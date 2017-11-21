@@ -21,10 +21,10 @@
                 <h:inputText id="espacioOrdenacion" value="#{agendaManagedBean.distanciaOrdenacion}" title="distancia" rendered="#{agendaManagedBean.ordenacion != 3}"/>
             </div>
             <h:commandButton action="#{agendaManagedBean.obtenerEventos()}" value="Buscar">
-                <f:ajax execute="@form" render="@form" />
+                <f:ajax execute="@form" render="listaEventos" />
             </h:commandButton> 
            
-            <h:form>
+            <h:form id="listaEventos">
                 <h1><h:outputText value="List"/></h1>
                 <h:dataTable value="#{agendaManagedBean.obtenerEventos()}" var="item">
                     <h:column>
