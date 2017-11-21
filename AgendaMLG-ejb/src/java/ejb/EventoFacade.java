@@ -51,4 +51,12 @@ public class EventoFacade extends AbstractFacade<Evento> {
         
     }
     
+    public List<Evento> EventosDeUsuario(Usuarios u){
+        Query q;
+        
+        q = em.createQuery("SELECT e FROM Evento WHERE e.emailusuario LIKE u.email");
+        q.setParameter("u", u);
+        return q.getResultList();
+    }
+    
 }
