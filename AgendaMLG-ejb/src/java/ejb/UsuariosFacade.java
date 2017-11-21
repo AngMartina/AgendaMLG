@@ -32,14 +32,16 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
     }
     
     public Usuarios findByEmail(String email) {
+        try{
         Query q;
         
         q = em.createQuery("SELECT u FROM Usuarios u WHERE :email = u.email");
         q.setParameter("email", email);
 
         return (Usuarios)q.getSingleResult();
-        
-    }
+        }catch(NullPointerException e){
+        return null;
+    }}
     
     
 }

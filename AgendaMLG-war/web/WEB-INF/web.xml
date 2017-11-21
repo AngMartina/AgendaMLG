@@ -19,6 +19,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/evento/Autenticacion.xhtml</welcome-file>
+        <welcome-file>faces/evento/autenticacion.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>
