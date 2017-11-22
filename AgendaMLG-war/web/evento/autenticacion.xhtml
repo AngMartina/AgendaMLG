@@ -17,7 +17,7 @@ and open the template in the editor.
         <h:form>
             <h:inputText id="inputEmail" p:placeholder="Email" class="form-control" value="#{agendaManagedBean.autenticacionEmailIntroducido}" /> <br/>
             <h:inputSecret id="inputPassword" p:placeholder="Contraseña" class="form-control" value="#{agendaManagedBean.autenticacionContrasennaIntroducida}" />
-            <h:commandButton class="btn btn-lg btn-danger btn-block" value="Autenticarse" action="#{agendaManagedBean.iniciarSesion()}" />
+            <h:commandButton value="Autenticarse" action="#{agendaManagedBean.iniciarSesion()}" />
             <h:outputText style="color:red" value="#{agendaManagedBean.mensajeError}" /> <br/>
         </h:form>
     </h:body>

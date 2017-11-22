@@ -40,6 +40,10 @@ public class AgendaManagedBean implements Serializable {
     protected String autenticacionEmailIntroducido;
     protected String autenticacionContrasennaIntroducida;
     protected String mensajeError;
+    
+    
+    protected long localizacionLongitud;
+    protected long localizacionLatitud;
     /**
      * Creates a new instance of AgendaManagedBean
      */
@@ -63,6 +67,8 @@ public class AgendaManagedBean implements Serializable {
                 return eventoFacade.buscarEventoPorFecha(fechaOrdenacion);
             case 3:
                 //Ordeno por distancia
+                long a = localizacionLatitud;
+                long b = localizacionLongitud;
                 return null; //FALTA POR HACER
             default:
                 return eventoFacade.findAll();
@@ -90,6 +96,22 @@ public class AgendaManagedBean implements Serializable {
        
         return "listaEventos";
 
+    }
+
+    public long getLocalizacionLongitud() {
+        return localizacionLongitud;
+    }
+
+    public void setLocalizacionLongitud(long localizacionLongitud) {
+        this.localizacionLongitud = localizacionLongitud;
+    }
+
+    public long getLocalizacionLatitud() {
+        return localizacionLatitud;
+    }
+
+    public void setLocalizacionLatitud(long localizacionLatitud) {
+        this.localizacionLatitud = localizacionLatitud;
     }
 
     public String getAutenticacionEmailIntroducido() {
