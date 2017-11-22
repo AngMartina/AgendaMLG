@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Crear Evento</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Crear Evento"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Id:" for="id" />
+                    <h:outputText id="id" value="#{eventoCRUDBean.nuevoEvento.id}" title="Id"/>
+                    <h:outputLabel value="Fechainicio:" for="fechainicio" />
+                    <h:inputText id="fechainicio" value="#{eventoCRUDBean.nuevoEvento.fechainicio}" title="Fechainicio" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="Fechafin:" for="fechafin" />
+                    <h:inputText id="fechafin" value="#{eventoCRUDBean.nuevoEvento.fechafin}" title="Fechafin" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="Descripcion:" for="descripcion" />
+                    <h:inputText id="descripcion" value="#{eventoCRUDBean.nuevoEvento.descripcion}" title="Descripcion" required="true" requiredMessage="The Descripcion field is required."/>
+                    <h:outputLabel value="Localizacion:" for="localizacion" />
+                    <h:inputText id="localizacion" value="#{eventoCRUDBean.nuevoEvento.localizacion}" title="Localizacion" />
+                    <h:outputLabel value="Precio:" for="precio" />
+                    <h:inputText id="precio" value="#{eventoCRUDBean.nuevoEvento.precio}" title="Precio" required="true" requiredMessage="The Precio field is required."/>
+                    <h:outputLabel value="Url:" for="url" />
+                    <h:inputText id="url" value="#{eventoCRUDBean.nuevoEvento.url}" title="Url" />
+                    <h:outputLabel value="Emailusuario:" for="emailusuario" />
+                    <h:outputLabel id="emailusuario" value="#{eventoCRUDBean.nuevoEvento.emailusuario}" title="Emailusuario"/>
+                </h:panelGrid>
+                <h:commandButton action="#{eventoCRUDBean.crearEvento(EventoCRUDBean.nuevoEvento)}" value="Subir"/>
+            </h:form>
+        </f:view>
+
+    </h:body>
+</html>
+
