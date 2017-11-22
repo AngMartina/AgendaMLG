@@ -8,13 +8,11 @@ package ejb;
 import entity.Usuarios;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
- * @author Antonio
+ * @author Angela
  */
 @Stateless
 public class UsuariosFacade extends AbstractFacade<Usuarios> {
@@ -30,18 +28,5 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
     public UsuariosFacade() {
         super(Usuarios.class);
     }
-    
-    public Usuarios findByEmail(String email) {
-        try{
-        Query q;
-        
-        q = em.createQuery("SELECT u FROM Usuarios u WHERE :email = u.email");
-        q.setParameter("email", email);
-
-        return (Usuarios)q.getSingleResult();
-        }catch(NullPointerException e){
-        return null;
-    }}
-    
     
 }

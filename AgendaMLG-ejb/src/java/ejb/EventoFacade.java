@@ -6,17 +6,13 @@
 package ejb;
 
 import entity.Evento;
-import entity.Usuarios;
-import java.util.Date;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
- * @author Antonio
+ * @author Angela
  */
 @Stateless
 public class EventoFacade extends AbstractFacade<Evento> {
@@ -31,32 +27,6 @@ public class EventoFacade extends AbstractFacade<Evento> {
 
     public EventoFacade() {
         super(Evento.class);
-    }
-    
-    public List<Evento> buscarEventoPorPreferencias(Usuarios u){
-        Query q;
-        
-        q = em.createQuery("SELECT e FROM Evento WHERE e.palabrasclave LIKE u.preferencias");
-        q.setParameter("u", u);
-        return q.getResultList();
-        
-    }
-    
-    public List<Evento> buscarEventoPorFecha(Date fecha){
-        Query q;
-        
-        q = em.createQuery("SELECT e FROM Evento WHERE fecha BETWEEN e.fechainicio AND e.fechafin");
-        q.setParameter("fecha", fecha);
-        return q.getResultList();
-        
-    }
-    
-    public List<Evento> EventosDeUsuario(Usuarios u){
-        Query q;
-        
-        q = em.createQuery("SELECT e FROM Evento WHERE e.emailusuario LIKE u.email");
-        q.setParameter("u", u);
-        return q.getResultList();
     }
     
 }
