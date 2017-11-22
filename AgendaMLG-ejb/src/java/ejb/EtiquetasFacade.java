@@ -5,18 +5,17 @@
  */
 package ejb;
 
-import entity.Usuarios;
+import entity.Etiquetas;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
  * @author Angela
  */
 @Stateless
-public class UsuariosFacade extends AbstractFacade<Usuarios> {
+public class EtiquetasFacade extends AbstractFacade<Etiquetas> {
 
     @PersistenceContext(unitName = "AgendaMLG-ejbPU")
     private EntityManager em;
@@ -26,21 +25,8 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
         return em;
     }
 
-    public UsuariosFacade() {
-        super(Usuarios.class);
-    }
-    
-    public Usuarios findByEmail(String email) {
-        try{
-        Query q;
-        
-        q = em.createQuery("SELECT u FROM Usuarios u WHERE :email = u.email");
-        q.setParameter("email", email);
-
-        return (Usuarios)q.getSingleResult();
-        }catch(NullPointerException e){
-        return null;
-    }
+    public EtiquetasFacade() {
+        super(Etiquetas.class);
     }
     
 }

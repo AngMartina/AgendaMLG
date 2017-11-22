@@ -36,7 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuarios.findByNombre", query = "SELECT u FROM Usuarios u WHERE u.nombre = :nombre")
     , @NamedQuery(name = "Usuarios.findByApellidos", query = "SELECT u FROM Usuarios u WHERE u.apellidos = :apellidos")
     , @NamedQuery(name = "Usuarios.findByEmail", query = "SELECT u FROM Usuarios u WHERE u.email = :email")
-    , @NamedQuery(name = "Usuarios.findByPreferencias", query = "SELECT u FROM Usuarios u WHERE u.preferencias = :preferencias")
     , @NamedQuery(name = "Usuarios.findByContrase\u00f1a", query = "SELECT u FROM Usuarios u WHERE u.contrase\u00f1a = :contrase\u00f1a")
     , @NamedQuery(name = "Usuarios.findByTipoUsuario", query = "SELECT u FROM Usuarios u WHERE u.tipoUsuario = :tipoUsuario")})
 public class Usuarios implements Serializable {
@@ -63,9 +62,6 @@ public class Usuarios implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "EMAIL")
     private String email;
-    @Size(max = 200)
-    @Column(name = "PREFERENCIAS")
-    private String preferencias;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -124,14 +120,6 @@ public class Usuarios implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPreferencias() {
-        return preferencias;
-    }
-
-    public void setPreferencias(String preferencias) {
-        this.preferencias = preferencias;
     }
 
     public String getContraseña() {

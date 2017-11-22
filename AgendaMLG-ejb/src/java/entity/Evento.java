@@ -42,8 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Evento.findByLongitud", query = "SELECT e FROM Evento e WHERE e.longitud = :longitud")
     , @NamedQuery(name = "Evento.findByPrecio", query = "SELECT e FROM Evento e WHERE e.precio = :precio")
     , @NamedQuery(name = "Evento.findByUrl", query = "SELECT e FROM Evento e WHERE e.url = :url")
-    , @NamedQuery(name = "Evento.findByEstado", query = "SELECT e FROM Evento e WHERE e.estado = :estado")
-    , @NamedQuery(name = "Evento.findByPalabrasclave", query = "SELECT e FROM Evento e WHERE e.palabrasclave = :palabrasclave")})
+    , @NamedQuery(name = "Evento.findByEstado", query = "SELECT e FROM Evento e WHERE e.estado = :estado")})
 public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -82,9 +81,6 @@ public class Evento implements Serializable {
     @NotNull
     @Column(name = "ESTADO")
     private int estado;
-    @Size(max = 200)
-    @Column(name = "PALABRASCLAVE")
-    private String palabrasclave;
     @JoinColumn(name = "EMAILUSUARIO", referencedColumnName = "EMAIL")
     @ManyToOne(optional = false)
     private Usuarios emailusuario;
@@ -181,14 +177,6 @@ public class Evento implements Serializable {
 
     public void setEstado(int estado) {
         this.estado = estado;
-    }
-
-    public String getPalabrasclave() {
-        return palabrasclave;
-    }
-
-    public void setPalabrasclave(String palabrasclave) {
-        this.palabrasclave = palabrasclave;
     }
 
     public Usuarios getEmailusuario() {
