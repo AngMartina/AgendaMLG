@@ -91,7 +91,6 @@
 <xs:sequence>
 <xs:element name="arg0" type="xs:string" minOccurs="0"/>
 <xs:element name="arg1" type="tns:usuarios" minOccurs="0"/>
-<xs:element name="arg2" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

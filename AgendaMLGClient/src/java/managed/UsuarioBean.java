@@ -10,7 +10,6 @@ import client.UsuarioService_Service;
 import client.Usuarios;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.xml.ws.WebServiceRef;

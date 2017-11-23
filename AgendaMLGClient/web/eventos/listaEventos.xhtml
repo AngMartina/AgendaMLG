@@ -48,7 +48,7 @@
                 </h:selectOneRadio>
                 <div id="actualizar">
                     <h:inputText id="fechaOrdenacion" value="#{agendaManagedBean.fechaOrdenacion}" title="Fecha" rendered="#{agendaManagedBean.ordenacion == '2'}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:inputText>
                     <h:inputText id="espacioOrdenacion" value="#{agendaManagedBean.distanciaOrdenacion}" title="distancia" rendered="#{agendaManagedBean.ordenacion != 3}"/>
                 </div>
@@ -67,7 +67,7 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="FECHAINICIO23"/>
+                            <h:outputText value="FechaInicio"/>
                         </f:facet>
                         <h:outputText value="#{item.fechainicio}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
