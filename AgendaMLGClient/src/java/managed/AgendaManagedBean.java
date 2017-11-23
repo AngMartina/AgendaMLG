@@ -41,8 +41,6 @@ public class AgendaManagedBean implements Serializable {
     protected String autenticacionEmailIntroducido;
     protected String mensajeError;
     
-    public String hola;
-    
     protected double localizacionLongitud;
     protected double localizacionLatitud;
     /**
