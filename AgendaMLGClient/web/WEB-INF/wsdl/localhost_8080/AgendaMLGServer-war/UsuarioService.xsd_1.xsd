@@ -100,22 +100,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="obtenerEventos">
-<xs:sequence>
-<xs:element name="arg0" type="xs:int" minOccurs="0"/>
-<xs:element name="arg1" type="tns:usuarios" minOccurs="0"/>
-<xs:element name="arg2" type="xs:dateTime" minOccurs="0"/>
-<xs:element name="arg3" type="xs:int"/>
-<xs:element name="arg4" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="obtenerEventosResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="iniciarSesion">
 <xs:sequence>
 <xs:element name="arg0" type="xs:string" minOccurs="0"/>
@@ -127,6 +111,22 @@
 <xs:complexType name="iniciarSesionResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:usuarios" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerEventos">
+<xs:sequence>
+<xs:element name="arg0" type="xs:int" minOccurs="0"/>
+<xs:element name="arg1" type="tns:usuarios" minOccurs="0"/>
+<xs:element name="arg2" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="arg3" type="xs:double"/>
+<xs:element name="arg4" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerEventosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

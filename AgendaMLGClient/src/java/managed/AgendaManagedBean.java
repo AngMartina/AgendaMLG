@@ -12,10 +12,19 @@ import java.util.Date;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+
 import java.util.List;
 import javax.annotation.PostConstruct;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
+
 
 /**
  *
@@ -37,10 +46,10 @@ public class AgendaManagedBean implements Serializable {
     protected String autenticacionEmailIntroducido;
     protected String mensajeError;
     
-    
-    protected long localizacionLongitud;
-    protected long localizacionLatitud;
-    
+
+    protected double localizacionLongitud;
+    protected double localizacionLatitud;
+
     /**
      * Creates a new instance of NewJSFManagedBean
      */
@@ -98,19 +107,19 @@ public class AgendaManagedBean implements Serializable {
         this.mensajeError = mensajeError;
     }
 
-    public long getLocalizacionLongitud() {
+    public double getLocalizacionLongitud() {
         return localizacionLongitud;
     }
 
-    public void setLocalizacionLongitud(long localizacionLongitud) {
+    public void setLocalizacionLongitud(double localizacionLongitud) {
         this.localizacionLongitud = localizacionLongitud;
     }
 
-    public long getLocalizacionLatitud() {
+    public double getLocalizacionLatitud() {
         return localizacionLatitud;
     }
 
-    public void setLocalizacionLatitud(long localizacionLatitud) {
+    public void setLocalizacionLatitud(double localizacionLatitud) {
         this.localizacionLatitud = localizacionLatitud;
     }
 
@@ -129,10 +138,11 @@ public class AgendaManagedBean implements Serializable {
             mensajeError="Debe introducir un email";
             return "/usuario/autenticacion?faces-redirect=true";
         }
-        
+        //return "/usuario/perfilUsuario?faces-redirect=true";
         return "/eventos/listaEventos?faces-redirect=true";
         //return "/usuario/perfilUsuario?faces-redirect=true";
     }
+
     
      public String verPerfilUsuario() {
         //TODO write your implementation code here:
@@ -144,8 +154,9 @@ public class AgendaManagedBean implements Serializable {
     }
     public Date formateoFecha(XMLGregorianCalendar fechaAParsear){
         return fechaAParsear.toGregorianCalendar().getTime();
+
     }
-    public java.util.List<client.Evento> obtenerEventos(java.lang.Integer arg0, client.Usuarios arg1, javax.xml.datatype.XMLGregorianCalendar arg2, int arg3, int arg4) {
+    public java.util.List<client.Evento> obtenerEventos(java.lang.Integer arg0, client.Usuarios arg1, javax.xml.datatype.XMLGregorianCalendar arg2, double arg3, double arg4) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
@@ -182,6 +193,34 @@ public class AgendaManagedBean implements Serializable {
 
     
     
+    
+    private List<Evento> buscarPorGeolocalizacion(){
+        List<Evento> eventosCercanos = new ArrayList<>();
+        List<Evento> todosEventos = obtenerEventos(null, null, null, 0, 0);
+        
+        for(int i =0; i<todosEventos.size();i++){
+            int distancia = ditanciaAEvento(todosEventos.get(i), localizacionLatitud, localizacionLongitud);
+            if(distancia<=distancia){
+                eventosCercanos.add(todosEventos.get(i));
+            }
+            
+        }
+        return eventosCercanos;
+    } 
+
+    private int ditanciaAEvento(Evento get, double localizacionLatitud, double localizacionLongitud) {
+        int distancia=0;
+        int radioT=6378;
+        double varLat=get.getLatitud()-localizacionLatitud;
+        double varLong = get.getLongitud()-localizacionLongitud;
+        
+        
+        
+        
+        
+        return distancia;
+
+    }
     
     
 }

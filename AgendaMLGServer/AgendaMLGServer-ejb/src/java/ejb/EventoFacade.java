@@ -36,7 +36,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
        public List<Evento> buscarEventoPorPreferencias(Usuarios u){
         Query q;
         
-        q = em.createQuery("SELECT e FROM Evento WHERE e.palabrasclave LIKE u.preferencias");
+        q = em.createQuery("SELECT e FROM Evento e WHERE e.palabrasclave LIKE :u.preferencias");
         q.setParameter("u", u);
         return q.getResultList();
         
@@ -45,7 +45,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
     public List<Evento> buscarEventoPorFecha(Date fecha){
         Query q;
         
-        q = em.createQuery("SELECT e FROM Evento WHERE fecha BETWEEN e.fechainicio AND e.fechafin");
+        q = em.createQuery("SELECT e FROM Evento e WHERE :fecha BETWEEN e.fechainicio AND e.fechafin");
         q.setParameter("fecha", fecha);
         return q.getResultList();
         
@@ -54,8 +54,9 @@ public class EventoFacade extends AbstractFacade<Evento> {
     public List<Evento> EventosDeUsuario(Usuarios u){
         Query q;
         
-        q = em.createQuery("SELECT e FROM Evento WHERE e.emailusuario LIKE u.email");
-        q.setParameter("u", u);
+        q = em.createQuery("SELECT e FROM Evento e WHERE :email=e.emailusuario");
+        q.setParameter("email", u);
+        
         return q.getResultList();
     }
     

@@ -6,19 +6,15 @@
     <h:head>
         <title>Eventos</title>
         <script type="text/javascript">
-            <!--Prueba de que el navegador admite geolocalizacion-->
-            if (navigator.geolocation) {
-                var timeoutVal = 10 * 1000 * 1000;
-                navigator.geolocation.getCurrentPosition(
-                    displayPosition,
-                    displayError,
-                    { enableHighAccuracy: true, timeout: timeoutVal,maximumAge: 0 }
-                );
-            }
-            else {
+
+            if(navigator.geolocation){
+                var timeOut = 10*1000*1000;
+                navigator.geolocation.getCurrentPosition(displayPosition, displayError,{enableHighAccuracy:true, timeout:timeOut, maximumAge:0});
+            }else{
                 alert("Geolocation is not supported by this browser");
             }
             
+           
             function displayPosition(position) {
                 document.getElementById('latitud').value=position.coords.latitud;
                 document.getElementById('longitud').value = position.coords.latitud;
@@ -70,7 +66,7 @@
                             <h:outputText value="FechaInicio"/>
                         </f:facet>
                         <h:outputText value="#{agendaManagedBean.formateoFecha(item.fechainicio)}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                     </h:column>
                     <h:column>

@@ -72,7 +72,7 @@ public class UsuarioService {
      * @return 
      */
     @WebMethod(operationName = "obtenerEventos")
-    public List<Evento> obtenerEventos(Integer ordenacion, Usuarios usuario, Date fechaOrdenacion, int localizacionLatitud, int localizacionLongitud){
+    public List<Evento> obtenerEventos(Integer ordenacion, Usuarios usuario, Date fechaOrdenacion, double localizacionLatitud, double localizacionLongitud){
        if(null==ordenacion){
            return eventoFacade.findAll();
        } else switch (ordenacion) {
@@ -84,8 +84,8 @@ public class UsuarioService {
                 return eventoFacade.buscarEventoPorFecha(fechaOrdenacion);
             case 3:
                 //Ordeno por distancia
-                long a = localizacionLatitud;
-                long b = localizacionLongitud;
+                double a = localizacionLatitud;
+                double b = localizacionLongitud;
                 return null; //FALTA POR HACER
             default:
                 return eventoFacade.findAll();
@@ -102,27 +102,37 @@ public class UsuarioService {
    }
    
    
+   
+   
         /**
      * Web service operation
      * @param nuevoEvento
+     * @param usuario
      * @return 
      */
     @WebMethod(operationName = "crearEvento")
-    public String crearEvento(Evento nuevoEvento){
-        /*Codigo Antonio*/
+    public String crearEvento(Evento nuevoEvento, Usuarios usuario){
+        /*Codigo Antonio: Me falta enlazarlo con un usuario*/
+        if(usuario.getTipoUsuario() != 3){//Usuario normal y Superusuario
+            nuevoEvento.setEstado(0); //Sin validar   
+        }else{//Periodista
+            nuevoEvento.setEstado(1); //Validado
+        }
+        nuevoEvento.setEmailusuario(usuario); //No me deja hacer getEmail(), por?
         this.eventoFacade.create(nuevoEvento);
-        return "ListaEventos";
+        return "listaEventos";
     }
     
     
     /**
      * Web service operation
      * @param usuarioLoggeado
-     * @param eventosDelUsuario
-     * @return 
+     * @return
      */
-    @WebMethod(operationName = "initUsuario")
-    public void initUsuario(Usuarios usuarioLoggeado,  List<Evento> eventosDelUsuario){
-        eventosDelUsuario = this.eventoFacade.EventosDeUsuario(usuarioLoggeado);
+    @WebMethod(operationName = "obtenerEventosDeUsuario")
+    public List<Evento> obtenerEventosDeUsuario(Usuarios usuarioLoggeado){
+        return this.eventoFacade.EventosDeUsuario(usuarioLoggeado);
     }
+
+    
 }
