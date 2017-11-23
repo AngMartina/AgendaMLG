@@ -32,7 +32,7 @@ public class UsuarioBean {
     @PostConstruct
     public void init(){
         //initusuario
-        initUsuario(usuarioLoggeado, eventosDelUsuario);
+        this.eventosDelUsuario = obtenerEventosDeUsuario(usuarioLoggeado);
     }
 
     public Usuarios getUsuarioLoggeado() {
@@ -58,12 +58,14 @@ public class UsuarioBean {
     public UsuarioBean() {
     }
 
-    private void initUsuario(client.Usuarios arg0, java.util.List<client.Evento> arg1) {
+    private java.util.List<client.Evento> obtenerEventosDeUsuario(client.Usuarios arg0) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
-        port.initUsuario(arg0, arg1);
+        return port.obtenerEventosDeUsuario(arg0);
     }
+
+   
     
     
 }

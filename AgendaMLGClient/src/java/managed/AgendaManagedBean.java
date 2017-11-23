@@ -5,12 +5,16 @@
  */
 package managed;
 
+import client.Evento;
 import client.UsuarioService_Service;
 import client.Usuarios;
 import java.util.Date;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
 
 /**
@@ -36,14 +40,14 @@ public class AgendaManagedBean implements Serializable {
     
     protected long localizacionLongitud;
     protected long localizacionLatitud;
+    
     /**
      * Creates a new instance of NewJSFManagedBean
      */
     public AgendaManagedBean() {
     }
     
-        
-    
+   
 
     public Integer getOrdenacion() {
         return ordenacion;
@@ -110,6 +114,8 @@ public class AgendaManagedBean implements Serializable {
         this.localizacionLatitud = localizacionLatitud;
     }
 
+    
+
 
    
     
@@ -125,8 +131,20 @@ public class AgendaManagedBean implements Serializable {
         }
         
         return "/eventos/listaEventos?faces-redirect=true";
+        //return "/usuario/perfilUsuario?faces-redirect=true";
     }
-
+    
+     public String verPerfilUsuario() {
+        //TODO write your implementation code here:
+        return "/usuario/perfilUsuario?faces-redirect=true";
+    }
+      public String verListaEventos() {
+        //TODO write your implementation code here:
+        return "/eventos/listaEventos?faces-redirect=true";
+    }
+    public Date formateoFecha(XMLGregorianCalendar fechaAParsear){
+        return fechaAParsear.toGregorianCalendar().getTime();
+    }
     public java.util.List<client.Evento> obtenerEventos(java.lang.Integer arg0, client.Usuarios arg1, javax.xml.datatype.XMLGregorianCalendar arg2, int arg3, int arg4) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
@@ -148,12 +166,22 @@ public class AgendaManagedBean implements Serializable {
         return port.subirEvento();
     }
 
-    private Usuarios iniciarSesion(java.lang.String arg0, client.Usuarios arg1) {
+    private Usuarios iniciarSesion(String arg0, Usuarios arg1) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
-        return port.iniciarSesion(arg0, arg1);
+        return port.iniciarSesion(arg0, arg1, null);
     }
+
+    public java.util.List<client.Evento> obtenerEventosDeUsuario(client.Usuarios arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.obtenerEventosDeUsuario(arg0);
+    }
+
+    
+    
     
     
 }
