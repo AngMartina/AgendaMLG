@@ -33,6 +33,7 @@ public class AgendaManagedBean implements Serializable {
     protected String autenticacionEmailIntroducido;
     protected String mensajeError;
     
+    public String hola;
     
     protected long localizacionLongitud;
     protected long localizacionLatitud;
