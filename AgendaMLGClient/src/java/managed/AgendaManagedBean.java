@@ -31,7 +31,6 @@ public class AgendaManagedBean implements Serializable {
     protected Usuarios usuario;
     
     protected String autenticacionEmailIntroducido;
-    protected String autenticacionContrasennaIntroducida;
     protected String mensajeError;
     
     
@@ -86,14 +85,7 @@ public class AgendaManagedBean implements Serializable {
         this.autenticacionEmailIntroducido = autenticacionEmailIntroducido;
     }
 
-    public String getAutenticacionContrasennaIntroducida() {
-        return autenticacionContrasennaIntroducida;
-    }
-
-    public void setAutenticacionContrasennaIntroducida(String autenticacionContrasennaIntroducida) {
-        this.autenticacionContrasennaIntroducida = autenticacionContrasennaIntroducida;
-    }
-
+ 
     public String getMensajeError() {
         return mensajeError;
     }
@@ -122,17 +114,17 @@ public class AgendaManagedBean implements Serializable {
    
     
     public String iniciarSesion2(){
-        usuario = iniciarSesion(autenticacionEmailIntroducido, usuario, mensajeError);
+        usuario = iniciarSesion(autenticacionEmailIntroducido, usuario);
         if(usuario==null){
             mensajeError="El email no es correcto";
-            return "autenticacion";
+            return "/usuario/autenticacion?faces-redirect=true";
             
         }else if(autenticacionEmailIntroducido.isEmpty() || autenticacionEmailIntroducido==null){
             mensajeError="Debe introducir un email";
-            return "autenticacion";
+            return "/usuario/autenticacion?faces-redirect=true";
         }
         
-        return "listaEventos";
+        return "/eventos/listaEventos?faces-redirect=true";
     }
 
     public java.util.List<client.Evento> obtenerEventos(java.lang.Integer arg0, client.Usuarios arg1, javax.xml.datatype.XMLGregorianCalendar arg2, int arg3, int arg4) {
@@ -156,13 +148,12 @@ public class AgendaManagedBean implements Serializable {
         return port.subirEvento();
     }
 
-    private Usuarios iniciarSesion(java.lang.String arg0, client.Usuarios arg1, java.lang.String arg2) {
+    private Usuarios iniciarSesion(java.lang.String arg0, client.Usuarios arg1) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
-        return port.iniciarSesion(arg0, arg1, arg2);
+        return port.iniciarSesion(arg0, arg1);
     }
-    
     
     
 }
