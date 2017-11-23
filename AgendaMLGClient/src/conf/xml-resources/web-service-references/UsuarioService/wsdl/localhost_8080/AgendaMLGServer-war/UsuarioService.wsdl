@@ -4,35 +4,11 @@
 <xsd:import namespace="http://service/" schemaLocation="http://localhost:8080/AgendaMLGServer-war/UsuarioService?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="subirEvento">
-<part name="parameters" element="tns:subirEvento"/>
-</message>
-<message name="subirEventoResponse">
-<part name="parameters" element="tns:subirEventoResponse"/>
-</message>
-<message name="iniciarSesion">
-<part name="parameters" element="tns:iniciarSesion"/>
-</message>
-<message name="iniciarSesionResponse">
-<part name="parameters" element="tns:iniciarSesionResponse"/>
-</message>
 <message name="crearEvento">
 <part name="parameters" element="tns:crearEvento"/>
 </message>
 <message name="crearEventoResponse">
 <part name="parameters" element="tns:crearEventoResponse"/>
-</message>
-<message name="initUsuario">
-<part name="parameters" element="tns:initUsuario"/>
-</message>
-<message name="initUsuarioResponse">
-<part name="parameters" element="tns:initUsuarioResponse"/>
-</message>
-<message name="obtenerEventos">
-<part name="parameters" element="tns:obtenerEventos"/>
-</message>
-<message name="obtenerEventosResponse">
-<part name="parameters" element="tns:obtenerEventosResponse"/>
 </message>
 <message name="obtenerUsuarios">
 <part name="parameters" element="tns:obtenerUsuarios"/>
@@ -40,35 +16,68 @@
 <message name="obtenerUsuariosResponse">
 <part name="parameters" element="tns:obtenerUsuariosResponse"/>
 </message>
+<message name="iniciarSesion">
+<part name="parameters" element="tns:iniciarSesion"/>
+</message>
+<message name="iniciarSesionResponse">
+<part name="parameters" element="tns:iniciarSesionResponse"/>
+</message>
+<message name="subirEvento">
+<part name="parameters" element="tns:subirEvento"/>
+</message>
+<message name="subirEventoResponse">
+<part name="parameters" element="tns:subirEventoResponse"/>
+</message>
+<message name="obtenerEventos">
+<part name="parameters" element="tns:obtenerEventos"/>
+</message>
+<message name="obtenerEventosResponse">
+<part name="parameters" element="tns:obtenerEventosResponse"/>
+</message>
+<message name="obtenerEventosDeUsuario">
+<part name="parameters" element="tns:obtenerEventosDeUsuario"/>
+</message>
+<message name="obtenerEventosDeUsuarioResponse">
+<part name="parameters" element="tns:obtenerEventosDeUsuarioResponse"/>
+</message>
 <portType name="UsuarioService">
-<operation name="subirEvento">
-<input wsam:Action="http://service/UsuarioService/subirEventoRequest" message="tns:subirEvento"/>
-<output wsam:Action="http://service/UsuarioService/subirEventoResponse" message="tns:subirEventoResponse"/>
-</operation>
-<operation name="iniciarSesion">
-<input wsam:Action="http://service/UsuarioService/iniciarSesionRequest" message="tns:iniciarSesion"/>
-<output wsam:Action="http://service/UsuarioService/iniciarSesionResponse" message="tns:iniciarSesionResponse"/>
-</operation>
 <operation name="crearEvento">
 <input wsam:Action="http://service/UsuarioService/crearEventoRequest" message="tns:crearEvento"/>
 <output wsam:Action="http://service/UsuarioService/crearEventoResponse" message="tns:crearEventoResponse"/>
-</operation>
-<operation name="initUsuario">
-<input wsam:Action="http://service/UsuarioService/initUsuarioRequest" message="tns:initUsuario"/>
-<output wsam:Action="http://service/UsuarioService/initUsuarioResponse" message="tns:initUsuarioResponse"/>
-</operation>
-<operation name="obtenerEventos">
-<input wsam:Action="http://service/UsuarioService/obtenerEventosRequest" message="tns:obtenerEventos"/>
-<output wsam:Action="http://service/UsuarioService/obtenerEventosResponse" message="tns:obtenerEventosResponse"/>
 </operation>
 <operation name="obtenerUsuarios">
 <input wsam:Action="http://service/UsuarioService/obtenerUsuariosRequest" message="tns:obtenerUsuarios"/>
 <output wsam:Action="http://service/UsuarioService/obtenerUsuariosResponse" message="tns:obtenerUsuariosResponse"/>
 </operation>
+<operation name="iniciarSesion">
+<input wsam:Action="http://service/UsuarioService/iniciarSesionRequest" message="tns:iniciarSesion"/>
+<output wsam:Action="http://service/UsuarioService/iniciarSesionResponse" message="tns:iniciarSesionResponse"/>
+</operation>
+<operation name="subirEvento">
+<input wsam:Action="http://service/UsuarioService/subirEventoRequest" message="tns:subirEvento"/>
+<output wsam:Action="http://service/UsuarioService/subirEventoResponse" message="tns:subirEventoResponse"/>
+</operation>
+<operation name="obtenerEventos">
+<input wsam:Action="http://service/UsuarioService/obtenerEventosRequest" message="tns:obtenerEventos"/>
+<output wsam:Action="http://service/UsuarioService/obtenerEventosResponse" message="tns:obtenerEventosResponse"/>
+</operation>
+<operation name="obtenerEventosDeUsuario">
+<input wsam:Action="http://service/UsuarioService/obtenerEventosDeUsuarioRequest" message="tns:obtenerEventosDeUsuario"/>
+<output wsam:Action="http://service/UsuarioService/obtenerEventosDeUsuarioResponse" message="tns:obtenerEventosDeUsuarioResponse"/>
+</operation>
 </portType>
 <binding name="UsuarioServicePortBinding" type="tns:UsuarioService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="subirEvento">
+<operation name="crearEvento">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="obtenerUsuarios">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -86,16 +95,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="crearEvento">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="initUsuario">
+<operation name="subirEvento">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -113,7 +113,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="obtenerUsuarios">
+<operation name="obtenerEventosDeUsuario">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

@@ -11,26 +11,34 @@
             <h:form>
                 <h1><h:outputText value="Crear Evento"/></h1>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="Id:" for="id" />
-                    <h:outputText id="id" value="#{eventoCRUDBean.nuevoEvento.id}" title="Id"/>
                     <h:outputLabel value="Fechainicio:" for="fechainicio" />
                     <h:inputText id="fechainicio" value="#{eventoCRUDBean.nuevoEvento.fechainicio}" title="Fechainicio" >
                         <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:inputText>
+                    
                     <h:outputLabel value="Fechafin:" for="fechafin" />
                     <h:inputText id="fechafin" value="#{eventoCRUDBean.nuevoEvento.fechafin}" title="Fechafin" >
                         <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:inputText>
+                    
                     <h:outputLabel value="Descripcion:" for="descripcion" />
                     <h:inputText id="descripcion" value="#{eventoCRUDBean.nuevoEvento.descripcion}" title="Descripcion" required="true" requiredMessage="The Descripcion field is required."/>
+                    
                     <h:outputLabel value="Localizacion:" for="localizacion" />
                     <h:inputText id="localizacion" value="#{eventoCRUDBean.nuevoEvento.localizacion}" title="Localizacion" />
+                    
+                    <h:outputLabel value="Latitud:" for="latitud" />
+                    <h:inputText id="latitud" value="#{eventoCRUDBean.nuevoEvento.latitud}" title="Latitud" />
+                   
+                    <h:outputLabel value="Longitud" for="longitud" />
+                    <h:inputText id="longitud" value="#{eventoCRUDBean.nuevoEvento.longitud}" title="Longitud" />
+                    
                     <h:outputLabel value="Precio:" for="precio" />
                     <h:inputText id="precio" value="#{eventoCRUDBean.nuevoEvento.precio}" title="Precio" required="true" requiredMessage="The Precio field is required."/>
+                    
                     <h:outputLabel value="Url:" for="url" />
                     <h:inputText id="url" value="#{eventoCRUDBean.nuevoEvento.url}" title="Url" />
-                    <h:outputLabel value="Emailusuario:" for="emailusuario" />
-                    <h:outputLabel id="emailusuario" value="#{eventoCRUDBean.nuevoEvento.emailusuario}" title="Emailusuario"/>
+                    
                 </h:panelGrid>
                 <h:commandButton action="#{eventoCRUDBean.crearEvento(EventoCRUDBean.nuevoEvento)}" value="Subir"/>
             </h:form>

@@ -13,18 +13,17 @@
             <h:form>
                 <h1><h:outputText value="Ver Perfil"/></h1>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="Id:" for="id" />
-                    <h:outputText id="id" value="#{usuarioBean.usuarioLoggeado.id}" title="Id" />
                     <h:outputLabel value="Nombre:" for="nombre" />
-                    <h:outputText id="nombre" value="#{usuarioBean.usuarioLoggeado.nombre}" title="Nombre" />
+                    <h:outputText id="nombre" value="#{agendaManagedBean.usuario.nombre}" title="Nombre" />
+                    
                     <h:outputLabel value="Apellidos:" for="apellidos" />
-                    <h:outputText id="apellidos" value="#{usuarioBean.usuarioLoggeado.apellidos}" title="Apellidos" />
+                    <h:outputText id="apellidos" value="#{agendaManagedBean.usuario.apellidos}" title="Apellidos" />
+                    
                     <h:outputLabel value="Email:" for="email" />
-                    <h:outputText id="email" value="#{usuarioBean.usuarioLoggeado.email}" title="Email" />
-            <!--        <h:outputLabel value="Preferencias:" for="preferencias" />   YA NO  EXISTE
-                    <h:outputText id="preferencias" value="{usuarioBean.usuarioLoggeado.preferencias}" title="Preferencias" />-->
+                    <h:outputText id="email" value="#{agendaManagedBean.usuario.email}" title="Email" />
+            
                     <h:outputLabel value="TipoUsuario:" for="tipoUsuario" />
-                    <h:outputText id="tipoUsuario" value="#{usuarioBean.usuarioLoggeado.tipoUsuario}" title="TipoUsuario" />
+                    <h:outputText id="tipoUsuario" value="#{agendaManagedBean.usuario.tipoUsuario}" title="TipoUsuario" />
                 </h:panelGrid>
             </h:form>
         </f:view>
@@ -33,18 +32,13 @@
 
             <h:form>
                 <h1><h:outputText value="Eventos creados por este usuario"/></h1>
-                <h:dataTable value="#{usuarioBean.eventosDelUsuario}" var="item">
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Id"/>
-                        </f:facet>
-                        <h:outputText value="#{item.id}"/>
-                    </h:column>
+                <h:dataTable value="#{agendaManagedBean.obtenerEventosDeUsuario(agendaManagedBean.usuario)}" var="item">
+                    
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Fechainicio"/>
                         </f:facet>
-                        <h:outputText value="#{item.fechainicio}">
+                        <h:outputText value="#{agendaManagedBean.formateoFecha(item.fechainicio)}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
                     </h:column>
@@ -52,7 +46,7 @@
                         <f:facet name="header">
                             <h:outputText value="Fechafin"/>
                         </f:facet>
-                        <h:outputText value="#{item.fechafin}">
+                        <h:outputText value="#{agendaManagedBean.formateoFecha(item.fechafin)}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
                     </h:column>
@@ -80,21 +74,11 @@
                         </f:facet>
                         <h:outputText value="#{item.url}"/>
                     </h:column>
-                    
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Palabrasclave"/>
-                        </f:facet>
-                   <!--     <h:outputText value="{item.palabrasclave}"/>     YA NO EXISTEN-->
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Emailusuario"/>
-                        </f:facet>
-                        <h:outputText value="#{item.emailusuario}"/>
-                    </h:column>
+          
                 </h:dataTable>
+                <h:commandButton action="#{agendaManagedBean.verListaEventos()}" value="Volver"/>
             </h:form>
+            
         </f:view>
 
 

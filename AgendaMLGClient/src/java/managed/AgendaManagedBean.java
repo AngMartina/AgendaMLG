@@ -12,11 +12,16 @@ import java.util.Date;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+
+import java.util.List;
+import javax.annotation.PostConstruct;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
 
@@ -41,16 +46,17 @@ public class AgendaManagedBean implements Serializable {
     protected String autenticacionEmailIntroducido;
     protected String mensajeError;
     
+
     protected double localizacionLongitud;
     protected double localizacionLatitud;
+
     /**
      * Creates a new instance of NewJSFManagedBean
      */
     public AgendaManagedBean() {
     }
     
-        
-    
+   
 
     public Integer getOrdenacion() {
         return ordenacion;
@@ -117,6 +123,8 @@ public class AgendaManagedBean implements Serializable {
         this.localizacionLatitud = localizacionLatitud;
     }
 
+    
+
 
    
     
@@ -132,11 +140,23 @@ public class AgendaManagedBean implements Serializable {
         }
         //return "/usuario/perfilUsuario?faces-redirect=true";
         return "/eventos/listaEventos?faces-redirect=true";
+        //return "/usuario/perfilUsuario?faces-redirect=true";
     }
-    public Date formateoFecha(XMLGregorianCalendar fechaAParsear) throws ParseException {      
-        return fechaAParsear.toGregorianCalendar().getTime();    
+
+    
+     public String verPerfilUsuario() {
+        //TODO write your implementation code here:
+        return "/usuario/perfilUsuario?faces-redirect=true";
     }
-    public java.util.List<client.Evento> obtenerEventos(java.lang.Integer arg0, client.Usuarios arg1, javax.xml.datatype.XMLGregorianCalendar arg2, int arg3, int arg4) {
+      public String verListaEventos() {
+        //TODO write your implementation code here:
+        return "/eventos/listaEventos?faces-redirect=true";
+    }
+    public Date formateoFecha(XMLGregorianCalendar fechaAParsear){
+        return fechaAParsear.toGregorianCalendar().getTime();
+
+    }
+    public java.util.List<client.Evento> obtenerEventos(java.lang.Integer arg0, client.Usuarios arg1, javax.xml.datatype.XMLGregorianCalendar arg2, double arg3, double arg4) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
@@ -157,12 +177,22 @@ public class AgendaManagedBean implements Serializable {
         return port.subirEvento();
     }
 
-    private Usuarios iniciarSesion(java.lang.String arg0, client.Usuarios arg1) {
+    private Usuarios iniciarSesion(String arg0, Usuarios arg1) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
-        return port.iniciarSesion(arg0, arg1);
+        return port.iniciarSesion(arg0, arg1, null);
     }
+
+    public java.util.List<client.Evento> obtenerEventosDeUsuario(client.Usuarios arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.obtenerEventosDeUsuario(arg0);
+    }
+
+    
+    
     
     private List<Evento> buscarPorGeolocalizacion(){
         List<Evento> eventosCercanos = new ArrayList<>();

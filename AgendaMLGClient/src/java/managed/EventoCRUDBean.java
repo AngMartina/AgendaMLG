@@ -30,7 +30,6 @@ public class EventoCRUDBean {
     @PostConstruct
     public void init(){
         nuevoEvento = new Evento();
-        //nuevoEvento.setEmailusuario(emailusuario);  /*Email del usuario que inició sesioón*/
     }
 
     public Evento getNuevoEvento() {
@@ -49,11 +48,17 @@ public class EventoCRUDBean {
     public EventoCRUDBean() {
     }
 
-    private String crearEvento(client.Evento arg0) {
+    private String crearEvento(client.Evento arg0, client.Usuarios arg1) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
-        return port.crearEvento(arg0);
+        return port.crearEvento(arg0, arg1);
     }
+
+    
+
+   
+    
+    
     
 }
