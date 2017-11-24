@@ -284,8 +284,8 @@ public class AgendaManagedBean implements Serializable {
         GregorianCalendar fin = new GregorianCalendar();
         inicio.setTime(this.fechaInicioAModificar);
         inicio.add(GregorianCalendar.DAY_OF_MONTH, +1);
-        fin.add(GregorianCalendar.DAY_OF_MONTH, +1);
         fin.setTime(this.fechaFinAModificar);
+        fin.add(GregorianCalendar.DAY_OF_MONTH, +1);
         XMLGregorianCalendar date1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(inicio);
         XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(fin);
         eventoAModificar.setFechainicio(date1);
