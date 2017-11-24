@@ -59,4 +59,11 @@ public class EventoCRUDBean {
         return port.modificarEvento(arg0);
     }
 
+    public java.util.List<client.Evento> obtenerEventosSinValidar() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.obtenerEventosSinValidar();
+    }
+
 }

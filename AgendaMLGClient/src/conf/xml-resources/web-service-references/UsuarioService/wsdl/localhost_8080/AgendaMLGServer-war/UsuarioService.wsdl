@@ -46,6 +46,12 @@
 <message name="iniciarSesionResponse">
 <part name="parameters" element="tns:iniciarSesionResponse"/>
 </message>
+<message name="obtenerEventosSinValidar">
+<part name="parameters" element="tns:obtenerEventosSinValidar"/>
+</message>
+<message name="obtenerEventosSinValidarResponse">
+<part name="parameters" element="tns:obtenerEventosSinValidarResponse"/>
+</message>
 <message name="validarEvento">
 <part name="parameters" element="tns:validarEvento"/>
 </message>
@@ -80,6 +86,10 @@
 <operation name="iniciarSesion">
 <input wsam:Action="http://service/UsuarioService/iniciarSesionRequest" message="tns:iniciarSesion"/>
 <output wsam:Action="http://service/UsuarioService/iniciarSesionResponse" message="tns:iniciarSesionResponse"/>
+</operation>
+<operation name="obtenerEventosSinValidar">
+<input wsam:Action="http://service/UsuarioService/obtenerEventosSinValidarRequest" message="tns:obtenerEventosSinValidar"/>
+<output wsam:Action="http://service/UsuarioService/obtenerEventosSinValidarResponse" message="tns:obtenerEventosSinValidarResponse"/>
 </operation>
 <operation name="validarEvento">
 <input wsam:Action="http://service/UsuarioService/validarEventoRequest" message="tns:validarEvento"/>
@@ -143,6 +153,15 @@
 </output>
 </operation>
 <operation name="iniciarSesion">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="obtenerEventosSinValidar">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

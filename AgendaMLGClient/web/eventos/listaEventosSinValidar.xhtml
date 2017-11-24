@@ -5,56 +5,12 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Eventos</title>
-        <script type="text/javascript">
-
-            if(navigator.geolocation){
-                var timeOut = 10*1000*1000;
-                navigator.geolocation.getCurrentPosition(displayPosition, displayError,{enableHighAccuracy:true, timeout:timeOut, maximumAge:0});
-            }else{
-                alert("Geolocation is not supported by this browser");
-            }
-            
-           
-            function displayPosition(position) {
-                document.getElementById('latitud').value=position.coords.latitud;
-                document.getElementById('longitud').value = position.coords.latitud;
-                alert("Latitude: " + position.coords.latitude+ ", Longitude: " +
-                position.coords.longitude);
-            }
-            
-            function displayError(error) {
-                var errors = {
-                1: 'Permission denied',
-                2: 'Position unavailable',
-                3: 'Request timeout'};
-                alert("Error: " + errors[error.code]);
-            }
-        </script>
     </h:head>
     <h:body>
-        <h:inputHidden value="#{agendaManagedBean.localizacionLatitud}" id="latitud" />
-        <h:inputHidden value="#{agendaManagedBean.localizacionLongitud}" id="longitud" />
         <f:view>
-             <h:form id="ordenacion">
-                <h:selectOneRadio value="#{agendaManagedBean.ordenacion}">
-                   <f:selectItem itemValue="1" itemLabel="Ordenar por Preferencias" /><br/>
-                   <f:selectItem itemValue="2" itemLabel="Ordenar por fecha" /><br/>
-                   <f:selectItem itemValue="3" itemLabel="Ordenar por espacio" /><br/>
-                   <f:ajax execute="@form" render="actualizar"/>
-                </h:selectOneRadio>
-                <div id="actualizar">
-                    <h:inputText id="fechaOrdenacion" value="#{agendaManagedBean.fechaOrdenacion}" title="Fecha" rendered="#{agendaManagedBean.ordenacion == '2'}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
-                    <h:inputText id="espacioOrdenacion" value="#{agendaManagedBean.distanciaOrdenacion}" title="distancia" rendered="#{agendaManagedBean.ordenacion != 3}"/>
-                </div>
-                 <h:commandButton action="#{agendaManagedBean.obtenerEventos(agendaManagedBean.ordenacion, agendaManagedBean.usuario, agendaManagedBean.fechaOrdenacion, agendaManagedBean.localizacionLatitud, agendaManagedBean.localizacionLongitud)}" value="Buscar">
-                    <f:ajax execute="@form" render="listaEventos" />
-                </h:commandButton> 
-             </h:form>
-            <h:form id="listaEventos">
+            <h:form id="listaEventosSinValidar">
                 <h1><h:outputText value="List"/></h1>
-                <h:dataTable value="#{agendaManagedBean.obtenerEventos(agendaManagedBean.ordenacion, agendaManagedBean.usuario, agendaManagedBean.fechaOrdenacion, agendaManagedBean.localizacionLatitud, agendaManagedBean.localizacionLongitud)}" var="item">
+                <h:dataTable value="#{eventoCRUDBean.obtenerEventosSinValidar()}" var="item">
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Id"/>
@@ -117,13 +73,12 @@
                         <f:facet name="header">
                             <h:outputText value=""/>
                         </f:facet>
-                        <h:commandButton action="#{agendaManagedBean.goToModificarEvento(item)}" rendered="#{agendaManagedBean.comprobarPeriodista()}" value="modificarEvento">
+                        <h:commandButton action="#{agendaManagedBean.validarEvento(item)}" rendered="#{agendaManagedBean.comprobarEstado(item)}" value="validarEvento">
+                            <f:ajax execute="@form" render="listaEventosSinValidar" />
                         </h:commandButton>
                     </h:column>
                 </h:dataTable>
-                <h:commandButton action="#{agendaManagedBean.subirEvento()}" value="Subir Evento"/>
-                <h:commandButton action="#{agendaManagedBean.verPerfilUsuario()}" value="Ver mi perfil"/>
-                <h:commandButton action="#{agendaManagedBean.goToValidarEventos()}" rendered="#{agendaManagedBean.comprobarPeriodista()}" value="Validar Eventos"/>
+                <h:commandButton action="#{agendaManagedBean.verListaEventos()}" value="Volver"/>
             </h:form>
         </f:view>
         
