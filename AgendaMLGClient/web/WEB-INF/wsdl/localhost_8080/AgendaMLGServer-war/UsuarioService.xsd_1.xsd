@@ -22,6 +22,10 @@
 
 <xs:element name="obtenerEventosResponse" type="tns:obtenerEventosResponse"/>
 
+<xs:element name="obtenerEventosSinValidar" type="tns:obtenerEventosSinValidar"/>
+
+<xs:element name="obtenerEventosSinValidarResponse" type="tns:obtenerEventosSinValidarResponse"/>
+
 <xs:element name="obtenerUsuarios" type="tns:obtenerUsuarios"/>
 
 <xs:element name="obtenerUsuariosResponse" type="tns:obtenerUsuariosResponse"/>
@@ -94,6 +98,16 @@
 <xs:complexType name="subirEventoResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerEventosSinValidar">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="obtenerEventosSinValidarResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 

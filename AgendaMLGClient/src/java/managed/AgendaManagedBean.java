@@ -13,7 +13,12 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
@@ -36,6 +41,9 @@ public class AgendaManagedBean implements Serializable {
     
     protected Usuarios usuario;
     protected Evento eventoAModificar;
+
+    protected Date fechaInicioAModificar;
+    protected Date fechaFinAModificar;
     
     protected String autenticacionEmailIntroducido;
     protected String mensajeError;
@@ -121,6 +129,22 @@ public class AgendaManagedBean implements Serializable {
     public Evento getEventoAModificar() {
         return eventoAModificar;
     }
+    
+        public Date getFechaInicioAModificar() {
+        return fechaInicioAModificar;
+    }
+
+    public void setFechaInicioAModificar(Date fechaInicioAModificar) {
+        this.fechaInicioAModificar = fechaInicioAModificar;
+    }
+
+    public Date getFechaFinAModificar() {
+        return fechaFinAModificar;
+    }
+
+    public void setFechaFinAModificar(Date fechaFinAModificar) {
+        this.fechaFinAModificar = fechaFinAModificar;
+    }
 
     public void setEventoAModificar(Evento eventoAModificar) {
         this.eventoAModificar = eventoAModificar;
@@ -128,7 +152,13 @@ public class AgendaManagedBean implements Serializable {
 
     public String goToModificarEvento(Evento e){
         this.setEventoAModificar(e);
+        this.setFechaInicioAModificar(e.getFechainicio().toGregorianCalendar().getTime());
+        this.setFechaFinAModificar(e.getFechafin().toGregorianCalendar().getTime());
         return "/eventos/modificarEvento?faces-redirect=true";
+    }
+    
+    public String goToValidarEventos(){
+        return "/eventos/listaEventosSinValidar?faces-redirect=true";
     }
     
     public boolean comprobarEstado(Evento e){
@@ -166,6 +196,7 @@ public class AgendaManagedBean implements Serializable {
         return fechaAParsear.toGregorianCalendar().getTime();
 
     }
+    
     public java.util.List<client.Evento> obtenerEventos(java.lang.Integer arg0, client.Usuarios arg1, javax.xml.datatype.XMLGregorianCalendar arg2, double arg3, double arg4) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
@@ -237,6 +268,30 @@ public class AgendaManagedBean implements Serializable {
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.validarEvento(arg0);
+    }
+
+    public java.util.List<client.Evento> obtenerEventosSinValidar() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.obtenerEventosSinValidar();
+    }
+
+    public String modificarEvento() throws DatatypeConfigurationException {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        GregorianCalendar inicio = new GregorianCalendar();
+        GregorianCalendar fin = new GregorianCalendar();
+        inicio.setTime(this.fechaInicioAModificar);
+        inicio.add(GregorianCalendar.DAY_OF_MONTH, +1);
+        fin.add(GregorianCalendar.DAY_OF_MONTH, +1);
+        fin.setTime(this.fechaFinAModificar);
+        XMLGregorianCalendar date1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(inicio);
+        XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(fin);
+        eventoAModificar.setFechainicio(date1);
+        eventoAModificar.setFechafin(date2);
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.modificarEvento(eventoAModificar);
     }
     
 }
