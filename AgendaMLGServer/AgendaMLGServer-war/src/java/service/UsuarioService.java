@@ -134,6 +134,16 @@ public class UsuarioService {
         return "listaEventos";
     }
     
+     /**
+     * Web service operation
+     * @param evento
+     * @return 
+     */
+    @WebMethod(operationName = "validarEvento")
+    public String validarEvento(Evento evento){
+        this.eventoFacade.ValidarEvento(evento);
+        return "listaEventos";
+    }
     
     /**
      * Web service operation

@@ -75,4 +75,12 @@ public class EventoFacade extends AbstractFacade<Evento> {
         q.setParameter("id", evento.getId()).executeUpdate();
     }
     
+        public void ValidarEvento(Evento evento){
+        Query q;
+        
+        q = em.createQuery("UPDATE Evento SET estado = :estado WHERE id = :id");
+        q.setParameter("estado", 1);
+        q.setParameter("id", evento.getId()).executeUpdate();
+    }
+    
 }
