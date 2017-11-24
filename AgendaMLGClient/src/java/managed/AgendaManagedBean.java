@@ -12,13 +12,6 @@ import java.util.Date;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-
-import java.util.List;
-import javax.annotation.PostConstruct;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +35,7 @@ public class AgendaManagedBean implements Serializable {
     protected Integer distanciaOrdenacion;
     
     protected Usuarios usuario;
+    protected Evento eventoAModificar;
     
     protected String autenticacionEmailIntroducido;
     protected String mensajeError;
@@ -124,10 +118,27 @@ public class AgendaManagedBean implements Serializable {
     }
 
     
+    public Evento getEventoAModificar() {
+        return eventoAModificar;
+    }
 
+    public void setEventoAModificar(Evento eventoAModificar) {
+        this.eventoAModificar = eventoAModificar;
+    }
 
-   
+    public String goToModificarEvento(Evento e){
+        this.setEventoAModificar(e);
+        return "/eventos/modificarEvento?faces-redirect=true";
+    }
     
+    public boolean comprobarEstado(Evento e){
+        return e.getEstado() == 0 && comprobarPeriodista();
+    }
+    
+    public boolean comprobarPeriodista(){
+        return this.usuario.getTipoUsuario() == 3;
+    }
+        
     public String iniciarSesion2(){
         usuario = iniciarSesion(autenticacionEmailIntroducido, usuario);
         if(usuario==null){
@@ -142,7 +153,6 @@ public class AgendaManagedBean implements Serializable {
         return "/eventos/listaEventos?faces-redirect=true";
         //return "/usuario/perfilUsuario?faces-redirect=true";
     }
-
     
      public String verPerfilUsuario() {
         //TODO write your implementation code here:
@@ -221,6 +231,12 @@ public class AgendaManagedBean implements Serializable {
         return distancia;
 
     }
-    
+
+    public String validarEvento(client.Evento arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.validarEvento(arg0);
+    }
     
 }

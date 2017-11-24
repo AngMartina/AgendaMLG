@@ -82,5 +82,4 @@ public class EventoFacade extends AbstractFacade<Evento> {
         q.setParameter("estado", 1);
         q.setParameter("id", evento.getId()).executeUpdate();
     }
-    
 }

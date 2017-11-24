@@ -12,20 +12,20 @@
                 <h1><h:outputText value="Crear Evento"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Fechainicio:" for="fechainicio" />
-                    <h:inputText id="fechainicio" value="#{agendaManagedBean.eventoAModificar.fechainicio.toGregorianCalendar().time}" title="Fechainicio" >
+                    <h:inputText id="fechainicio" value="#{agendaManagedBean.eventoAModificar.fechainicio.toGregorianCalendar().time}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio" >
                         <f:convertDateTime pattern="yyyy-MM-dd" />
                     </h:inputText>
                     
                     <h:outputLabel value="Fechafin:" for="fechafin" />
-                    <h:inputText id="fechafin" value="#{agendaManagedBean.eventoAModificar.fechafin.toGregorianCalendar().time}" title="Fechafin" >
+                    <h:inputText id="fechafin" value="#{agendaManagedBean.eventoAModificar.fechafin.toGregorianCalendar().time}" title="Fechafin" required="true" requiredMessage="Introduzca fecha de fin" >
                         <f:convertDateTime pattern="yyyy-MM-dd" />
                     </h:inputText>
                     
                     <h:outputLabel value="Descripcion:" for="descripcion" />
-                    <h:inputText id="descripcion" value="#{agendaManagedBean.eventoAModificar.descripcion}" title="Descripcion" required="true" requiredMessage="The Descripcion field is required."/>
+                    <h:inputText id="descripcion" value="#{agendaManagedBean.eventoAModificar.descripcion}" title="Descripcion" />
                     
                     <h:outputLabel value="Localizacion:" for="localizacion" />
-                    <h:inputText id="localizacion" value="#{agendaManagedBean.eventoAModificar.localizacion}" title="Localizacion" />
+                    <h:inputText id="localizacion" value="#{agendaManagedBean.eventoAModificar.localizacion}" title="Localizacion" required="true" requiredMessage="Introduzca localización" />
                     
                     <h:outputLabel value="Latitud:" for="latitud" />
                     <h:inputText id="latitud" value="#{agendaManagedBean.eventoAModificar.latitud}" title="Latitud" />
@@ -40,7 +40,10 @@
                     <h:inputText id="url" value="#{agendaManagedBean.eventoAModificar.url}" title="Url" />
                     
                 </h:panelGrid>
-                <h:commandButton action="#{eventoCRUDBean.crearEvento(agendaManagedBean.eventoAModificar)}" value="Modificar"/>
+                <h:commandButton action="#{eventoCRUDBean.modificarEvento(agendaManagedBean.eventoAModificar)}" value="Modificar"/>
+            </h:form>
+            <h:form>
+                <h:commandButton action="#{agendaManagedBean.verListaEventos()}" value="Volver"/>
             </h:form>
         </f:view>
 
