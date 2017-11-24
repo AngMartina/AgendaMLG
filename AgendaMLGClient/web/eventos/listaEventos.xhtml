@@ -117,14 +117,15 @@
                         <f:facet name="header">
                             <h:outputText value=""/>
                         </f:facet>
-                        <h:commandButton action="#{agendaManagedBean.goToModificarEvento(item)}" value="modificarEvento">
+                        <h:commandButton action="#{agendaManagedBean.goToModificarEvento(item)}" rendered="#{agendaManagedBean.comprobarPeriodista()}" value="modificarEvento">
                         </h:commandButton>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value=""/>
                         </f:facet>
-                        <h:commandButton action="#{agendaManagedBean.validarEvento(item)}" value="validarEvento">
+                        <h:commandButton action="#{agendaManagedBean.validarEvento(item)}" rendered="#{agendaManagedBean.comprobarEstado(item)}" value="validarEvento">
+                            <f:ajax execute="@form" render="listaEventos" />
                         </h:commandButton>
                     </h:column>
                     <h:commandButton action="#{agendaManagedBean.subirEvento()}" value="Subir Evento"/>

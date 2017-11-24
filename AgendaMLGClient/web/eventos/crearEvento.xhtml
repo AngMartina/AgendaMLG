@@ -12,20 +12,20 @@
                 <h1><h:outputText value="Crear Evento"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Fechainicio:" for="fechainicio" />
-                    <h:inputText id="fechainicio" value="#{eventoCRUDBean.nuevoEvento.fechainicio}" title="Fechainicio" >
+                    <h:inputText id="fechainicio" value="#{eventoCRUDBean.nuevoEvento.fechainicio}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio">
                         <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:inputText>
                     
                     <h:outputLabel value="Fechafin:" for="fechafin" />
-                    <h:inputText id="fechafin" value="#{eventoCRUDBean.nuevoEvento.fechafin}" title="Fechafin" >
+                    <h:inputText id="fechafin" value="#{eventoCRUDBean.nuevoEvento.fechafin}" title="Fechafin" required="true" requiredMessage="Introduzca fecha de fin">
                         <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:inputText>
                     
                     <h:outputLabel value="Descripcion:" for="descripcion" />
-                    <h:inputText id="descripcion" value="#{eventoCRUDBean.nuevoEvento.descripcion}" title="Descripcion" required="true" requiredMessage="The Descripcion field is required."/>
+                    <h:inputText id="descripcion" value="#{eventoCRUDBean.nuevoEvento.descripcion}" title="Descripcion" />
                     
                     <h:outputLabel value="Localizacion:" for="localizacion" />
-                    <h:inputText id="localizacion" value="#{eventoCRUDBean.nuevoEvento.localizacion}" title="Localizacion" />
+                    <h:inputText id="localizacion" value="#{eventoCRUDBean.nuevoEvento.localizacion}" title="Localizacion" required="true" requiredMessage="Introduzca localizacion"/>
                     
                     <h:outputLabel value="Latitud:" for="latitud" />
                     <h:inputText id="latitud" value="#{eventoCRUDBean.nuevoEvento.latitud}" title="Latitud" />
@@ -41,6 +41,10 @@
                     
                 </h:panelGrid>
                 <h:commandButton action="#{eventoCRUDBean.crearEvento(EventoCRUDBean.nuevoEvento)}" value="Subir"/>
+                
+            </h:form>
+            <h:form>
+                <h:commandButton action="#{agendaManagedBean.verListaEventos()}" value="Volver"/>
             </h:form>
         </f:view>
 
