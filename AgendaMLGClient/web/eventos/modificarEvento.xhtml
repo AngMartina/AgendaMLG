@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Crear Evento</title>
+        <title>Modificar Evento</title>
     </h:head>
     <h:body>
         <f:view>
@@ -12,36 +12,35 @@
                 <h1><h:outputText value="Crear Evento"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Fechainicio:" for="fechainicio" />
-                    <h:inputText id="fechainicio" value="#{eventoCRUDBean.nuevoEvento.fechainicio}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio">
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    <h:inputText id="fechainicio" value="#{agendaManagedBean.fechaInicioAModificar}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio" >
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
                     </h:inputText>
                     
                     <h:outputLabel value="Fechafin:" for="fechafin" />
-                    <h:inputText id="fechafin" value="#{eventoCRUDBean.nuevoEvento.fechafin}" title="Fechafin" required="true" requiredMessage="Introduzca fecha de fin">
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    <h:inputText id="fechafin" value="#{agendaManagedBean.fechaFinAModificar}" title="Fechafin" required="true" requiredMessage="Introduzca fecha de fin" >
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
                     </h:inputText>
                     
                     <h:outputLabel value="Descripcion:" for="descripcion" />
-                    <h:inputText id="descripcion" value="#{eventoCRUDBean.nuevoEvento.descripcion}" title="Descripcion" />
+                    <h:inputText id="descripcion" value="#{agendaManagedBean.eventoAModificar.descripcion}" title="Descripcion" />
                     
                     <h:outputLabel value="Localizacion:" for="localizacion" />
-                    <h:inputText id="localizacion" value="#{eventoCRUDBean.nuevoEvento.localizacion}" title="Localizacion" required="true" requiredMessage="Introduzca localizacion"/>
+                    <h:inputText id="localizacion" value="#{agendaManagedBean.eventoAModificar.localizacion}" title="Localizacion" required="true" requiredMessage="Introduzca localización" />
                     
                     <h:outputLabel value="Latitud:" for="latitud" />
-                    <h:inputText id="latitud" value="#{eventoCRUDBean.nuevoEvento.latitud}" title="Latitud" />
+                    <h:inputText id="latitud" value="#{agendaManagedBean.eventoAModificar.latitud}" title="Latitud" />
                    
                     <h:outputLabel value="Longitud" for="longitud" />
-                    <h:inputText id="longitud" value="#{eventoCRUDBean.nuevoEvento.longitud}" title="Longitud" />
+                    <h:inputText id="longitud" value="#{agendaManagedBean.eventoAModificar.longitud}" title="Longitud" />
                     
                     <h:outputLabel value="Precio:" for="precio" />
-                    <h:inputText id="precio" value="#{eventoCRUDBean.nuevoEvento.precio}" title="Precio" required="true" requiredMessage="The Precio field is required."/>
+                    <h:inputText id="precio" value="#{agendaManagedBean.eventoAModificar.precio}" title="Precio" required="true" requiredMessage="The Precio field is required."/>
                     
                     <h:outputLabel value="Url:" for="url" />
-                    <h:inputText id="url" value="#{eventoCRUDBean.nuevoEvento.url}" title="Url" />
+                    <h:inputText id="url" value="#{agendaManagedBean.eventoAModificar.url}" title="Url" />
                     
                 </h:panelGrid>
-                <h:commandButton action="#{eventoCRUDBean.crearEvento(EventoCRUDBean.nuevoEvento)}" value="Subir"/>
-                
+                <h:commandButton action="#{agendaManagedBean.modificarEvento()}" value="Modificar"/>
             </h:form>
             <h:form>
                 <h:commandButton action="#{agendaManagedBean.verListaEventos()}" value="Volver"/>

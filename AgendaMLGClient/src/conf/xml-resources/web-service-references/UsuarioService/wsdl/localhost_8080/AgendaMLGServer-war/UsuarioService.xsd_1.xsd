@@ -10,6 +10,10 @@
 
 <xs:element name="iniciarSesionResponse" type="tns:iniciarSesionResponse"/>
 
+<xs:element name="modificarEvento" type="tns:modificarEvento"/>
+
+<xs:element name="modificarEventoResponse" type="tns:modificarEventoResponse"/>
+
 <xs:element name="obtenerEventos" type="tns:obtenerEventos"/>
 
 <xs:element name="obtenerEventosDeUsuario" type="tns:obtenerEventosDeUsuario"/>
@@ -17,6 +21,10 @@
 <xs:element name="obtenerEventosDeUsuarioResponse" type="tns:obtenerEventosDeUsuarioResponse"/>
 
 <xs:element name="obtenerEventosResponse" type="tns:obtenerEventosResponse"/>
+
+<xs:element name="obtenerEventosSinValidar" type="tns:obtenerEventosSinValidar"/>
+
+<xs:element name="obtenerEventosSinValidarResponse" type="tns:obtenerEventosSinValidarResponse"/>
 
 <xs:element name="obtenerUsuarios" type="tns:obtenerUsuarios"/>
 
@@ -28,41 +36,13 @@
 
 <xs:element name="usuarios" type="tns:usuarios"/>
 
-<xs:complexType name="subirEvento">
-<xs:sequence/>
-</xs:complexType>
+<xs:element name="validarEvento" type="tns:validarEvento"/>
 
-<xs:complexType name="subirEventoResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
+<xs:element name="validarEventoResponse" type="tns:validarEventoResponse"/>
 
-<xs:complexType name="obtenerUsuarios">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="obtenerUsuariosResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:usuarios" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="usuarios">
-<xs:sequence>
-<xs:element name="apellidos" type="xs:string" minOccurs="0"/>
-<xs:element name="contraseña" type="xs:string" minOccurs="0"/>
-<xs:element name="email" type="xs:string" minOccurs="0"/>
-<xs:element name="id" type="xs:int" minOccurs="0"/>
-<xs:element name="nombre" type="xs:string" minOccurs="0"/>
-<xs:element name="tipoUsuario" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="crearEvento">
+<xs:complexType name="modificarEvento">
 <xs:sequence>
 <xs:element name="arg0" type="tns:evento" minOccurs="0"/>
-<xs:element name="arg1" type="tns:usuarios" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -79,6 +59,72 @@
 <xs:element name="longitud" type="xs:double" minOccurs="0"/>
 <xs:element name="precio" type="xs:double"/>
 <xs:element name="url" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="usuarios">
+<xs:sequence>
+<xs:element name="apellidos" type="xs:string" minOccurs="0"/>
+<xs:element name="contraseña" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoUsuario" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="modificarEventoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="validarEvento">
+<xs:sequence>
+<xs:element name="arg0" type="tns:evento" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="validarEventoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="subirEvento">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="subirEventoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerEventosSinValidar">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="obtenerEventosSinValidarResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerUsuarios">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="obtenerUsuariosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:usuarios" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearEvento">
+<xs:sequence>
+<xs:element name="arg0" type="tns:evento" minOccurs="0"/>
+<xs:element name="arg1" type="tns:usuarios" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -100,20 +146,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="iniciarSesion">
-<xs:sequence>
-<xs:element name="arg0" type="xs:string" minOccurs="0"/>
-<xs:element name="arg1" type="tns:usuarios" minOccurs="0"/>
-<xs:element name="arg2" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="iniciarSesionResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:usuarios" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="obtenerEventos">
 <xs:sequence>
 <xs:element name="arg0" type="xs:int" minOccurs="0"/>
@@ -127,6 +159,20 @@
 <xs:complexType name="obtenerEventosResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="iniciarSesion">
+<xs:sequence>
+<xs:element name="arg0" type="xs:string" minOccurs="0"/>
+<xs:element name="arg1" type="tns:usuarios" minOccurs="0"/>
+<xs:element name="arg2" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="iniciarSesionResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:usuarios" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

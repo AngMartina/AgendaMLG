@@ -44,7 +44,7 @@
                 </h:selectOneRadio>
                 <div id="actualizar">
                     <h:inputText id="fechaOrdenacion" value="#{agendaManagedBean.fechaOrdenacion}" title="Fecha" rendered="#{agendaManagedBean.ordenacion == '2'}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:inputText>
                     <h:inputText id="espacioOrdenacion" value="#{agendaManagedBean.distanciaOrdenacion}" title="distancia" rendered="#{agendaManagedBean.ordenacion != 3}"/>
                 </div>
@@ -74,7 +74,7 @@
                             <h:outputText value="Fechafin"/>
                         </f:facet>
                         <h:outputText value="#{agendaManagedBean.formateoFecha(item.fechafin)}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                     </h:column>
                     <h:column>
@@ -111,11 +111,19 @@
                         <f:facet name="header">
                             <h:outputText value="Emailusuario"/>
                         </f:facet>
-                        <h:outputText value="#{item.emailusuario}"/>
+                        <h:outputText value="#{item.emailusuario.email}"/>
                     </h:column>
-                    <h:commandButton action="#{agendaManagedBean.subirEvento()}" value="Subir Evento"/>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value=""/>
+                        </f:facet>
+                        <h:commandButton action="#{agendaManagedBean.goToModificarEvento(item)}" rendered="#{agendaManagedBean.comprobarPeriodista()}" value="modificarEvento">
+                        </h:commandButton>
+                    </h:column>
                 </h:dataTable>
+                <h:commandButton action="#{agendaManagedBean.subirEvento()}" value="Subir Evento"/>
                 <h:commandButton action="#{agendaManagedBean.verPerfilUsuario()}" value="Ver mi perfil"/>
+                <h:commandButton action="#{agendaManagedBean.goToValidarEventos()}" rendered="#{agendaManagedBean.comprobarPeriodista()}" value="Validar Eventos"/>
             </h:form>
         </f:view>
         
