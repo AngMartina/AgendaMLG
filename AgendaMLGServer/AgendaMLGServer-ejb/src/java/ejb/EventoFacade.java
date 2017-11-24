@@ -60,19 +60,4 @@ public class EventoFacade extends AbstractFacade<Evento> {
         return q.getResultList();
     }
     
-    public void ModificarEvento(Evento evento){
-        Query q;
-        
-        q = em.createQuery("UPDATE Evento SET fechainicio = :fechainicio, fechafin = :fechafin, descripcion = :descripcion, localizacion = :localizacion, latitud = :latitud, longitud = :longitud, precio = :precio, url = :url WHERE id = :id");
-        q.setParameter("fechainicio", evento.getFechainicio());
-        q.setParameter("fechafin", evento.getFechafin());
-        q.setParameter("descripcion", evento.getDescripcion());
-        q.setParameter("localizacion", evento.getLocalizacion());
-        q.setParameter("latitud", evento.getLatitud());
-        q.setParameter("longitud", evento.getLongitud());
-        q.setParameter("precio", evento.getPrecio());
-        q.setParameter("url", evento.getUrl());
-        q.setParameter("id", evento.getId()).executeUpdate();
-    }
-    
 }

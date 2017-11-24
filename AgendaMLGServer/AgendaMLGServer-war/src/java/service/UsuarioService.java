@@ -123,17 +123,6 @@ public class UsuarioService {
         return "listaEventos";
     }
     
-     /**
-     * Web service operation
-     * @param evento
-     * @return 
-     */
-    @WebMethod(operationName = "modificarEvento")
-    public String modificarEvento(Evento evento){
-        this.eventoFacade.ModificarEvento(evento);
-        return "listaEventos";
-    }
-    
     
     /**
      * Web service operation
