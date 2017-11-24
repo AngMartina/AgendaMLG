@@ -113,9 +113,24 @@
                         </f:facet>
                         <h:outputText value="#{item.emailusuario}"/>
                     </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value=""/>
+                        </f:facet>
+                        <h:commandButton action="#{agendaManagedBean.goToModificarEvento(item)}" value="modificarEvento">
+                        </h:commandButton>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value=""/>
+                        </f:facet>
+                        <h:commandButton action="#{agendaManagedBean.validarEvento(item)}" value="validarEvento">
+                        </h:commandButton>
+                    </h:column>
                     <h:commandButton action="#{agendaManagedBean.subirEvento()}" value="Subir Evento"/>
                 </h:dataTable>
                 <h:commandButton action="#{agendaManagedBean.verPerfilUsuario()}" value="Ver mi perfil"/>
+                <h:commandButton action="/eventos/crearEvento?faces-redirect=true}" value="Crear Evento"/>
             </h:form>
         </f:view>
         

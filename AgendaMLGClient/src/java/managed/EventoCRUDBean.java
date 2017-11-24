@@ -9,7 +9,6 @@ package managed;
 import client.Evento;
 import client.UsuarioService_Service;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.xml.ws.WebServiceRef;
@@ -29,7 +28,7 @@ public class EventoCRUDBean {
     
     @PostConstruct
     public void init(){
-        nuevoEvento = new Evento();
+        this.nuevoEvento = new Evento();
     }
 
     public Evento getNuevoEvento() {
@@ -39,8 +38,6 @@ public class EventoCRUDBean {
     public void setNuevoEvento(Evento nuevoEvento) {
         this.nuevoEvento = nuevoEvento;
     }
-    
-   
     
     /**
      * Creates a new instance of EventoCRUDBean
@@ -55,10 +52,11 @@ public class EventoCRUDBean {
         return port.crearEvento(arg0, arg1);
     }
 
-    
+    public String modificarEvento(client.Evento arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.modificarEvento(arg0);
+    }
 
-   
-    
-    
-    
 }

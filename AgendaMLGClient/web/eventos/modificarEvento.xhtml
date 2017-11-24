@@ -40,7 +40,8 @@
                     <h:inputText id="url" value="#{agendaManagedBean.eventoAModificar.url}" title="Url" />
                     
                 </h:panelGrid>
-                <h:commandButton action="#{eventoCRUDBean.crearEvento(agendaManagedBean.eventoAModificar)}" value="Modificar"/>
+                <h:commandButton action="#{eventoCRUDBean.modificarEvento(agendaManagedBean.eventoAModificar)}" value="Modificar"/>
+                <h:commandButton action="/eventos/listaEventos?faces-redirect=true" value="Volver"/>
             </h:form>
         </f:view>
 

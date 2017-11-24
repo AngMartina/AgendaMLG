@@ -10,6 +10,10 @@
 
 <xs:element name="iniciarSesionResponse" type="tns:iniciarSesionResponse"/>
 
+<xs:element name="modificarEvento" type="tns:modificarEvento"/>
+
+<xs:element name="modificarEventoResponse" type="tns:modificarEventoResponse"/>
+
 <xs:element name="obtenerEventos" type="tns:obtenerEventos"/>
 
 <xs:element name="obtenerEventosDeUsuario" type="tns:obtenerEventosDeUsuario"/>
@@ -27,6 +31,45 @@
 <xs:element name="subirEventoResponse" type="tns:subirEventoResponse"/>
 
 <xs:element name="usuarios" type="tns:usuarios"/>
+
+<xs:complexType name="modificarEvento">
+<xs:sequence>
+<xs:element name="arg0" type="tns:evento" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="evento">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="emailusuario" type="tns:usuarios" minOccurs="0"/>
+<xs:element name="estado" type="xs:int"/>
+<xs:element name="fechafin" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="fechainicio" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="latitud" type="xs:double" minOccurs="0"/>
+<xs:element name="localizacion" type="xs:string" minOccurs="0"/>
+<xs:element name="longitud" type="xs:double" minOccurs="0"/>
+<xs:element name="precio" type="xs:double"/>
+<xs:element name="url" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="usuarios">
+<xs:sequence>
+<xs:element name="apellidos" type="xs:string" minOccurs="0"/>
+<xs:element name="contraseña" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoUsuario" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="modificarEventoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
 
 <xs:complexType name="subirEvento">
 <xs:sequence/>
@@ -48,37 +91,10 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="usuarios">
-<xs:sequence>
-<xs:element name="apellidos" type="xs:string" minOccurs="0"/>
-<xs:element name="contraseña" type="xs:string" minOccurs="0"/>
-<xs:element name="email" type="xs:string" minOccurs="0"/>
-<xs:element name="id" type="xs:int" minOccurs="0"/>
-<xs:element name="nombre" type="xs:string" minOccurs="0"/>
-<xs:element name="tipoUsuario" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="crearEvento">
 <xs:sequence>
 <xs:element name="arg0" type="tns:evento" minOccurs="0"/>
 <xs:element name="arg1" type="tns:usuarios" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="evento">
-<xs:sequence>
-<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
-<xs:element name="emailusuario" type="tns:usuarios" minOccurs="0"/>
-<xs:element name="estado" type="xs:int"/>
-<xs:element name="fechafin" type="xs:dateTime" minOccurs="0"/>
-<xs:element name="fechainicio" type="xs:dateTime" minOccurs="0"/>
-<xs:element name="id" type="xs:int" minOccurs="0"/>
-<xs:element name="latitud" type="xs:double" minOccurs="0"/>
-<xs:element name="localizacion" type="xs:string" minOccurs="0"/>
-<xs:element name="longitud" type="xs:double" minOccurs="0"/>
-<xs:element name="precio" type="xs:double"/>
-<xs:element name="url" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

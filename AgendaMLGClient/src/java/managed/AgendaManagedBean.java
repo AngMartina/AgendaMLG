@@ -42,6 +42,7 @@ public class AgendaManagedBean implements Serializable {
     protected Integer distanciaOrdenacion;
     
     protected Usuarios usuario;
+    protected Evento eventoAModificar;
     
     protected String autenticacionEmailIntroducido;
     protected String mensajeError;
@@ -124,9 +125,18 @@ public class AgendaManagedBean implements Serializable {
     }
 
     
+    public Evento getEventoAModificar() {
+        return eventoAModificar;
+    }
 
+    public void setEventoAModificar(Evento eventoAModificar) {
+        this.eventoAModificar = eventoAModificar;
+    }
 
-   
+    public String goToModificarEvento(Evento e){
+        this.setEventoAModificar(e);
+        return "/eventos/modificarEvento?faces-redirect=true";
+    }
     
     public String iniciarSesion2(){
         usuario = iniciarSesion(autenticacionEmailIntroducido, usuario);
