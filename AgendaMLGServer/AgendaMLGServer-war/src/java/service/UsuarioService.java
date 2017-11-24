@@ -91,6 +91,11 @@ public class UsuarioService {
                 return eventoFacade.findAll();
         }
     }
+     
+    @WebMethod(operationName = "obtenerEventosSinValidar")
+    public List<Evento> obtenerEventosSinValidar(){
+        return this.eventoFacade.EventosSinValidar();
+    }
     
     /**
     * Web service operation
@@ -142,7 +147,7 @@ public class UsuarioService {
     @WebMethod(operationName = "validarEvento")
     public String validarEvento(Evento evento){
         this.eventoFacade.ValidarEvento(evento);
-        return "listaEventos";
+        return "listaEventosSinValidar";
     }
     
     /**
