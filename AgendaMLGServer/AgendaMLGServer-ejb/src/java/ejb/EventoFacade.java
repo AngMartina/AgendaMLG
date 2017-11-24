@@ -7,12 +7,15 @@ package ejb;
 
 import entity.Evento;
 import entity.Usuarios;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  *
@@ -62,10 +65,11 @@ public class EventoFacade extends AbstractFacade<Evento> {
     
     public void ModificarEvento(Evento evento){
         Query q;
-        
+        Date inicio = evento.getFechainicio();
+        Date fin = evento.getFechafin();
         q = em.createQuery("UPDATE Evento SET fechainicio = :fechainicio, fechafin = :fechafin, descripcion = :descripcion, localizacion = :localizacion, latitud = :latitud, longitud = :longitud, precio = :precio, url = :url WHERE id = :id");
-        q.setParameter("fechainicio", evento.getFechainicio());
-        q.setParameter("fechafin", evento.getFechafin());
+        q.setParameter("fechainicio", inicio);
+        q.setParameter("fechafin", fin);
         q.setParameter("descripcion", evento.getDescripcion());
         q.setParameter("localizacion", evento.getLocalizacion());
         q.setParameter("latitud", evento.getLatitud());
