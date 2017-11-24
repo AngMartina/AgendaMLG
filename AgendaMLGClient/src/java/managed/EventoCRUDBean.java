@@ -8,9 +8,11 @@ package managed;
 
 import client.Evento;
 import client.UsuarioService_Service;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
 
 /**

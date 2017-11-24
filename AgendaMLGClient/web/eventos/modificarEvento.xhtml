@@ -12,12 +12,12 @@
                 <h1><h:outputText value="Crear Evento"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Fechainicio:" for="fechainicio" />
-                    <h:inputText id="fechainicio" value="#{agendaManagedBean.eventoAModificar.fechainicio.toGregorianCalendar().time}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio" >
-                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                    <h:inputText id="fechainicio" value="#{agendaManagedBean.fechaInicioAModificar}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio" >
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
                     </h:inputText>
                     
                     <h:outputLabel value="Fechafin:" for="fechafin" />
-                    <h:inputText id="fechafin" value="#{agendaManagedBean.eventoAModificar.fechafin.toGregorianCalendar().time}" title="Fechafin" required="true" requiredMessage="Introduzca fecha de fin" >
+                    <h:inputText id="fechafin" value="#{agendaManagedBean.fechaFinAModificar}" title="Fechafin" required="true" requiredMessage="Introduzca fecha de fin" >
                         <f:convertDateTime pattern="yyyy-MM-dd" />
                     </h:inputText>
                     
@@ -40,7 +40,7 @@
                     <h:inputText id="url" value="#{agendaManagedBean.eventoAModificar.url}" title="Url" />
                     
                 </h:panelGrid>
-                <h:commandButton action="#{eventoCRUDBean.modificarEvento(agendaManagedBean.eventoAModificar)}" value="Modificar"/>
+                <h:commandButton action="#{agendaManagedBean.modificarEvento()}" value="Modificar"/>
             </h:form>
             <h:form>
                 <h:commandButton action="#{agendaManagedBean.verListaEventos()}" value="Volver"/>
