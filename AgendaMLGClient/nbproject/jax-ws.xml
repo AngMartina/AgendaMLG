@@ -7,6 +7,9 @@
       <local-wsdl-file>localhost_8080/AgendaMLGServer-war/UsuarioService.wsdl</local-wsdl-file>
       <package-name forceReplace="true">client</package-name>
       <catalog-file>catalog.xml</catalog-file>
+      <binding>
+        <file-name>jax-ws-jaxb-customization_1.xml</file-name>
+      </binding>
       <wsimport-options>
         <wsimport-option>
           <wsimport-option-name>extension</wsimport-option-name>

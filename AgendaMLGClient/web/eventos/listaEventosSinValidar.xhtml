@@ -21,7 +21,7 @@
                         <f:facet name="header">
                             <h:outputText value="FechaInicio"/>
                         </f:facet>
-                        <h:outputText value="#{agendaManagedBean.formateoFecha(item.fechainicio)}">
+                        <h:outputText value="#{item.fechainicio}">
                             <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                     </h:column>
@@ -29,7 +29,7 @@
                         <f:facet name="header">
                             <h:outputText value="Fechafin"/>
                         </f:facet>
-                        <h:outputText value="#{agendaManagedBean.formateoFecha(item.fechafin)}">
+                        <h:outputText value="#{item.fechafin}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
                     </h:column>

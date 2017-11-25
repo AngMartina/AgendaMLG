@@ -12,12 +12,12 @@
                 <h1><h:outputText value="Crear Evento"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Fechainicio:" for="fechainicio" />
-                    <h:inputText id="fechainicio" value="#{agendaManagedBean.fechaInicioAModificar}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio" >
+                    <h:inputText id="fechainicio" value="#{agendaManagedBean.eventoAModificar.fechainicio}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio" >
                         <f:convertDateTime pattern="dd-MM-yyyy" />
                     </h:inputText>
                     
                     <h:outputLabel value="Fechafin:" for="fechafin" />
-                    <h:inputText id="fechafin" value="#{agendaManagedBean.fechaFinAModificar}" title="Fechafin" required="true" requiredMessage="Introduzca fecha de fin" >
+                    <h:inputText id="fechafin" value="#{agendaManagedBean.eventoAModificar.fechafin}" title="Fechafin" required="true" requiredMessage="Introduzca fecha de fin" >
                         <f:convertDateTime pattern="dd-MM-yyyy" />
                     </h:inputText>
                     
