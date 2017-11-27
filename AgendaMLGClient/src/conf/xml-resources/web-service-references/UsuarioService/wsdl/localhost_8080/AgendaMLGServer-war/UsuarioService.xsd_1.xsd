@@ -115,16 +115,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="obtenerUsuarios">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="obtenerUsuariosResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:usuarios" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="verEventos">
 <xs:sequence>
 <xs:element name="arg0" type="tns:usuarios" minOccurs="0"/>
@@ -134,6 +124,16 @@
 <xs:complexType name="verEventosResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerUsuarios">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="obtenerUsuariosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:usuarios" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 

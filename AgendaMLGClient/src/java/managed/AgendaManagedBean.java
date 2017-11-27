@@ -13,12 +13,9 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.ws.WebServiceRef;
 
@@ -273,6 +270,7 @@ public class AgendaManagedBean implements Serializable {
     public String validarEvento(client.Evento arg0) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
+        //arg0.setEstado(1);
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.validarEvento(arg0);
     }
@@ -297,6 +295,7 @@ public class AgendaManagedBean implements Serializable {
         XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(fin);
         eventoAModificar.setFechainicio(date1);
         eventoAModificar.setFechafin(date2);*/
+        lista.set(lista.indexOf(eventoAModificar), eventoAModificar);
         eventoAModificar.getFechainicio().setDate(eventoAModificar.getFechainicio().getDate()+ 1);
         eventoAModificar.getFechafin().setDate(eventoAModificar.getFechafin().getDate()+ 1);
         client.UsuarioService port = service.getUsuarioServicePort();
@@ -313,6 +312,7 @@ public class AgendaManagedBean implements Serializable {
     public String borrarEvento(client.Evento arg0) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
+        lista.remove(arg0);
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.borrarEvento(arg0);
     }
