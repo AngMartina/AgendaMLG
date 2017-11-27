@@ -18,10 +18,13 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
+
 import javax.jws.WebParam;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+
 
 /**
  *
@@ -68,47 +71,24 @@ public class UsuarioService {
 
     }
 
-    /**
-     * Web service operation
-     *
-     * @param ordenacion
+    
      * @param usuario
-     * @param fechaOrdenacion
-     * @param localizacionLatitud
-     * @param localizacionLongitud
-     * @return
-     * @throws javax.xml.datatype.DatatypeConfigurationException
+     * @return 
      */
-    @WebMethod(operationName = "obtenerEventos")
-    public List<Evento> obtenerEventos(Integer ordenacion, Usuarios usuario, Date fechaOrdenacion, double localizacionLatitud, double localizacionLongitud) throws DatatypeConfigurationException {
-        if (null == ordenacion) {
-            //if (usuario.getTipoUsuario() == 3) { // Periodista
-                return eventoFacade.findAll();
-            //} else {
-            //    GregorianCalendar fechaActual = new GregorianCalendar();
-            //    return eventoFacade.EventosNoCaducados(fechaActual);
-                 
-            //}
-        } else {
-            switch (ordenacion) {
-                case 1:
-                    //Ordeno por preferencias
-                    return eventoFacade.buscarEventoPorPreferencias(usuario);
-                case 2:
-                    //Ordeno por fecha
-                   return eventoFacade.buscarEventoPorFecha(fechaOrdenacion);
-                case 3:
-                    //Ordeno por distancia
-                    double a = localizacionLatitud;
-                    double b = localizacionLongitud;
-                    return null; //FALTA POR HACER
-                case 4:
-                    return eventoFacade.findAll();
-                default:
-                    return eventoFacade.findAll();
-            }
+    @WebMethod(operationName = "verEventos")
+    public List<Evento> verEventos(Usuarios usuario){
+       if(usuario.getTipoUsuario() != 3){
+           return eventoFacade.eventosVisibles();
+       } else {
+            return eventoFacade.findAll();
         }
     }
+     
+    @WebMethod(operationName = "obtenerEventosSinValidar")
+    public List<Evento> obtenerEventosSinValidar(){
+        return this.eventoFacade.EventosSinValidar();
+    }
+    
 
     /**
      * Web service operation
@@ -143,10 +123,48 @@ public class UsuarioService {
         return "/eventos/listaEventos?faces-redirect=true";
     }
 
+
     public Date formateoFecha(XMLGregorianCalendar fechaAParsear) {
         return fechaAParsear.toGregorianCalendar().getTime();
 
     }
+
+
+    
+     /**
+     * Web service operation
+     * @param evento
+     * @return 
+     */
+    @WebMethod(operationName = "modificarEvento")
+    public String modificarEvento(Evento evento){
+        this.eventoFacade.edit(evento);
+        return "listaEventos";
+    }
+    
+    /**
+     * Web service operation
+     * @param evento
+     * @return 
+     */
+    @WebMethod(operationName = "borrarEvento")
+    public String borrarEvento(Evento evento){
+        this.eventoFacade.remove(evento);
+        return "listaEventos";
+    }
+    
+     /**
+     * Web service operation
+     * @param evento
+     * @return 
+     */
+    @WebMethod(operationName = "validarEvento")
+    public String validarEvento(Evento evento){
+        evento.setEstado(1);
+        this.eventoFacade.edit(evento);
+        return "listaEventosSinValidar";
+    }
+    
 
     /**
      * Web service operation
