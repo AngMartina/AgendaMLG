@@ -10,7 +10,7 @@
         <f:view>
             <h:form id="listaEventosSinValidar">
                 <h1><h:outputText value="List"/></h1>
-                <h:dataTable value="#{eventoCRUDBean.obtenerEventosSinValidar()}" var="item">
+                <h:dataTable value="#{agendaManagedBean.obtenerEventosSinValidar()}" var="item">
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Id"/>
@@ -21,7 +21,7 @@
                         <f:facet name="header">
                             <h:outputText value="FechaInicio"/>
                         </f:facet>
-                        <h:outputText value="#{agendaManagedBean.formateoFecha(item.fechainicio)}">
+                        <h:outputText value="#{item.fechainicio}">
                             <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                     </h:column>
@@ -29,7 +29,7 @@
                         <f:facet name="header">
                             <h:outputText value="Fechafin"/>
                         </f:facet>
-                        <h:outputText value="#{agendaManagedBean.formateoFecha(item.fechafin)}">
+                        <h:outputText value="#{item.fechafin}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
                     </h:column>
@@ -73,7 +73,7 @@
                         <f:facet name="header">
                             <h:outputText value=""/>
                         </f:facet>
-                        <h:commandButton action="#{agendaManagedBean.validarEvento(item)}" rendered="#{agendaManagedBean.comprobarEstado(item)}" value="validarEvento">
+                        <h:commandButton action="#{agendaManagedBean.validarEvento(item)}" value="validarEvento">
                             <f:ajax execute="@form" render="listaEventosSinValidar" />
                         </h:commandButton>
                     </h:column>

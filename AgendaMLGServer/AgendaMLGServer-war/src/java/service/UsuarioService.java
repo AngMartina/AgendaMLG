@@ -15,7 +15,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
-import javax.jws.WebParam;
 
 /**
  *
@@ -64,31 +63,15 @@ public class UsuarioService {
     
       /**
      * Web service operation
-     * @param ordenacion
      * @param usuario
-     * @param fechaOrdenacion
-     * @param localizacionLatitud
-     * @param localizacionLongitud
      * @return 
      */
-    @WebMethod(operationName = "obtenerEventos")
-    public List<Evento> obtenerEventos(Integer ordenacion, Usuarios usuario, Date fechaOrdenacion, double localizacionLatitud, double localizacionLongitud){
-       if(null==ordenacion){
-           return eventoFacade.findAll();
-       } else switch (ordenacion) {
-            case 1:
-                //Ordeno por preferencias
-                return eventoFacade.buscarEventoPorPreferencias(usuario);
-            case 2:
-                //Ordeno por fecha
-                return eventoFacade.buscarEventoPorFecha(fechaOrdenacion);
-            case 3:
-                //Ordeno por distancia
-                double a = localizacionLatitud;
-                double b = localizacionLongitud;
-                return null; //FALTA POR HACER
-            default:
-                return eventoFacade.findAll();
+    @WebMethod(operationName = "verEventos")
+    public List<Evento> verEventos(Usuarios usuario){
+       if(usuario.getTipoUsuario() != 3){
+           return eventoFacade.eventosVisibles();
+       } else {
+            return eventoFacade.findAll();
         }
     }
      
@@ -135,7 +118,18 @@ public class UsuarioService {
      */
     @WebMethod(operationName = "modificarEvento")
     public String modificarEvento(Evento evento){
-        this.eventoFacade.ModificarEvento(evento);
+        this.eventoFacade.edit(evento);
+        return "listaEventos";
+    }
+    
+    /**
+     * Web service operation
+     * @param evento
+     * @return 
+     */
+    @WebMethod(operationName = "borrarEvento")
+    public String borrarEvento(Evento evento){
+        this.eventoFacade.remove(evento);
         return "listaEventos";
     }
     
@@ -146,7 +140,8 @@ public class UsuarioService {
      */
     @WebMethod(operationName = "validarEvento")
     public String validarEvento(Evento evento){
-        this.eventoFacade.ValidarEvento(evento);
+        evento.setEstado(1);
+        this.eventoFacade.edit(evento);
         return "listaEventosSinValidar";
     }
     
