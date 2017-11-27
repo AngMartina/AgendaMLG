@@ -10,11 +10,21 @@ import ejb.EventoFacade;
 import ejb.UsuariosFacade;
 import entity.Evento;
 import entity.Usuarios;
+import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
+
+import javax.jws.WebParam;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+
 
 /**
  *
@@ -31,38 +41,37 @@ public class UsuarioService {
 
     @EJB
     private EtiquetasFacade etiquetasFacade;
-    
-
 
     /**
      * Web service operation
+     *
      * @param autenticacionEmailIntroducido
      * @param usuario
      * @param mensajeError
-     * @return 
+     * @return
      */
     @WebMethod(operationName = "iniciarSesion")
-     public Usuarios iniciarSesion(String autenticacionEmailIntroducido, Usuarios usuario, String mensajeError) {
+    public Usuarios iniciarSesion(String autenticacionEmailIntroducido, Usuarios usuario, String mensajeError) {
         if (!autenticacionEmailIntroducido.isEmpty() && autenticacionEmailIntroducido != null) {
             usuario = usuariosFacade.findByEmail(autenticacionEmailIntroducido);
-        }else{
-            usuario =null;
+        } else {
+            usuario = null;
         }
         return usuario;
     }
-     
-     /**
+
+    /**
      * Web service operation
-     * @return 
+     *
+     * @return
      */
     @WebMethod(operationName = "obtenerUsuarios")
-     public List<Usuarios> obtenerUsuarios(){
-            return usuariosFacade.findAll();
-        
+    public List<Usuarios> obtenerUsuarios() {
+        return usuariosFacade.findAll();
+
     }
+
     
-      /**
-     * Web service operation
      * @param usuario
      * @return 
      */
@@ -80,36 +89,47 @@ public class UsuarioService {
         return this.eventoFacade.EventosSinValidar();
     }
     
+
     /**
-    * Web service operation
-    * @return 
-    */
-    @WebMethod(operationName = "subirEvento")
-   public String subirEvento(){
-       return "crearEvento";
-   }
-   
-   
-   
-   
-        /**
      * Web service operation
+     *
+     * @return
+     */
+    @WebMethod(operationName = "subirEvento")
+    public String subirEvento() {
+        return "crearEvento";
+    }
+
+    /**
+     * Web service operation
+     *
      * @param nuevoEvento
      * @param usuario
-     * @return 
+     * @param fechainicio
+     * @param fechafin
+     * @return
      */
     @WebMethod(operationName = "crearEvento")
-    public String crearEvento(Evento nuevoEvento, Usuarios usuario){
-        /*Codigo Antonio: Me falta enlazarlo con un usuario*/
-        if(usuario.getTipoUsuario() != 3){//Usuario normal y Superusuario
-            nuevoEvento.setEstado(0); //Sin validar   
-        }else{//Periodista
-            nuevoEvento.setEstado(1); //Validado
+    public String crearEvento(Evento nuevoEvento, Usuarios usuario, Date fechainicio, Date fechafin) {
+        if (usuario.getTipoUsuario() != 1) {//Usuario normal y Superusuario
+            nuevoEvento.setEstado(1); //Validado   
+        } else {//Periodista
+            nuevoEvento.setEstado(0);//Sin validar 
         }
-        nuevoEvento.setEmailusuario(usuario); //No me deja hacer getEmail(), por?
+        nuevoEvento.setFechainicio(fechainicio);
+        nuevoEvento.setFechafin(fechafin);
+        nuevoEvento.setEmailusuario(usuario); //No me deja hacer getEmail()
         this.eventoFacade.create(nuevoEvento);
-        return "listaEventos";
+        return "/eventos/listaEventos?faces-redirect=true";
     }
+
+
+    public Date formateoFecha(XMLGregorianCalendar fechaAParsear) {
+        return fechaAParsear.toGregorianCalendar().getTime();
+
+    }
+
+
     
      /**
      * Web service operation
@@ -145,15 +165,16 @@ public class UsuarioService {
         return "listaEventosSinValidar";
     }
     
+
     /**
      * Web service operation
+     *
      * @param usuarioLoggeado
      * @return
      */
     @WebMethod(operationName = "obtenerEventosDeUsuario")
-    public List<Evento> obtenerEventosDeUsuario(Usuarios usuarioLoggeado){
+    public List<Evento> obtenerEventosDeUsuario(Usuarios usuarioLoggeado) {
         return this.eventoFacade.EventosDeUsuario(usuarioLoggeado);
     }
 
-    
 }
