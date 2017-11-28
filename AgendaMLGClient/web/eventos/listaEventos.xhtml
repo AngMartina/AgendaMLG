@@ -5,35 +5,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Eventos</title>
-        <script type="text/javascript">
-
-            if(navigator.geolocation){
-                var timeOut = 10*1000*1000;
-                navigator.geolocation.getCurrentPosition(displayPosition, displayError,{enableHighAccuracy:true, timeout:timeOut, maximumAge:0});
-            }else{
-                alert("Geolocation is not supported by this browser");
-            }
-            
-           
-            function displayPosition(position) {
-                document.getElementById('latitud').value=position.coords.latitud;
-                document.getElementById('longitud').value = position.coords.latitud;
-                alert("Latitude: " + position.coords.latitude+ ", Longitude: " +
-                position.coords.longitude);
-            }
-            
-            function displayError(error) {
-                var errors = {
-                1: 'Permission denied',
-                2: 'Position unavailable',
-                3: 'Request timeout'};
-                alert("Error: " + errors[error.code]);
-            }
-        </script>
+        
     </h:head>
     <h:body>
-        <h:inputHidden value="#{agendaManagedBean.localizacionLatitud}" id="latitud" />
-        <h:inputHidden value="#{agendaManagedBean.localizacionLongitud}" id="longitud" />
         <f:view>
              <h:form id="ordenacion">
                 <h:selectOneRadio value="#{agendaManagedBean.ordenacion}">

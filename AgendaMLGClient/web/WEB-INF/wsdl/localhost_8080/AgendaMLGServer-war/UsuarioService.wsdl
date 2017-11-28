@@ -4,18 +4,6 @@
 <xsd:import namespace="http://service/" schemaLocation="http://localhost:8080/AgendaMLGServer-war/UsuarioService?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="obtenerEventosSinValidar">
-<part name="parameters" element="tns:obtenerEventosSinValidar"/>
-</message>
-<message name="obtenerEventosSinValidarResponse">
-<part name="parameters" element="tns:obtenerEventosSinValidarResponse"/>
-</message>
-<message name="obtenerEventosDeUsuario">
-<part name="parameters" element="tns:obtenerEventosDeUsuario"/>
-</message>
-<message name="obtenerEventosDeUsuarioResponse">
-<part name="parameters" element="tns:obtenerEventosDeUsuarioResponse"/>
-</message>
 <message name="crearEvento">
 <part name="parameters" element="tns:crearEvento"/>
 </message>
@@ -27,6 +15,12 @@
 </message>
 <message name="borrarEventoResponse">
 <part name="parameters" element="tns:borrarEventoResponse"/>
+</message>
+<message name="iniciarSesion">
+<part name="parameters" element="tns:iniciarSesion"/>
+</message>
+<message name="iniciarSesionResponse">
+<part name="parameters" element="tns:iniciarSesionResponse"/>
 </message>
 <message name="verEventos">
 <part name="parameters" element="tns:verEventos"/>
@@ -40,23 +34,23 @@
 <message name="subirEventoResponse">
 <part name="parameters" element="tns:subirEventoResponse"/>
 </message>
-<message name="obtenerUsuarios">
-<part name="parameters" element="tns:obtenerUsuarios"/>
-</message>
-<message name="obtenerUsuariosResponse">
-<part name="parameters" element="tns:obtenerUsuariosResponse"/>
-</message>
 <message name="modificarEvento">
 <part name="parameters" element="tns:modificarEvento"/>
 </message>
 <message name="modificarEventoResponse">
 <part name="parameters" element="tns:modificarEventoResponse"/>
 </message>
-<message name="iniciarSesion">
-<part name="parameters" element="tns:iniciarSesion"/>
+<message name="formateoFecha">
+<part name="parameters" element="tns:formateoFecha"/>
 </message>
-<message name="iniciarSesionResponse">
-<part name="parameters" element="tns:iniciarSesionResponse"/>
+<message name="formateoFechaResponse">
+<part name="parameters" element="tns:formateoFechaResponse"/>
+</message>
+<message name="obtenerUsuarios">
+<part name="parameters" element="tns:obtenerUsuarios"/>
+</message>
+<message name="obtenerUsuariosResponse">
+<part name="parameters" element="tns:obtenerUsuariosResponse"/>
 </message>
 <message name="validarEvento">
 <part name="parameters" element="tns:validarEvento"/>
@@ -64,15 +58,19 @@
 <message name="validarEventoResponse">
 <part name="parameters" element="tns:validarEventoResponse"/>
 </message>
+<message name="obtenerEventosSinValidar">
+<part name="parameters" element="tns:obtenerEventosSinValidar"/>
+</message>
+<message name="obtenerEventosSinValidarResponse">
+<part name="parameters" element="tns:obtenerEventosSinValidarResponse"/>
+</message>
+<message name="obtenerEventosDeUsuario">
+<part name="parameters" element="tns:obtenerEventosDeUsuario"/>
+</message>
+<message name="obtenerEventosDeUsuarioResponse">
+<part name="parameters" element="tns:obtenerEventosDeUsuarioResponse"/>
+</message>
 <portType name="UsuarioService">
-<operation name="obtenerEventosSinValidar">
-<input wsam:Action="http://service/UsuarioService/obtenerEventosSinValidarRequest" message="tns:obtenerEventosSinValidar"/>
-<output wsam:Action="http://service/UsuarioService/obtenerEventosSinValidarResponse" message="tns:obtenerEventosSinValidarResponse"/>
-</operation>
-<operation name="obtenerEventosDeUsuario">
-<input wsam:Action="http://service/UsuarioService/obtenerEventosDeUsuarioRequest" message="tns:obtenerEventosDeUsuario"/>
-<output wsam:Action="http://service/UsuarioService/obtenerEventosDeUsuarioResponse" message="tns:obtenerEventosDeUsuarioResponse"/>
-</operation>
 <operation name="crearEvento">
 <input wsam:Action="http://service/UsuarioService/crearEventoRequest" message="tns:crearEvento"/>
 <output wsam:Action="http://service/UsuarioService/crearEventoResponse" message="tns:crearEventoResponse"/>
@@ -80,6 +78,10 @@
 <operation name="borrarEvento">
 <input wsam:Action="http://service/UsuarioService/borrarEventoRequest" message="tns:borrarEvento"/>
 <output wsam:Action="http://service/UsuarioService/borrarEventoResponse" message="tns:borrarEventoResponse"/>
+</operation>
+<operation name="iniciarSesion">
+<input wsam:Action="http://service/UsuarioService/iniciarSesionRequest" message="tns:iniciarSesion"/>
+<output wsam:Action="http://service/UsuarioService/iniciarSesionResponse" message="tns:iniciarSesionResponse"/>
 </operation>
 <operation name="verEventos">
 <input wsam:Action="http://service/UsuarioService/verEventosRequest" message="tns:verEventos"/>
@@ -89,43 +91,33 @@
 <input wsam:Action="http://service/UsuarioService/subirEventoRequest" message="tns:subirEvento"/>
 <output wsam:Action="http://service/UsuarioService/subirEventoResponse" message="tns:subirEventoResponse"/>
 </operation>
-<operation name="obtenerUsuarios">
-<input wsam:Action="http://service/UsuarioService/obtenerUsuariosRequest" message="tns:obtenerUsuarios"/>
-<output wsam:Action="http://service/UsuarioService/obtenerUsuariosResponse" message="tns:obtenerUsuariosResponse"/>
-</operation>
 <operation name="modificarEvento">
 <input wsam:Action="http://service/UsuarioService/modificarEventoRequest" message="tns:modificarEvento"/>
 <output wsam:Action="http://service/UsuarioService/modificarEventoResponse" message="tns:modificarEventoResponse"/>
 </operation>
-<operation name="iniciarSesion">
-<input wsam:Action="http://service/UsuarioService/iniciarSesionRequest" message="tns:iniciarSesion"/>
-<output wsam:Action="http://service/UsuarioService/iniciarSesionResponse" message="tns:iniciarSesionResponse"/>
+<operation name="formateoFecha">
+<input wsam:Action="http://service/UsuarioService/formateoFechaRequest" message="tns:formateoFecha"/>
+<output wsam:Action="http://service/UsuarioService/formateoFechaResponse" message="tns:formateoFechaResponse"/>
+</operation>
+<operation name="obtenerUsuarios">
+<input wsam:Action="http://service/UsuarioService/obtenerUsuariosRequest" message="tns:obtenerUsuarios"/>
+<output wsam:Action="http://service/UsuarioService/obtenerUsuariosResponse" message="tns:obtenerUsuariosResponse"/>
 </operation>
 <operation name="validarEvento">
 <input wsam:Action="http://service/UsuarioService/validarEventoRequest" message="tns:validarEvento"/>
 <output wsam:Action="http://service/UsuarioService/validarEventoResponse" message="tns:validarEventoResponse"/>
 </operation>
+<operation name="obtenerEventosSinValidar">
+<input wsam:Action="http://service/UsuarioService/obtenerEventosSinValidarRequest" message="tns:obtenerEventosSinValidar"/>
+<output wsam:Action="http://service/UsuarioService/obtenerEventosSinValidarResponse" message="tns:obtenerEventosSinValidarResponse"/>
+</operation>
+<operation name="obtenerEventosDeUsuario">
+<input wsam:Action="http://service/UsuarioService/obtenerEventosDeUsuarioRequest" message="tns:obtenerEventosDeUsuario"/>
+<output wsam:Action="http://service/UsuarioService/obtenerEventosDeUsuarioResponse" message="tns:obtenerEventosDeUsuarioResponse"/>
+</operation>
 </portType>
 <binding name="UsuarioServicePortBinding" type="tns:UsuarioService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="obtenerEventosSinValidar">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="obtenerEventosDeUsuario">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="crearEvento">
 <soap:operation soapAction=""/>
 <input>
@@ -136,6 +128,15 @@
 </output>
 </operation>
 <operation name="borrarEvento">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="iniciarSesion">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -162,15 +163,6 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="obtenerUsuarios">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="modificarEvento">
 <soap:operation soapAction=""/>
 <input>
@@ -180,7 +172,16 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="iniciarSesion">
+<operation name="formateoFecha">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="obtenerUsuarios">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -190,6 +191,24 @@
 </output>
 </operation>
 <operation name="validarEvento">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="obtenerEventosSinValidar">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="obtenerEventosDeUsuario">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

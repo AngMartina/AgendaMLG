@@ -44,13 +44,13 @@ public class AgendaManagedBean implements Serializable {
     protected List<Evento> lista;
     
 
-    protected double localizacionLongitud;
-    protected double localizacionLatitud;
+    protected Integer codigoPostal;
 
     /**
      * Creates a new instance of NewJSFManagedBean
      */
     public AgendaManagedBean() {
+        this.autenticacionEmailIntroducido = "";
     }
     
    
@@ -104,21 +104,14 @@ public class AgendaManagedBean implements Serializable {
         this.mensajeError = mensajeError;
     }
 
-    public double getLocalizacionLongitud() {
-        return localizacionLongitud;
+    public Integer getCodigoPostal() {
+        return codigoPostal;
     }
 
-    public void setLocalizacionLongitud(double localizacionLongitud) {
-        this.localizacionLongitud = localizacionLongitud;
+    public void setCodigoPostal(Integer codigoPostal) {
+        this.codigoPostal = codigoPostal;
     }
 
-    public double getLocalizacionLatitud() {
-        return localizacionLatitud;
-    }
-
-    public void setLocalizacionLatitud(double localizacionLatitud) {
-        this.localizacionLatitud = localizacionLatitud;
-    }
     
     public Evento getEventoAModificar() {
         return eventoAModificar;
@@ -154,14 +147,17 @@ public class AgendaManagedBean implements Serializable {
     }
         
     public String iniciarSesion2(){
-        usuario = iniciarSesion(autenticacionEmailIntroducido, usuario);
+        if(autenticacionEmailIntroducido.isEmpty() || autenticacionEmailIntroducido==null || autenticacionEmailIntroducido==""){
+            autenticacionEmailIntroducido="anonimo@mail.com";
+        }
+            
+        usuario = iniciarSesion(autenticacionEmailIntroducido);
+        
+        
         if(usuario==null){
             mensajeError="El email no es correcto";
             return "/usuario/autenticacion?faces-redirect=true";
             
-        }else if(autenticacionEmailIntroducido.isEmpty() || autenticacionEmailIntroducido==null){
-            mensajeError="Debe introducir un email";
-            return "/usuario/autenticacion?faces-redirect=true";
         }
         //return "/usuario/perfilUsuario?faces-redirect=true";
         lista = new ArrayList<>();
@@ -169,6 +165,7 @@ public class AgendaManagedBean implements Serializable {
         return "/eventos/listaEventos?faces-redirect=true";
         //return "/usuario/perfilUsuario?faces-redirect=true";
     }
+   
     
     public void ordenar(){
         if(this.ordenacion == 1){
@@ -225,11 +222,11 @@ public class AgendaManagedBean implements Serializable {
         return port.subirEvento();
     }
 
-    private Usuarios iniciarSesion(String arg0, Usuarios arg1) {
+    private Usuarios iniciarSesion(String arg0) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
-        return port.iniciarSesion(arg0, arg1, null);
+        return port.iniciarSesion(arg0);
     }
 
     public java.util.List<client.Evento> obtenerEventosDeUsuario(client.Usuarios arg0) {
@@ -258,12 +255,10 @@ public class AgendaManagedBean implements Serializable {
     
     */
 
-    private int ditanciaAEvento(Evento get, double localizacionLatitud, double localizacionLongitud) {
-        int distancia=0;
-        int radioT=6378;
-        double varLat=get.getLatitud()-localizacionLatitud;
-        double varLong = get.getLongitud()-localizacionLongitud;
-        return distancia;
+    private int ditanciaAEvento(Evento get, Integer codigoPostal) {
+       int d=0;
+        
+        return d;
 
     }
 
