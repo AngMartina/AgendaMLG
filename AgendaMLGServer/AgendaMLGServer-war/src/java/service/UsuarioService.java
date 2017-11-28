@@ -5,7 +5,6 @@
  */
 package service;
 
-import ejb.EtiquetasFacade;
 import ejb.EventoFacade;
 import ejb.UsuariosFacade;
 import entity.Evento;
@@ -28,9 +27,6 @@ public class UsuarioService {
 
     @EJB
     private EventoFacade eventoFacade;
-
-    @EJB
-    private EtiquetasFacade etiquetasFacade;
     
 
 
