@@ -41,5 +41,6 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
         }catch(NullPointerException e){
         return null;
     }}
+
     
 }

@@ -6,7 +6,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Angela
+ * @author alumno
  */
 @Entity
 @Table(name = "USUARIOS")
@@ -36,8 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuarios.findByNombre", query = "SELECT u FROM Usuarios u WHERE u.nombre = :nombre")
     , @NamedQuery(name = "Usuarios.findByApellidos", query = "SELECT u FROM Usuarios u WHERE u.apellidos = :apellidos")
     , @NamedQuery(name = "Usuarios.findByEmail", query = "SELECT u FROM Usuarios u WHERE u.email = :email")
-    , @NamedQuery(name = "Usuarios.findByContrase\u00f1a", query = "SELECT u FROM Usuarios u WHERE u.contrase\u00f1a = :contrase\u00f1a")
-    , @NamedQuery(name = "Usuarios.findByTipoUsuario", query = "SELECT u FROM Usuarios u WHERE u.tipoUsuario = :tipoUsuario")})
+    , @NamedQuery(name = "Usuarios.findByContrasenna", query = "SELECT u FROM Usuarios u WHERE u.contrasenna = :contrasenna")
+    , @NamedQuery(name = "Usuarios.findByTipoUsuario", query = "SELECT u FROM Usuarios u WHERE u.tipoUsuario = :tipoUsuario")
+    , @NamedQuery(name = "Usuarios.findByPreferencias", query = "SELECT u FROM Usuarios u WHERE u.preferencias = :preferencias")})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,14 +66,17 @@ public class Usuarios implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "CONTRASE\u00d1A")
-    private String contraseña;
+    @Column(name = "CONTRASENNA")
+    private String contrasenna;
     @Basic(optional = false)
     @NotNull
     @Column(name = "TIPO_USUARIO")
     private int tipoUsuario;
+    @Size(max = 200)
+    @Column(name = "PREFERENCIAS")
+    private String preferencias;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "emailusuario")
-    private List<Evento> eventoList;
+    private Collection<Evento> eventoCollection;
 
     public Usuarios() {
     }
@@ -81,12 +85,12 @@ public class Usuarios implements Serializable {
         this.id = id;
     }
 
-    public Usuarios(Integer id, String nombre, String apellidos, String email, String contraseña, int tipoUsuario) {
+    public Usuarios(Integer id, String nombre, String apellidos, String email, String contrasenna, int tipoUsuario) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
-        this.contraseña = contraseña;
+        this.contrasenna = contrasenna;
         this.tipoUsuario = tipoUsuario;
     }
 
@@ -122,12 +126,12 @@ public class Usuarios implements Serializable {
         this.email = email;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenna() {
+        return contrasenna;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasenna(String contrasenna) {
+        this.contrasenna = contrasenna;
     }
 
     public int getTipoUsuario() {
@@ -138,13 +142,21 @@ public class Usuarios implements Serializable {
         this.tipoUsuario = tipoUsuario;
     }
 
-    @XmlTransient
-    public List<Evento> getEventoList() {
-        return eventoList;
+    public String getPreferencias() {
+        return preferencias;
     }
 
-    public void setEventoList(List<Evento> eventoList) {
-        this.eventoList = eventoList;
+    public void setPreferencias(String preferencias) {
+        this.preferencias = preferencias;
+    }
+
+    @XmlTransient
+    public Collection<Evento> getEventoCollection() {
+        return eventoCollection;
+    }
+
+    public void setEventoCollection(Collection<Evento> eventoCollection) {
+        this.eventoCollection = eventoCollection;
     }
 
     @Override
