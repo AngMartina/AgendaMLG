@@ -10,7 +10,7 @@
         <f:view>
             <h:form id="listaEventosSinValidar">
                 <h1><h:outputText value="List"/></h1>
-                <h:dataTable value="#{agendaManagedBean.obtenerEventosSinValidar()}" var="item">
+                <h:dataTable value="#{agendaManagedBean.eventosSinValidar}" var="item">
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Id"/>
@@ -73,7 +73,15 @@
                         <f:facet name="header">
                             <h:outputText value=""/>
                         </f:facet>
-                        <h:commandButton action="#{agendaManagedBean.validarEvento(item)}" value="validarEvento">
+                        <h:commandButton action="#{agendaManagedBean.preValidarEvento(item)}" value="validarEvento">
+                            <f:ajax execute="@form" render="listaEventosSinValidar" />
+                        </h:commandButton>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value=""/>
+                        </f:facet>
+                        <h:commandButton action="#{agendaManagedBean.preRechazarEvento(item)}" value="rechazarEvento">
                             <f:ajax execute="@form" render="listaEventosSinValidar" />
                         </h:commandButton>
                     </h:column>

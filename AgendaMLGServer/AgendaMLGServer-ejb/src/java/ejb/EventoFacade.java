@@ -7,10 +7,8 @@ package ejb;
 
 import entity.Evento;
 import entity.Usuarios;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -20,7 +18,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Angela
+ * @author Charlie
  */
 @Stateless
 public class EventoFacade extends AbstractFacade<Evento> {
@@ -36,8 +34,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
     public EventoFacade() {
         super(Evento.class);
     }
-        
-    public List<Evento> eventosVisibles(){
+    
+       public List<Evento> eventosVisibles(){
         Query q;
         LocalDate todayLocalDate = LocalDate.now( ZoneId.of( "UTC+01:00" ) );
         java.sql.Date today = java.sql.Date.valueOf(todayLocalDate);
@@ -89,4 +87,5 @@ public class EventoFacade extends AbstractFacade<Evento> {
         q.setParameter("estado", 1);
         q.setParameter("id", evento.getId()).executeUpdate();
     }
+    
 }

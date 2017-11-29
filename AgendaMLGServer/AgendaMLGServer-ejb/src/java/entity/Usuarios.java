@@ -6,6 +6,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Angela
+ * @author Charlie
  */
 @Entity
 @Table(name = "USUARIOS")
@@ -36,8 +38,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuarios.findByNombre", query = "SELECT u FROM Usuarios u WHERE u.nombre = :nombre")
     , @NamedQuery(name = "Usuarios.findByApellidos", query = "SELECT u FROM Usuarios u WHERE u.apellidos = :apellidos")
     , @NamedQuery(name = "Usuarios.findByEmail", query = "SELECT u FROM Usuarios u WHERE u.email = :email")
-    , @NamedQuery(name = "Usuarios.findByContrase\u00f1a", query = "SELECT u FROM Usuarios u WHERE u.contrase\u00f1a = :contrase\u00f1a")
-    , @NamedQuery(name = "Usuarios.findByTipoUsuario", query = "SELECT u FROM Usuarios u WHERE u.tipoUsuario = :tipoUsuario")})
+    , @NamedQuery(name = "Usuarios.findByContrasenna", query = "SELECT u FROM Usuarios u WHERE u.contrasenna = :contrasenna")
+    , @NamedQuery(name = "Usuarios.findByTipoUsuario", query = "SELECT u FROM Usuarios u WHERE u.tipoUsuario = :tipoUsuario")
+    , @NamedQuery(name = "Usuarios.findByNotificaciones", query = "SELECT u FROM Usuarios u WHERE u.notificaciones = :notificaciones")
+    , @NamedQuery(name = "Usuarios.findByPreferencias", query = "SELECT u FROM Usuarios u WHERE u.preferencias = :preferencias")})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,12 +69,18 @@ public class Usuarios implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "CONTRASE\u00d1A")
-    private String contraseña;
+    @Column(name = "CONTRASENNA")
+    private String contrasenna;
     @Basic(optional = false)
     @NotNull
     @Column(name = "TIPO_USUARIO")
     private int tipoUsuario;
+    @Size(max = 200)
+    @Column(name = "NOTIFICACIONES")
+    private String notificaciones;
+    @Size(max = 200)
+    @Column(name = "PREFERENCIAS")
+    private String preferencias;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "emailusuario")
     private List<Evento> eventoList;
 
@@ -81,12 +91,12 @@ public class Usuarios implements Serializable {
         this.id = id;
     }
 
-    public Usuarios(Integer id, String nombre, String apellidos, String email, String contraseña, int tipoUsuario) {
+    public Usuarios(Integer id, String nombre, String apellidos, String email, String contrasenna, int tipoUsuario) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
-        this.contraseña = contraseña;
+        this.contrasenna = contrasenna;
         this.tipoUsuario = tipoUsuario;
     }
 
@@ -122,12 +132,12 @@ public class Usuarios implements Serializable {
         this.email = email;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenna() {
+        return contrasenna;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasenna(String contrasenna) {
+        this.contrasenna = contrasenna;
     }
 
     public int getTipoUsuario() {
@@ -136,6 +146,22 @@ public class Usuarios implements Serializable {
 
     public void setTipoUsuario(int tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public String getNotificaciones() {
+        return notificaciones;
+    }
+
+    public void setNotificaciones(String notificaciones) {
+        this.notificaciones = notificaciones;
+    }
+
+    public String getPreferencias() {
+        return preferencias;
+    }
+
+    public void setPreferencias(String preferencias) {
+        this.preferencias = preferencias;
     }
 
     @XmlTransient
@@ -165,6 +191,18 @@ public class Usuarios implements Serializable {
             return false;
         }
         return true;
+    }
+    
+    public void añadirNotificacion(String s){
+        if(notificaciones == null){
+            setNotificaciones(s);
+        }else{
+            if(notificaciones.equals("")){
+                setNotificaciones(notificaciones + s);
+            } else{
+                setNotificaciones(notificaciones + "||"+s);
+            }
+        }
     }
 
     @Override

@@ -5,23 +5,16 @@
  */
 package service;
 
-import ejb.EtiquetasFacade;
 import ejb.EventoFacade;
 import ejb.UsuariosFacade;
 import entity.Evento;
 import entity.Usuarios;
-import java.time.Instant;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 
-import javax.jws.WebParam;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 
@@ -38,9 +31,8 @@ public class UsuarioService {
 
     @EJB
     private EventoFacade eventoFacade;
+    
 
-    @EJB
-    private EtiquetasFacade etiquetasFacade;
 
     /**
      * Web service operation
@@ -70,11 +62,7 @@ public class UsuarioService {
         return usuariosFacade.findAll();
 
     }
-
     
-     * @param usuario
-     * @return 
-     */
     @WebMethod(operationName = "verEventos")
     public List<Evento> verEventos(Usuarios usuario){
        if(usuario.getTipoUsuario() != 3){
@@ -165,6 +153,16 @@ public class UsuarioService {
         return "listaEventosSinValidar";
     }
     
+         /**
+     * Web service operation
+     * @param evento
+     * @return 
+     */
+    @WebMethod(operationName = "rechazarEvento")
+    public String rechazarEvento(Evento evento){
+        this.eventoFacade.remove(evento);
+        return "listaEventosSinValidar";
+    }
 
     /**
      * Web service operation
@@ -176,5 +174,14 @@ public class UsuarioService {
     public List<Evento> obtenerEventosDeUsuario(Usuarios usuarioLoggeado) {
         return this.eventoFacade.EventosDeUsuario(usuarioLoggeado);
     }
+    
+       
+    @WebMethod(operationName = "notificarUsuario")
+    public void notificarUsuario(Usuarios usuario, String notificacion) {
+        usuario.añadirNotificacion(notificacion);
+        usuariosFacade.edit(usuario);
+    }
+    
+
 
 }
