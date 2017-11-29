@@ -5,6 +5,7 @@
  */
 package managed;
 
+
 import client.Evento;
 import client.UsuarioService_Service;
 import client.Usuarios;
@@ -15,8 +16,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
 
 
@@ -46,11 +51,28 @@ public class AgendaManagedBean implements Serializable {
 
     protected double localizacionLongitud;
     protected double localizacionLatitud;
+    
+    /*Variables de crear evento*/
+    protected Evento nuevoEvento;
+    protected Date fechainicio;
+    protected Date fechafin;
+    protected List<String> palabrasClave;
+    protected String mensajeDeError;
+    
+    /*Variables de ver perfil*/
+    protected String tipoUsuario;
 
     /**
      * Creates a new instance of NewJSFManagedBean
      */
     public AgendaManagedBean() {
+    }
+    
+    @PostConstruct
+    public void init() {
+       usuario = new Usuarios();
+       nuevoEvento = new Evento();
+       this.lista =  this.verEventos(usuario);
     }
     
    
@@ -126,6 +148,84 @@ public class AgendaManagedBean implements Serializable {
 
     public void setEventoAModificar(Evento eventoAModificar) {
         this.eventoAModificar = eventoAModificar;
+    }
+
+    public Evento getNuevoEvento() {
+        return nuevoEvento;
+    }
+
+    public void setNuevoEvento(Evento nuevoEvento) {
+        this.nuevoEvento = nuevoEvento;
+    }
+
+    public Date getFechainicio() {
+        return fechainicio;
+    }
+
+    public void setFechainicio(Date fechainicio) {
+        this.fechainicio = fechainicio;
+    }
+
+    public Date getFechafin() {
+        return fechafin;
+    }
+
+    public void setFechafin(Date fechafin) {
+        this.fechafin = fechafin;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public List<String> getPalabrasClave() {
+        return palabrasClave;
+    }
+
+    public void setPalabrasClave(List<String> palabrasClave) {
+        this.palabrasClave = palabrasClave;
+    }
+
+    public String getMensajeDeError() {
+        return mensajeDeError;
+    }
+
+    public void setMensajeDeError(String mensajeDeError) {
+        this.mensajeDeError = mensajeDeError;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    public void anadirPalabrasClaveEvento(){
+        String pcEvento = ""; //Palabras clave del Evento
+        
+        for(String palabra : this.palabrasClave){
+            pcEvento += palabra;    
+            pcEvento += ";";
+        }
+        
+       
+        this.nuevoEvento.setPalabrasclave(pcEvento);
+        
+    }
+    
+    public void validarCamposCrearEventoYCrear(){
+        if(this.fechainicio.after(fechafin)){
+            this.mensajeDeError = "La fecha de fin debe ser posterior a la fecha de inicio";
+        }else{
+            nuevoEvento.setFechainicio(fechainicio);
+            nuevoEvento.setFechafin(fechafin);
+            crearEvento(nuevoEvento, usuario);
+        }
     }
 
     public String verModificarEvento(Evento e){
@@ -204,11 +304,27 @@ public class AgendaManagedBean implements Serializable {
     
      public String verPerfilUsuario() {
         //TODO write your implementation code here:
+        switch (this.usuario.getTipoUsuario()) {
+            case 1:
+                this.tipoUsuario = "Usuario Normal";
+                break;
+            case 2:
+                this.tipoUsuario = "Superusuario";
+                break;
+            default:
+                this.tipoUsuario = "Periodista";
+                break;
+        }
         return "/usuario/perfilUsuario?faces-redirect=true";
     }
       public String verListaEventos() {
         //TODO write your implementation code here:
         return "/eventos/listaEventos?faces-redirect=true";
+    }
+      
+      public Date formateoFecha(XMLGregorianCalendar fechaAParsear){
+        return fechaAParsear.toGregorianCalendar().getTime();
+
     }
 
     public java.util.List<client.Usuarios> obtenerUsuarios() {
@@ -258,21 +374,14 @@ public class AgendaManagedBean implements Serializable {
     
     */
 
-    private int ditanciaAEvento(Evento get, double localizacionLatitud, double localizacionLongitud) {
-        int distancia=0;
-        int radioT=6378;
-        double varLat=get.getLatitud()-localizacionLatitud;
-        double varLong = get.getLongitud()-localizacionLongitud;
-        return distancia;
-
-    }
+   
 
     public String validarEvento(client.Evento arg0) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         //arg0.setEstado(1);
         client.UsuarioService port = service.getUsuarioServicePort();
-        return port.validarEvento(arg0);
+        return port.validarEvento(arg0); 
     }
 
     public java.util.List<client.Evento> obtenerEventosSinValidar() {
@@ -316,5 +425,25 @@ public class AgendaManagedBean implements Serializable {
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.borrarEvento(arg0);
     }
+
+   
+
+    public XMLGregorianCalendar fechaAGregorianCalendar(Date fecha) throws DatatypeConfigurationException {
+        GregorianCalendar c = new GregorianCalendar();
+        c.setTime(fecha);
+        XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+        return date2;
+    }
+
+    public String crearEvento(client.Evento arg0, client.Usuarios arg1) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.crearEvento(arg0, arg1);
+    }
+
+    
+
+    
     
 }

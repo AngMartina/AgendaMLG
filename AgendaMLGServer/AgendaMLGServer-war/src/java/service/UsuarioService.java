@@ -5,23 +5,16 @@
  */
 package service;
 
-import ejb.EtiquetasFacade;
+
 import ejb.EventoFacade;
 import ejb.UsuariosFacade;
 import entity.Evento;
 import entity.Usuarios;
-import java.time.Instant;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
-
-import javax.jws.WebParam;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 
@@ -39,8 +32,7 @@ public class UsuarioService {
     @EJB
     private EventoFacade eventoFacade;
 
-    @EJB
-    private EtiquetasFacade etiquetasFacade;
+   
 
     /**
      * Web service operation
@@ -54,7 +46,7 @@ public class UsuarioService {
     public Usuarios iniciarSesion(String autenticacionEmailIntroducido, Usuarios usuario, String mensajeError) {
         if (!autenticacionEmailIntroducido.isEmpty() && autenticacionEmailIntroducido != null) {
             usuario = usuariosFacade.findByEmail(autenticacionEmailIntroducido);
-        } else {
+        } else { 
             usuario = null;
         }
         return usuario;
@@ -71,7 +63,7 @@ public class UsuarioService {
 
     }
 
-    
+    /*
      * @param usuario
      * @return 
      */
@@ -105,22 +97,22 @@ public class UsuarioService {
      *
      * @param nuevoEvento
      * @param usuario
-     * @param fechainicio
-     * @param fechafin
      * @return
      */
     @WebMethod(operationName = "crearEvento")
-    public String crearEvento(Evento nuevoEvento, Usuarios usuario, Date fechainicio, Date fechafin) {
+    public String crearEvento(Evento nuevoEvento, Usuarios usuario) {
         if (usuario.getTipoUsuario() != 1) {//Usuario normal y Superusuario
             nuevoEvento.setEstado(1); //Validado   
         } else {//Periodista
             nuevoEvento.setEstado(0);//Sin validar 
         }
-        nuevoEvento.setFechainicio(fechainicio);
-        nuevoEvento.setFechafin(fechafin);
+      
+        //nuevoEvento.setFechainicio(fechainicio);
+       // nuevoEvento.setFechafin(fechafin);
         nuevoEvento.setEmailusuario(usuario); //No me deja hacer getEmail()
         this.eventoFacade.create(nuevoEvento);
-        return "/eventos/listaEventos?faces-redirect=true";
+        
+        return "listaEventos";
     }
 
 

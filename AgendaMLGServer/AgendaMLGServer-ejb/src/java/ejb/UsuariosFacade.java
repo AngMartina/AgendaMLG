@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Angela
+ * @author Antonio
  */
 @Stateless
 public class UsuariosFacade extends AbstractFacade<Usuarios> {
@@ -31,15 +31,16 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
     }
     
     public Usuarios findByEmail(String email) {
-        try{
-        Query q;
-        
-        q = em.createQuery("SELECT u FROM Usuarios u WHERE :email = u.email");
-        q.setParameter("email", email);
+        try {
+            Query q;
 
-        return (Usuarios)q.getSingleResult();
-        }catch(NullPointerException e){
-        return null;
-    }}
+            q = em.createQuery("SELECT u FROM Usuarios u WHERE :email = u.email");
+            q.setParameter("email", email);
+
+            return (Usuarios) q.getSingleResult();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
     
 }

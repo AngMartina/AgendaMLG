@@ -10,6 +10,10 @@
 
 <xs:element name="evento" type="tns:evento"/>
 
+<xs:element name="formateoFecha" type="tns:formateoFecha"/>
+
+<xs:element name="formateoFechaResponse" type="tns:formateoFechaResponse"/>
+
 <xs:element name="iniciarSesion" type="tns:iniciarSesion"/>
 
 <xs:element name="iniciarSesionResponse" type="tns:iniciarSesionResponse"/>
@@ -52,15 +56,15 @@
 
 <xs:complexType name="evento">
 <xs:sequence>
+<xs:element name="codigopostal" type="xs:int"/>
 <xs:element name="descripcion" type="xs:string" minOccurs="0"/>
 <xs:element name="emailusuario" type="tns:usuarios" minOccurs="0"/>
 <xs:element name="estado" type="xs:int"/>
 <xs:element name="fechafin" type="xs:dateTime" minOccurs="0"/>
 <xs:element name="fechainicio" type="xs:dateTime" minOccurs="0"/>
 <xs:element name="id" type="xs:int" minOccurs="0"/>
-<xs:element name="latitud" type="xs:double" minOccurs="0"/>
 <xs:element name="localizacion" type="xs:string" minOccurs="0"/>
-<xs:element name="longitud" type="xs:double" minOccurs="0"/>
+<xs:element name="palabrasclave" type="xs:string" minOccurs="0"/>
 <xs:element name="precio" type="xs:double"/>
 <xs:element name="url" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -69,10 +73,11 @@
 <xs:complexType name="usuarios">
 <xs:sequence>
 <xs:element name="apellidos" type="xs:string" minOccurs="0"/>
-<xs:element name="contraseña" type="xs:string" minOccurs="0"/>
+<xs:element name="contrasenna" type="xs:string" minOccurs="0"/>
 <xs:element name="email" type="xs:string" minOccurs="0"/>
 <xs:element name="id" type="xs:int" minOccurs="0"/>
 <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="preferencias" type="xs:string" minOccurs="0"/>
 <xs:element name="tipoUsuario" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
@@ -115,6 +120,16 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="obtenerUsuarios">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="obtenerUsuariosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:usuarios" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="verEventos">
 <xs:sequence>
 <xs:element name="arg0" type="tns:usuarios" minOccurs="0"/>
@@ -124,16 +139,6 @@
 <xs:complexType name="verEventosResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="obtenerUsuarios">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="obtenerUsuariosResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:usuarios" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -159,6 +164,18 @@
 <xs:complexType name="obtenerEventosDeUsuarioResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="formateoFecha">
+<xs:sequence>
+<xs:element name="arg0" type="xs:anySimpleType" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="formateoFechaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:dateTime" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
