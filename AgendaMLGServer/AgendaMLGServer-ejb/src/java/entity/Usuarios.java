@@ -6,7 +6,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author alumno
+ * @author Charlie
  */
 @Entity
 @Table(name = "USUARIOS")
@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuarios.findByEmail", query = "SELECT u FROM Usuarios u WHERE u.email = :email")
     , @NamedQuery(name = "Usuarios.findByContrasenna", query = "SELECT u FROM Usuarios u WHERE u.contrasenna = :contrasenna")
     , @NamedQuery(name = "Usuarios.findByTipoUsuario", query = "SELECT u FROM Usuarios u WHERE u.tipoUsuario = :tipoUsuario")
+    , @NamedQuery(name = "Usuarios.findByNotificaciones", query = "SELECT u FROM Usuarios u WHERE u.notificaciones = :notificaciones")
     , @NamedQuery(name = "Usuarios.findByPreferencias", query = "SELECT u FROM Usuarios u WHERE u.preferencias = :preferencias")})
 public class Usuarios implements Serializable {
 
@@ -73,10 +74,13 @@ public class Usuarios implements Serializable {
     @Column(name = "TIPO_USUARIO")
     private int tipoUsuario;
     @Size(max = 200)
+    @Column(name = "NOTIFICACIONES")
+    private String notificaciones;
+    @Size(max = 200)
     @Column(name = "PREFERENCIAS")
     private String preferencias;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "emailusuario")
-    private Collection<Evento> eventoCollection;
+    private List<Evento> eventoList;
 
     public Usuarios() {
     }
@@ -142,6 +146,14 @@ public class Usuarios implements Serializable {
         this.tipoUsuario = tipoUsuario;
     }
 
+    public String getNotificaciones() {
+        return notificaciones;
+    }
+
+    public void setNotificaciones(String notificaciones) {
+        this.notificaciones = notificaciones;
+    }
+
     public String getPreferencias() {
         return preferencias;
     }
@@ -151,12 +163,12 @@ public class Usuarios implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Evento> getEventoCollection() {
-        return eventoCollection;
+    public List<Evento> getEventoList() {
+        return eventoList;
     }
 
-    public void setEventoCollection(Collection<Evento> eventoCollection) {
-        this.eventoCollection = eventoCollection;
+    public void setEventoList(List<Evento> eventoList) {
+        this.eventoList = eventoList;
     }
 
     @Override
