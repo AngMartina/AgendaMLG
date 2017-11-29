@@ -271,6 +271,7 @@ public class AgendaManagedBean implements Serializable {
         Usuarios u = arg0.getEmailusuario();
         String notificacion = "Se ha VALIDADO su evento "+arg0.getDescripcion()+".";
         notificarUsuario(u, notificacion);
+        eventosSinValidar.remove(arg0);
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.validarEvento(arg0);
     }
@@ -321,6 +322,7 @@ public class AgendaManagedBean implements Serializable {
         Usuarios u = evento.getEmailusuario();
         String notificacion = "Se ha RECHAZADO su evento "+evento.getDescripcion()+".";
         notificarUsuario(u, notificacion);
+        eventosSinValidar.remove(evento);
         return rechazarEvento(evento);
     }
 
