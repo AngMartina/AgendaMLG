@@ -140,9 +140,10 @@
                         </h:commandButton>
                     </h:column>
                 </h:dataTable>
-                <h:commandButton action="#{agendaManagedBean.subirEvento()}" value="Subir Evento"/>
-                <h:commandButton action="#{agendaManagedBean.verPerfilUsuario()}" value="Ver mi perfil"/>
+                <h:commandButton action="#{agendaManagedBean.subirEvento()}" rendered="#{agendaManagedBean.comprobarInvitado()}" value="Subir Evento"/>
+                <h:commandButton action="#{agendaManagedBean.verPerfilUsuario()}" rendered="#{agendaManagedBean.comprobarInvitado()}" value="Ver mi perfil"/>
                 <h:commandButton action="#{agendaManagedBean.verValidarEventos()}" rendered="#{agendaManagedBean.comprobarPeriodista()}" value="Validar Eventos"/>
+                <h:commandButton action="#{agendaManagedBean.salir()}" value="Salir"/>
             </h:form>
         </f:view>
         

@@ -6,6 +6,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Angela
+ * @author Charlie
  */
 @Entity
 @Table(name = "USUARIOS")
@@ -38,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuarios.findByEmail", query = "SELECT u FROM Usuarios u WHERE u.email = :email")
     , @NamedQuery(name = "Usuarios.findByContrasenna", query = "SELECT u FROM Usuarios u WHERE u.contrasenna = :contrasenna")
     , @NamedQuery(name = "Usuarios.findByTipoUsuario", query = "SELECT u FROM Usuarios u WHERE u.tipoUsuario = :tipoUsuario")
+    , @NamedQuery(name = "Usuarios.findByNotificaciones", query = "SELECT u FROM Usuarios u WHERE u.notificaciones = :notificaciones")
     , @NamedQuery(name = "Usuarios.findByPreferencias", query = "SELECT u FROM Usuarios u WHERE u.preferencias = :preferencias")})
 public class Usuarios implements Serializable {
 
@@ -72,6 +75,9 @@ public class Usuarios implements Serializable {
     @NotNull
     @Column(name = "TIPO_USUARIO")
     private int tipoUsuario;
+    @Size(max = 200)
+    @Column(name = "NOTIFICACIONES")
+    private String notificaciones;
     @Size(max = 200)
     @Column(name = "PREFERENCIAS")
     private String preferencias;
@@ -142,6 +148,14 @@ public class Usuarios implements Serializable {
         this.tipoUsuario = tipoUsuario;
     }
 
+    public String getNotificaciones() {
+        return notificaciones;
+    }
+
+    public void setNotificaciones(String notificaciones) {
+        this.notificaciones = notificaciones;
+    }
+
     public String getPreferencias() {
         return preferencias;
     }
@@ -177,6 +191,18 @@ public class Usuarios implements Serializable {
             return false;
         }
         return true;
+    }
+    
+    public void añadirNotificacion(String s){
+        if(notificaciones == null){
+            setNotificaciones(s);
+        }else{
+            if(notificaciones.equals("")){
+                setNotificaciones(notificaciones + s);
+            } else{
+                setNotificaciones(notificaciones + "||"+s);
+            }
+        }
     }
 
     @Override
