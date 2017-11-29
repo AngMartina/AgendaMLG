@@ -36,6 +36,19 @@
                     <h:outputLabel value="Url:" for="url" />
                     <h:inputText id="url" value="#{agendaManagedBean.eventoAModificar.url}" title="Url" />
                     
+                      <h:selectManyCheckbox value="#{agendaManagedBean.palabrasClave}">
+                        <f:selectItem itemLabel="Cine" itemValue="CINE"/>
+                        <f:selectItem itemLabel="Baile" itemValue="BAILE"/>
+                        <f:selectItem itemLabel="Teatro" itemValue="TEATRO"/>
+                        <f:selectItem itemLabel="Comida" itemValue="COMIDA"/>
+                        <f:selectItem itemLabel="Belleza" itemValue="BELLEZA"/>
+                        <f:selectItem itemLabel="Música" itemValue="MUSICA"/>
+                        <f:selectItem itemLabel="Deporte" itemValue="DEPORTE"/>
+                        <f:selectItem itemLabel="Moda" itemValue="MODA"/>
+                    </h:selectManyCheckbox>
+                    <h:commandButton action="#{agendaManagedBean.anadirPalabrasClaveEventoModificar()}" value="Fijar palabras"/>
+                    <h:outputText value="#{agendaManagedBean.mensajeKW}"/>
+                    
                 </h:panelGrid>
                 <h:commandButton action="#{agendaManagedBean.modificarEvento()}" value="Modificar"/>
             </h:form>

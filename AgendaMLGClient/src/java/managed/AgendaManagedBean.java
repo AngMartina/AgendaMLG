@@ -201,7 +201,18 @@ public class AgendaManagedBean implements Serializable {
     }
 
     
-    
+    public void anadirPalabrasClaveEventoModificar(){
+        String pcEvento = ""; //Palabras clave del Evento
+        
+        for(String palabra : this.palabrasClave){
+            pcEvento += palabra;    
+            pcEvento += ";";
+        }
+        
+       
+        this.eventoAModificar.setPalabrasclave(pcEvento);
+        mensajeKW = "Se han fijado correctamente las palabras clave";
+    }
     
     
     
