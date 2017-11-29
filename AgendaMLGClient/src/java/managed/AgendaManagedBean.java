@@ -13,6 +13,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -42,7 +43,8 @@ public class AgendaManagedBean implements Serializable {
     protected String mensajeError;
     
     protected List<Evento> lista;
-    
+    protected List<Evento> eventosSinValidar;
+    protected List<String> notificacionesDelUsuario;
 
     protected double localizacionLongitud;
     protected double localizacionLatitud;
@@ -128,6 +130,14 @@ public class AgendaManagedBean implements Serializable {
         this.eventoAModificar = eventoAModificar;
     }
 
+    public List<Evento> getEventosSinValidar() {
+        return eventosSinValidar;
+    }
+
+    public void setEventosSinValidar(List<Evento> eventosSinValidar) {
+        this.eventosSinValidar = eventosSinValidar;
+    }
+
     public String verModificarEvento(Evento e){
         this.setEventoAModificar(e);
         return "/eventos/modificarEvento?faces-redirect=true";
@@ -140,8 +150,17 @@ public class AgendaManagedBean implements Serializable {
     public void setLista(List<Evento> lista) {
         this.lista = lista;
     }
+
+    public List<String> getNotificacionesDelUsuario() {
+        return notificacionesDelUsuario;
+    }
+
+    public void setNotificacionesDelUsuario(List<String> notificacionesDelUsuario) {
+        this.notificacionesDelUsuario = notificacionesDelUsuario;
+    }
     
     public String verValidarEventos(){
+        this.eventosSinValidar = obtenerEventosSinValidar();
         return "/eventos/listaEventosSinValidar?faces-redirect=true";
     }
     
@@ -165,6 +184,13 @@ public class AgendaManagedBean implements Serializable {
         }
         //return "/usuario/perfilUsuario?faces-redirect=true";
         lista = new ArrayList<>();
+        notificacionesDelUsuario = new ArrayList<>();
+        for(String n : Arrays.asList(usuario.getNotificaciones().split("\\|\\|"))){
+            notificacionesDelUsuario.add(n);
+        }
+        notificacionesDelUsuario.remove(0);
+        //las ultimas son las primeras
+        Collections.reverse(notificacionesDelUsuario);
         lista.addAll(this.verEventos(usuario));
         return "/eventos/listaEventos?faces-redirect=true";
         //return "/usuario/perfilUsuario?faces-redirect=true";
@@ -239,38 +265,12 @@ public class AgendaManagedBean implements Serializable {
         return port.obtenerEventosDeUsuario(arg0);
     }
 
-    
-    /*
-    
-    private List<Evento> buscarPorGeolocalizacion(){
-        List<Evento> eventosCercanos = new ArrayList<>();
-        List<Evento> todosEventos = obtenerEventos(null, null, null, 0, 0);
-        
-        for(int i =0; i<todosEventos.size();i++){
-            int distancia = ditanciaAEvento(todosEventos.get(i), localizacionLatitud, localizacionLongitud);
-            if(distancia<=distancia){
-                eventosCercanos.add(todosEventos.get(i));
-            }
-            
-        }
-        return eventosCercanos;
-    } 
-    
-    */
-
-    private int ditanciaAEvento(Evento get, double localizacionLatitud, double localizacionLongitud) {
-        int distancia=0;
-        int radioT=6378;
-        double varLat=get.getLatitud()-localizacionLatitud;
-        double varLong = get.getLongitud()-localizacionLongitud;
-        return distancia;
-
-    }
-
     public String validarEvento(client.Evento arg0) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
-        //arg0.setEstado(1);
+        Usuarios u = arg0.getEmailusuario();
+        String notificacion = "Se ha VALIDADO su evento "+arg0.getDescripcion()+".";
+        notificarUsuario(u, notificacion);
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.validarEvento(arg0);
     }
@@ -283,18 +283,6 @@ public class AgendaManagedBean implements Serializable {
     }
 
     public String modificarEvento() throws DatatypeConfigurationException {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        /*GregorianCalendar inicio = new GregorianCalendar();
-        GregorianCalendar fin = new GregorianCalendar();
-        inicio.setTime(this.fechaInicioAModificar);
-        inicio.add(GregorianCalendar.DAY_OF_MONTH, +1);
-        fin.setTime(this.fechaFinAModificar);
-        fin.add(GregorianCalendar.DAY_OF_MONTH, +1);
-        XMLGregorianCalendar date1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(inicio);
-        XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(fin);
-        eventoAModificar.setFechainicio(date1);
-        eventoAModificar.setFechafin(date2);*/
         lista.set(lista.indexOf(eventoAModificar), eventoAModificar);
         eventoAModificar.getFechainicio().setDate(eventoAModificar.getFechainicio().getDate()+ 1);
         eventoAModificar.getFechafin().setDate(eventoAModificar.getFechafin().getDate()+ 1);
@@ -315,6 +303,40 @@ public class AgendaManagedBean implements Serializable {
         lista.remove(arg0);
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.borrarEvento(arg0);
+    }
+    
+    public String preRechazarEvento(Evento evento) {
+        Evento aux = null;
+        for(Evento e : lista){
+            if(e.getId() == evento.getId()){
+                aux = e;
+                break;
+            }
+        }
+        if(aux != null){
+            lista.remove(aux);
+        } else{
+            //el evento no esta en la lista
+        }
+        Usuarios u = evento.getEmailusuario();
+        String notificacion = "Se ha RECHAZADO su evento "+evento.getDescripcion()+".";
+        notificarUsuario(u, notificacion);
+        return rechazarEvento(evento);
+    }
+
+    private String rechazarEvento(client.Evento arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.rechazarEvento(arg0);
+    }
+
+    private void notificarUsuario(client.Usuarios arg0, java.lang.String arg1) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        port.notificarUsuario(arg0, arg1);
     }
     
 }

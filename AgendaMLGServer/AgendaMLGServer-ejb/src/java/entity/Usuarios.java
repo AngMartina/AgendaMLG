@@ -6,6 +6,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -189,6 +191,10 @@ public class Usuarios implements Serializable {
             return false;
         }
         return true;
+    }
+    
+    public void añadirNotificacion(String s){
+        notificaciones += "||"+s;
     }
 
     @Override
