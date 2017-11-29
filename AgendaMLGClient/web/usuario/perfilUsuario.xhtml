@@ -32,7 +32,7 @@
                     <h:outputText id="email" value="#{agendaManagedBean.usuario.email}" title="Email" />
             
                     <h:outputLabel value="TipoUsuario:" for="tipoUsuario" />
-                    <h:outputText id="tipoUsuario" value="#{agendaManagedBean.usuario.tipoUsuario}" title="TipoUsuario" />
+                    <h:outputText id="tipoUsuario" value="#{agendaManagedBean.tipoUsuario}" title="TipoUsuario" />
                 </h:panelGrid>
             </h:form>
         </f:view>
@@ -82,6 +82,12 @@
                             <h:outputText value="Url"/>
                         </f:facet>
                         <h:outputText value="#{item.url}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Estado"/>
+                        </f:facet>
+                        <h:outputText value="#{item.estado}"/>
                     </h:column>
           
                 </h:dataTable>

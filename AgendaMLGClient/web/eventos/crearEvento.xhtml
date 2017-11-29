@@ -12,32 +12,48 @@
                 <h1><h:outputText value="Crear Evento"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Fechainicio:" for="fechainicio" />
-                    <h:inputText id="fechainicio" value="#{eventoCRUDBean.nuevoEvento.fechainicio}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio">
+                    <h:inputText id="fechainicio" value="#{agendaManagedBean.fechainicio}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio">
                         <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:inputText>
                     
+                    
                     <h:outputLabel value="Fechafin:" for="fechafin" />
-                    <h:inputText id="fechafin" value="#{eventoCRUDBean.nuevoEvento.fechafin}" title="Fechafin" required="true" requiredMessage="Introduzca fecha de fin">
+                    <h:inputText id="fechafin" value="#{agendaManagedBean.fechafin}" title="Fechafin" required="true" requiredMessage="Introduzca fecha de fin">
                         <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:inputText>
                     
                     <h:outputLabel value="Descripcion:" for="descripcion" />
-                    <h:inputText id="descripcion" value="#{eventoCRUDBean.nuevoEvento.descripcion}" title="Descripcion" />
+                    <h:inputText id="descripcion" value="#{agendaManagedBean.nuevoEvento.descripcion}" title="Descripcion" />
                     
                     <h:outputLabel value="Localizacion:" for="localizacion" />
-                    <h:inputText id="localizacion" value="#{eventoCRUDBean.nuevoEvento.localizacion}" title="Localizacion" required="true" requiredMessage="Introduzca localizacion"/>
+                    <h:inputText id="localizacion" value="#{agendaManagedBean.nuevoEvento.localizacion}" title="Localizacion" required="true" requiredMessage="Introduzca localizacion"/>
                     
-                    <h:outputLabel value="CodigoPostal" for="codigoPostal" />
-                    <h:inputText id="codigoPostal" value="#{eventoCRUDBean.nuevoEvento.codigoPostal}" title="CodigoPostal" />
-                   
+                    <h:outputLabel value="Código Postal" for="códigopostal" />
+                    <h:inputText id="codigopostal" value="#{agendaManagedBean.nuevoEvento.codigopostal}" title="Código Postal" />
+                    
                     <h:outputLabel value="Precio:" for="precio" />
-                    <h:inputText id="precio" value="#{eventoCRUDBean.nuevoEvento.precio}" title="Precio" required="true" requiredMessage="The Precio field is required."/>
+                    <h:inputText id="precio" value="#{agendaManagedBean.nuevoEvento.precio}" title="Precio" required="true" requiredMessage="The Precio field is required."/>
                     
                     <h:outputLabel value="Url:" for="url" />
-                    <h:inputText id="url" value="#{eventoCRUDBean.nuevoEvento.url}" title="Url" />
+                    <h:inputText id="url" value="#{agendaManagedBean.nuevoEvento.url}" title="Url" />
+                    
+                    <h:outputLabel value="Palabras clave:" for="palabrasclave"/>
+                    <h:selectManyCheckbox value="#{agendaManagedBean.palabrasClave}">
+                        <f:selectItem itemLabel="Cine" itemValue="CINE"/>
+                        <f:selectItem itemLabel="Baile" itemValue="BAILE"/>
+                        <f:selectItem itemLabel="Teatro" itemValue="TEATRO"/>
+                        <f:selectItem itemLabel="Comida" itemValue="COMIDA"/>
+                        <f:selectItem itemLabel="Belleza" itemValue="BELLEZA"/>
+                        <f:selectItem itemLabel="Música" itemValue="MUSICA"/>
+                        <f:selectItem itemLabel="Deporte" itemValue="DEPORTE"/>
+                        <f:selectItem itemLabel="Moda" itemValue="MODA"/>
+                    </h:selectManyCheckbox>
+                    <h:commandButton action="#{agendaManagedBean.anadirPalabrasClaveEvento()}" value="Fijar palabras"/>
+                    <h:outputText value="#{agendaManagedBean.mensajeKW}"/>
                     
                 </h:panelGrid>
-                <h:commandButton action="#{eventoCRUDBean.crearEvento(EventoCRUDBean.nuevoEvento)}" value="Subir"/>
+                <h:outputText value="#{agendaManagedBean.mensajeDeError}"/>
+                <h:commandButton action="#{agendaManagedBean.validarCamposCrearEventoYCrear()}" value="Crear"/>
                 
             </h:form>
             <h:form>

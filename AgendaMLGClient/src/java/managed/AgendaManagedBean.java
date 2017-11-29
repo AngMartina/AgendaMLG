@@ -5,6 +5,7 @@
  */
 package managed;
 
+
 import client.Evento;
 import client.UsuarioService_Service;
 import client.Usuarios;
@@ -16,8 +17,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
 
 
@@ -46,12 +51,28 @@ public class AgendaManagedBean implements Serializable {
     protected List<Evento> lista;
     protected List<Evento> eventosSinValidar;
     protected List<String> notificacionesDelUsuario;
+    
+    
+    /*Variables de crear evento*/
+    protected Evento nuevoEvento;
+    protected Date fechainicio;
+    protected Date fechafin;
+    protected List<String> palabrasClave;
+    protected String mensajeDeError;
+    protected String mensajeKW;
+    /*Variables de ver perfil*/
+    protected String tipoUsuario;
 
     /**
      * Creates a new instance of NewJSFManagedBean
      */
-    public AgendaManagedBean() {
+    @PostConstruct
+    public void init(){
         this.autenticacionEmailIntroducido = "";
+        nuevoEvento=new Evento();
+    }
+    public AgendaManagedBean() {
+        
     }
     
    
@@ -123,6 +144,94 @@ public class AgendaManagedBean implements Serializable {
         this.eventoAModificar = eventoAModificar;
     }
 
+    public Evento getNuevoEvento() {
+        return nuevoEvento;
+    }
+
+    public void setNuevoEvento(Evento nuevoEvento) {
+        this.nuevoEvento = nuevoEvento;
+    }
+
+    public Date getFechainicio() {
+        return fechainicio;
+    }
+
+    public void setFechainicio(Date fechainicio) {
+        this.fechainicio = fechainicio;
+    }
+
+    public Date getFechafin() {
+        return fechafin;
+    }
+
+    public void setFechafin(Date fechafin) {
+        this.fechafin = fechafin;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public List<String> getPalabrasClave() {
+        return palabrasClave;
+    }
+
+    public void setPalabrasClave(List<String> palabrasClave) {
+        this.palabrasClave = palabrasClave;
+    }
+
+    public String getMensajeDeError() {
+        return mensajeDeError;
+    }
+
+    public void setMensajeDeError(String mensajeDeError) {
+        this.mensajeDeError = mensajeDeError;
+    }
+
+    public String getMensajeKW() {
+        return mensajeKW;
+    }
+
+    public void setMensajeKW(String mensajeKW) {
+        this.mensajeKW = mensajeKW;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    public void anadirPalabrasClaveEvento(){
+        String pcEvento = ""; //Palabras clave del Evento
+        
+        for(String palabra : this.palabrasClave){
+            pcEvento += palabra;    
+            pcEvento += ";";
+        }
+        
+       
+        this.nuevoEvento.setPalabrasclave(pcEvento);
+        mensajeKW = "Se han fijado correctamente las palabras clave";
+    }
+    
+    public String validarCamposCrearEventoYCrear(){
+        if(this.fechainicio.after(fechafin)){
+            this.mensajeDeError = "La fecha de fin debe ser posterior a la fecha de inicio";
+        }else{
+            nuevoEvento.setFechainicio(fechainicio);
+            nuevoEvento.setFechafin(fechafin);
+            crearEvento(nuevoEvento, usuario);
+            return verListaEventos();
+        }
+        return null;
+    }
+
     public List<Evento> getEventosSinValidar() {
         return eventosSinValidar;
     }
@@ -169,6 +278,19 @@ public class AgendaManagedBean implements Serializable {
         }
         //las ultimas son las primeras
         Collections.reverse(notificacionesDelUsuario);
+        
+        switch (this.usuario.getTipoUsuario()) {
+            case 1:
+                this.tipoUsuario = "Usuario Normal";
+                break;
+            case 2:
+                this.tipoUsuario = "Superusuario";
+                break;
+            default:
+                this.tipoUsuario = "Periodista";
+                break;
+        }
+        
         return "/usuario/perfilUsuario?faces-redirect=true";
     }
     
@@ -243,21 +365,7 @@ public class AgendaManagedBean implements Serializable {
             });
         }
     }
-     
-  /*  public String buscarPorPreferencias(){//Por preferencias
-        List<Evento> listaPreferencias = listaEventosPreferencia(usuario);
-        lista.removeAll(lista);
-        listaPreferencias.forEach((e) -> {
-            if(usuario.getTipoUsuario()!=3){
-                if(e.getEstado()!=0){
-                    lista.add(e);
-                }
-            }else{
-                lista.add(e);
-            } }
-        );
-        return "/eventos/listaEventos?faces-redirect=true";
-    }*/
+    
    
   public void buscarPor(){
         if(null!=this.busqueda)switch (this.busqueda) {
@@ -479,6 +587,24 @@ public class AgendaManagedBean implements Serializable {
     
     
     
+   
+
+    public XMLGregorianCalendar fechaAGregorianCalendar(Date fecha) throws DatatypeConfigurationException {
+        GregorianCalendar c = new GregorianCalendar();
+        c.setTime(fecha);
+        XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+        return date2;
+    }
+
+    public String crearEvento(client.Evento arg0, client.Usuarios arg1) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.crearEvento(arg0, arg1);
+    }
+
+    
+
     
     
 }

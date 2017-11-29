@@ -5,6 +5,7 @@
  */
 package service;
 
+
 import ejb.EventoFacade;
 import ejb.UsuariosFacade;
 import entity.Evento;
@@ -33,6 +34,7 @@ public class UsuarioService {
     private EventoFacade eventoFacade;
     
 
+   
 
     /**
      * Web service operation
@@ -94,22 +96,22 @@ public class UsuarioService {
      *
      * @param nuevoEvento
      * @param usuario
-     * @param fechainicio
-     * @param fechafin
      * @return
      */
     @WebMethod(operationName = "crearEvento")
-    public String crearEvento(Evento nuevoEvento, Usuarios usuario, Date fechainicio, Date fechafin) {
+    public String crearEvento(Evento nuevoEvento, Usuarios usuario) {
         if (usuario.getTipoUsuario() != 1) {//Usuario normal y Superusuario
             nuevoEvento.setEstado(1); //Validado   
         } else {//Periodista
             nuevoEvento.setEstado(0);//Sin validar 
         }
-        nuevoEvento.setFechainicio(fechainicio);
-        nuevoEvento.setFechafin(fechafin);
+      
+        //nuevoEvento.setFechainicio(fechainicio);
+       // nuevoEvento.setFechafin(fechafin);
         nuevoEvento.setEmailusuario(usuario); //No me deja hacer getEmail()
         this.eventoFacade.create(nuevoEvento);
-        return "/eventos/listaEventos?faces-redirect=true";
+        
+        return "listaEventos";
     }
 
 

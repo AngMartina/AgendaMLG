@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
+ * @author Antonio
  * @author Charlie
  */
 @Entity
