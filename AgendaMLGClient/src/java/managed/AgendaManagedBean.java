@@ -46,9 +46,6 @@ public class AgendaManagedBean implements Serializable {
     protected List<Evento> eventosSinValidar;
     protected List<String> notificacionesDelUsuario;
 
-    protected double localizacionLongitud;
-    protected double localizacionLatitud;
-
     /**
      * Creates a new instance of NewJSFManagedBean
      */
@@ -105,22 +102,6 @@ public class AgendaManagedBean implements Serializable {
     public void setMensajeError(String mensajeError) {
         this.mensajeError = mensajeError;
     }
-
-    public double getLocalizacionLongitud() {
-        return localizacionLongitud;
-    }
-
-    public void setLocalizacionLongitud(double localizacionLongitud) {
-        this.localizacionLongitud = localizacionLongitud;
-    }
-
-    public double getLocalizacionLatitud() {
-        return localizacionLatitud;
-    }
-
-    public void setLocalizacionLatitud(double localizacionLatitud) {
-        this.localizacionLatitud = localizacionLatitud;
-    }
     
     public Evento getEventoAModificar() {
         return eventoAModificar;
@@ -136,11 +117,6 @@ public class AgendaManagedBean implements Serializable {
 
     public void setEventosSinValidar(List<Evento> eventosSinValidar) {
         this.eventosSinValidar = eventosSinValidar;
-    }
-
-    public String verModificarEvento(Evento e){
-        this.setEventoAModificar(e);
-        return "/eventos/modificarEvento?faces-redirect=true";
     }
 
     public List<Evento> getLista() {
@@ -160,8 +136,28 @@ public class AgendaManagedBean implements Serializable {
     }
     
     public String verValidarEventos(){
-        this.eventosSinValidar = obtenerEventosSinValidar();
+        this.setEventosSinValidar(obtenerEventosSinValidar());
         return "/eventos/listaEventosSinValidar?faces-redirect=true";
+    }
+
+    public String verModificarEvento(Evento e){
+        this.setEventoAModificar(e);
+        return "/eventos/modificarEvento?faces-redirect=true";
+    }
+          
+    public String verListaEventos() {
+        //TODO write your implementation code here:
+        this.setLista(verEventos(usuario));
+        return "/eventos/listaEventos?faces-redirect=true";
+    }
+    public String verPerfilUsuario() {
+        //TODO write your implementation code here:    
+        for(String n : Arrays.asList(usuario.getNotificaciones().split("\\|\\|"))){
+            notificacionesDelUsuario.add(n);
+        }
+        //las ultimas son las primeras
+        Collections.reverse(notificacionesDelUsuario);
+        return "/usuario/perfilUsuario?faces-redirect=true";
     }
     
     public boolean comprobarEstado(Evento e){
@@ -170,6 +166,10 @@ public class AgendaManagedBean implements Serializable {
     
     public boolean comprobarPeriodista(){
         return this.usuario.getTipoUsuario() == 3;
+    }
+    
+    public boolean comprobarInvitado(){
+        return this.usuario.getTipoUsuario() != 0;
     }
         
     public String iniciarSesion2(){
@@ -182,18 +182,21 @@ public class AgendaManagedBean implements Serializable {
             mensajeError="Debe introducir un email";
             return "/usuario/autenticacion?faces-redirect=true";
         }
-        //return "/usuario/perfilUsuario?faces-redirect=true";
         lista = new ArrayList<>();
+        eventosSinValidar = new ArrayList<>();
         notificacionesDelUsuario = new ArrayList<>();
-        for(String n : Arrays.asList(usuario.getNotificaciones().split("\\|\\|"))){
-            notificacionesDelUsuario.add(n);
-        }
-        notificacionesDelUsuario.remove(0);
-        //las ultimas son las primeras
-        Collections.reverse(notificacionesDelUsuario);
-        lista.addAll(this.verEventos(usuario));
-        return "/eventos/listaEventos?faces-redirect=true";
-        //return "/usuario/perfilUsuario?faces-redirect=true";
+        return verListaEventos();
+    }
+    
+    public String accesoInvitado(){
+        this.setAutenticacionEmailIntroducido("anonimo@mail.com");
+        
+        return iniciarSesion2();
+    }
+    
+    public String salir(){
+        this.setAutenticacionEmailIntroducido("");
+        return "/usuario/autenticacion?faces-redirect=true";
     }
     
     public void ordenar(){
@@ -227,15 +230,6 @@ public class AgendaManagedBean implements Serializable {
             });
         }
     }
-    
-     public String verPerfilUsuario() {
-        //TODO write your implementation code here:
-        return "/usuario/perfilUsuario?faces-redirect=true";
-    }
-      public String verListaEventos() {
-        //TODO write your implementation code here:
-        return "/eventos/listaEventos?faces-redirect=true";
-    }
 
     public java.util.List<client.Usuarios> obtenerUsuarios() {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
@@ -265,17 +259,6 @@ public class AgendaManagedBean implements Serializable {
         return port.obtenerEventosDeUsuario(arg0);
     }
 
-    public String validarEvento(client.Evento arg0) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        Usuarios u = arg0.getEmailusuario();
-        String notificacion = "Se ha VALIDADO su evento "+arg0.getDescripcion()+".";
-        notificarUsuario(u, notificacion);
-        eventosSinValidar.remove(arg0);
-        client.UsuarioService port = service.getUsuarioServicePort();
-        return port.validarEvento(arg0);
-    }
-
     public java.util.List<client.Evento> obtenerEventosSinValidar() {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
@@ -284,6 +267,11 @@ public class AgendaManagedBean implements Serializable {
     }
 
     public String modificarEvento() throws DatatypeConfigurationException {
+        if(eventoAModificar.getFechafin().compareTo(eventoAModificar.getFechainicio()) == -1){
+            Date aux = eventoAModificar.getFechainicio();
+            eventoAModificar.setFechainicio(eventoAModificar.getFechafin());
+            eventoAModificar.setFechafin(aux);
+        }
         lista.set(lista.indexOf(eventoAModificar), eventoAModificar);
         eventoAModificar.getFechainicio().setDate(eventoAModificar.getFechainicio().getDate()+ 1);
         eventoAModificar.getFechafin().setDate(eventoAModificar.getFechafin().getDate()+ 1);
@@ -306,6 +294,33 @@ public class AgendaManagedBean implements Serializable {
         return port.borrarEvento(arg0);
     }
     
+    public String preValidarEvento(Evento evento){
+        Evento aux = null;
+        for(Evento e : lista){
+            if(e.getId() == evento.getId()){
+                aux = e;
+                break;
+            }
+        }
+        if(aux != null){
+            aux.setEstado(1);
+        } else{
+            //el evento no esta en la lista
+        }        
+        Usuarios u = evento.getEmailusuario();
+        String notificacion = "Se ha VALIDADO su evento "+evento.getDescripcion()+".";
+        notificarUsuario(u, notificacion);
+        validarEvento(evento);
+        return verValidarEventos();
+    }
+    
+    public String validarEvento(client.Evento arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.validarEvento(arg0);
+    }
+    
     public String preRechazarEvento(Evento evento) {
         Evento aux = null;
         for(Evento e : lista){
@@ -322,14 +337,13 @@ public class AgendaManagedBean implements Serializable {
         Usuarios u = evento.getEmailusuario();
         String notificacion = "Se ha RECHAZADO su evento "+evento.getDescripcion()+".";
         notificarUsuario(u, notificacion);
-        eventosSinValidar.remove(evento);
-        return rechazarEvento(evento);
+        rechazarEvento(evento);
+        return verValidarEventos();
     }
 
     private String rechazarEvento(client.Evento arg0) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
-        
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.rechazarEvento(arg0);
     }
@@ -340,5 +354,7 @@ public class AgendaManagedBean implements Serializable {
         client.UsuarioService port = service.getUsuarioServicePort();
         port.notificarUsuario(arg0, arg1);
     }
+    
+    
     
 }

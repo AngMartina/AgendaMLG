@@ -194,7 +194,15 @@ public class Usuarios implements Serializable {
     }
     
     public void añadirNotificacion(String s){
-        notificaciones += "||"+s;
+        if(notificaciones == null){
+            setNotificaciones(s);
+        }else{
+            if(notificaciones.equals("")){
+                setNotificaciones(notificaciones + s);
+            } else{
+                setNotificaciones(notificaciones + "||"+s);
+            }
+        }
     }
 
     @Override

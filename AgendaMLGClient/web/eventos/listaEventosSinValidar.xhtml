@@ -73,7 +73,7 @@
                         <f:facet name="header">
                             <h:outputText value=""/>
                         </f:facet>
-                        <h:commandButton action="#{agendaManagedBean.validarEvento(item)}" value="validarEvento">
+                        <h:commandButton action="#{agendaManagedBean.preValidarEvento(item)}" value="validarEvento">
                             <f:ajax execute="@form" render="listaEventosSinValidar" />
                         </h:commandButton>
                     </h:column>

@@ -18,6 +18,7 @@ and open the template in the editor.
             <h:inputText id="inputEmail" p:placeholder="Email" class="form-control" value="#{agendaManagedBean.autenticacionEmailIntroducido}" /> <br/>
             <h:commandButton value="Autenticarse" action="#{agendaManagedBean.iniciarSesion2()}" />
             <h:outputText style="color:red" value="#{agendaManagedBean.mensajeError}" /> <br/>
+            <h:commandButton value="Invitado" action="#{agendaManagedBean.accesoInvitado()}" />
         </h:form>
     </h:body>
     
