@@ -30,7 +30,7 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
         super(Usuarios.class);
     }
     
-    public Usuarios findByEmail(String email) {
+       public Usuarios findByEmail(String email) {
         try{
         Query q;
         
@@ -41,5 +41,5 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
         }catch(NullPointerException e){
         return null;
     }}
-    
+
 }

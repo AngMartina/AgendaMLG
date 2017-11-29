@@ -7,10 +7,9 @@ package ejb;
 
 import entity.Evento;
 import entity.Usuarios;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -36,8 +35,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
     public EventoFacade() {
         super(Evento.class);
     }
-        
-    public List<Evento> eventosVisibles(){
+    
+     public List<Evento> eventosVisibles(){
         Query q;
         LocalDate todayLocalDate = LocalDate.now( ZoneId.of( "UTC+01:00" ) );
         java.sql.Date today = java.sql.Date.valueOf(todayLocalDate);
@@ -57,14 +56,24 @@ public class EventoFacade extends AbstractFacade<Evento> {
         
     }
     
+    
     public List<Evento> buscarEventoPorFecha(Date fecha){
         Query q;
         
-        q = em.createQuery("SELECT e FROM Evento e WHERE :fecha BETWEEN e.fechainicio AND e.fechafin");
+        q = em.createQuery("SELECT e FROM Evento e WHERE :fecha BETWEEN e.fechainicio AND e.fechafin ORDER BY e.fechafin");
         q.setParameter("fecha", fecha);
         return q.getResultList();
         
     }
+     public List<Evento> buscarEventoPorCP(Integer cp){
+        Query q;
+        
+        q = em.createQuery("SELECT e FROM Evento e WHERE :cp = e.codigopostal");
+        q.setParameter("cp", cp);
+        return q.getResultList();
+        
+    }
+    
     
     public List<Evento> EventosDeUsuario(Usuarios u){
         Query q;
@@ -89,4 +98,5 @@ public class EventoFacade extends AbstractFacade<Evento> {
         q.setParameter("estado", 1);
         q.setParameter("id", evento.getId()).executeUpdate();
     }
+    
 }

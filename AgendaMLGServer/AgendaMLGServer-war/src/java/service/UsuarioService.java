@@ -5,7 +5,6 @@
  */
 package service;
 
-import ejb.EtiquetasFacade;
 import ejb.EventoFacade;
 import ejb.UsuariosFacade;
 import entity.Evento;
@@ -39,25 +38,16 @@ public class UsuarioService {
     @EJB
     private EventoFacade eventoFacade;
 
-    @EJB
-    private EtiquetasFacade etiquetasFacade;
 
     /**
      * Web service operation
      *
      * @param autenticacionEmailIntroducido
-     * @param usuario
-     * @param mensajeError
      * @return
      */
     @WebMethod(operationName = "iniciarSesion")
-    public Usuarios iniciarSesion(String autenticacionEmailIntroducido, Usuarios usuario, String mensajeError) {
-        if (!autenticacionEmailIntroducido.isEmpty() && autenticacionEmailIntroducido != null) {
-            usuario = usuariosFacade.findByEmail(autenticacionEmailIntroducido);
-        } else {
-            usuario = null;
-        }
-        return usuario;
+    public Usuarios iniciarSesion(String autenticacionEmailIntroducido) {
+        return usuariosFacade.findByEmail(autenticacionEmailIntroducido);
     }
 
     /**
@@ -71,10 +61,11 @@ public class UsuarioService {
 
     }
 
-    
-     * @param usuario
-     * @return 
-     */
+     /**
+      * Web service operation
+      * @param usuario
+      * @return 
+      */
     @WebMethod(operationName = "verEventos")
     public List<Evento> verEventos(Usuarios usuario){
        if(usuario.getTipoUsuario() != 3){
@@ -84,6 +75,10 @@ public class UsuarioService {
         }
     }
      
+    /**
+      * Web service operation
+      * @return 
+      */
     @WebMethod(operationName = "obtenerEventosSinValidar")
     public List<Evento> obtenerEventosSinValidar(){
         return this.eventoFacade.EventosSinValidar();
@@ -92,7 +87,6 @@ public class UsuarioService {
 
     /**
      * Web service operation
-     *
      * @return
      */
     @WebMethod(operationName = "subirEvento")
@@ -176,5 +170,26 @@ public class UsuarioService {
     public List<Evento> obtenerEventosDeUsuario(Usuarios usuarioLoggeado) {
         return this.eventoFacade.EventosDeUsuario(usuarioLoggeado);
     }
+    
+    /**
+     * Web service operation
+     * @param fecha
+     * @return
+     */
+    @WebMethod(operationName = "buscarPorFecha")
+    public List<Evento> buscarPorFecha(Date fecha) {
+        return this.eventoFacade.buscarEventoPorFecha(fecha);
+    }
+    
+    /**
+     * Web service operation
+     * @param cp
+     * @return
+     */
+    @WebMethod(operationName = "buscarPorCP")
+    public List<Evento> buscarPorCP(Integer cp) {
+        return this.eventoFacade.buscarEventoPorCP(cp);
+    }
+    
 
 }

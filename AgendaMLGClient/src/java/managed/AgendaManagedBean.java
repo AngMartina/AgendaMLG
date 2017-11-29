@@ -32,8 +32,9 @@ public class AgendaManagedBean implements Serializable {
     private UsuarioService_Service service;
 
     protected Integer ordenacion;
+    protected Integer busqueda;
     protected Date fechaOrdenacion;
-    protected Integer distanciaOrdenacion;
+    protected Integer codigoPostalBuscar;
     
     protected Usuarios usuario;
     protected Evento eventoAModificar;
@@ -43,8 +44,6 @@ public class AgendaManagedBean implements Serializable {
     
     protected List<Evento> lista;
     
-
-    protected Integer codigoPostal;
 
     /**
      * Creates a new instance of NewJSFManagedBean
@@ -63,6 +62,16 @@ public class AgendaManagedBean implements Serializable {
         this.ordenacion = ordenacion;
     }
 
+    public Integer getBusqueda() {
+        return busqueda;
+    }
+
+    public void setBusqueda(Integer busqueda) {
+        this.busqueda = busqueda;
+    }
+    
+    
+
     public Date getFechaOrdenacion() {
         return fechaOrdenacion;
     }
@@ -71,12 +80,12 @@ public class AgendaManagedBean implements Serializable {
         this.fechaOrdenacion = fechaOrdenacion;
     }
 
-    public Integer getDistanciaOrdenacion() {
-        return distanciaOrdenacion;
+    public Integer getCodigoPostalBuscar() {
+        return codigoPostalBuscar;
     }
 
-    public void setDistanciaOrdenacion(Integer distanciaOrdenacion) {
-        this.distanciaOrdenacion = distanciaOrdenacion;
+    public void setCodigoPostalBuscar(Integer codigoPostalBuscar) {
+        this.codigoPostalBuscar = codigoPostalBuscar;
     }
 
     public Usuarios getUsuario() {
@@ -103,15 +112,6 @@ public class AgendaManagedBean implements Serializable {
     public void setMensajeError(String mensajeError) {
         this.mensajeError = mensajeError;
     }
-
-    public Integer getCodigoPostal() {
-        return codigoPostal;
-    }
-
-    public void setCodigoPostal(Integer codigoPostal) {
-        this.codigoPostal = codigoPostal;
-    }
-
     
     public Evento getEventoAModificar() {
         return eventoAModificar;
@@ -172,7 +172,7 @@ public class AgendaManagedBean implements Serializable {
             Collections.sort(lista, new Comparator<Evento>() {
             @Override
             public int compare(Evento o1, Evento o2) {
-                return o1.getId().compareTo(o2.getId());
+                return o1.getFechainicio().compareTo(o2.getFechainicio());
             }
             });
         } else if(this.ordenacion == 2){
@@ -198,6 +198,100 @@ public class AgendaManagedBean implements Serializable {
             });
         }
     }
+     
+  /*  public String buscarPorPreferencias(){//Por preferencias
+        List<Evento> listaPreferencias = listaEventosPreferencia(usuario);
+        lista.removeAll(lista);
+        listaPreferencias.forEach((e) -> {
+            if(usuario.getTipoUsuario()!=3){
+                if(e.getEstado()!=0){
+                    lista.add(e);
+                }
+            }else{
+                lista.add(e);
+            } }
+        );
+        return "/eventos/listaEventos?faces-redirect=true";
+    }*/
+   
+  public void buscarPor(){
+        if(null!=this.busqueda)switch (this.busqueda) {
+           
+            case 1: //Por fecha
+                if(fechaOrdenacion!=null){
+                    List<Evento> listaFecha = buscarPorFecha(fechaOrdenacion);
+                    lista.removeAll(lista);
+                    listaFecha.forEach((e) -> {
+                        if(usuario.getTipoUsuario()!=3){
+                            if(e.getEstado()!=0){
+                                lista.add(e);
+                            }
+                        }else{
+                            lista.add(e);
+                        } }
+                );}
+                break;
+            case 2: //Por codigoPostal
+                //Collections.copy(lista, buscarPorCP(codigoPostal));
+                if(codigoPostalBuscar!=null){
+                    List<Evento> listacp = buscarPorCP(codigoPostalBuscar);
+                    lista.removeAll(lista);
+                    listacp.forEach((e) -> {
+                        if(usuario.getTipoUsuario()!=3){
+                            if(e.getEstado()!=0){
+                                lista.add(e);
+                            }
+                        }else{
+                            lista.add(e);
+                        }
+            });}
+                break;
+                
+            case 3: //todos los eventos
+                lista.removeAll(lista);
+                lista=verEventos(usuario);
+                break;
+            case 4:
+                 List<Evento> listaPreferencias = listaEventosPreferencia(usuario);
+                lista.removeAll(lista);
+                listaPreferencias.forEach((e) -> {
+                    if(usuario.getTipoUsuario()!=3){
+                        if(e.getEstado()!=0){
+                            lista.add(e);
+                        }
+                    }else{
+                        lista.add(e);
+                    } }
+                );
+                break;
+            case 5: 
+                ordenacion=4;
+                ordenar();
+                break;
+        }
+    } 
+    public List<Evento> listaEventosPreferencia(Usuarios usuario){
+        List<Evento> listaEventos = new ArrayList<>();
+        boolean eventoAñadido;
+        String[] preferencias = usuario.getPreferencias().split(";");
+        
+        for(Evento evento: lista){
+            String[] palabrasClave = evento.getPalabrasclave().split(";");
+            eventoAñadido = false;
+            
+            for(int i = 0; i < preferencias.length-1 && !eventoAñadido; i++){
+                for(int j = 0; j < palabrasClave.length-1 && !eventoAñadido; j++){
+                    if(palabrasClave[j].equals(preferencias[i])){
+                        listaEventos.add(evento);
+                        eventoAñadido = true;
+                    }
+                }
+            }
+        }
+        
+        return listaEventos;
+    }
+   
     
      public String verPerfilUsuario() {
         //TODO write your implementation code here:
@@ -255,12 +349,6 @@ public class AgendaManagedBean implements Serializable {
     
     */
 
-    private int ditanciaAEvento(Evento get, Integer codigoPostal) {
-       int d=0;
-        
-        return d;
-
-    }
 
     public String validarEvento(client.Evento arg0) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
@@ -311,5 +399,20 @@ public class AgendaManagedBean implements Serializable {
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.borrarEvento(arg0);
     }
+
+    private java.util.List<client.Evento> buscarPorCP(java.lang.Integer arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.buscarPorCP(arg0);
+    }
+
+    private java.util.List<client.Evento> buscarPorFecha(java.util.Date arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.buscarPorFecha(arg0);
+    }
+    
     
 }

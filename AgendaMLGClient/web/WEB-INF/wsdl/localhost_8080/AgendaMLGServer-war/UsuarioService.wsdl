@@ -4,6 +4,18 @@
 <xsd:import namespace="http://service/" schemaLocation="http://localhost:8080/AgendaMLGServer-war/UsuarioService?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="buscarPorFecha">
+<part name="parameters" element="tns:buscarPorFecha"/>
+</message>
+<message name="buscarPorFechaResponse">
+<part name="parameters" element="tns:buscarPorFechaResponse"/>
+</message>
+<message name="buscarPorCP">
+<part name="parameters" element="tns:buscarPorCP"/>
+</message>
+<message name="buscarPorCPResponse">
+<part name="parameters" element="tns:buscarPorCPResponse"/>
+</message>
 <message name="crearEvento">
 <part name="parameters" element="tns:crearEvento"/>
 </message>
@@ -71,6 +83,14 @@
 <part name="parameters" element="tns:obtenerEventosDeUsuarioResponse"/>
 </message>
 <portType name="UsuarioService">
+<operation name="buscarPorFecha">
+<input wsam:Action="http://service/UsuarioService/buscarPorFechaRequest" message="tns:buscarPorFecha"/>
+<output wsam:Action="http://service/UsuarioService/buscarPorFechaResponse" message="tns:buscarPorFechaResponse"/>
+</operation>
+<operation name="buscarPorCP">
+<input wsam:Action="http://service/UsuarioService/buscarPorCPRequest" message="tns:buscarPorCP"/>
+<output wsam:Action="http://service/UsuarioService/buscarPorCPResponse" message="tns:buscarPorCPResponse"/>
+</operation>
 <operation name="crearEvento">
 <input wsam:Action="http://service/UsuarioService/crearEventoRequest" message="tns:crearEvento"/>
 <output wsam:Action="http://service/UsuarioService/crearEventoResponse" message="tns:crearEventoResponse"/>
@@ -118,6 +138,24 @@
 </portType>
 <binding name="UsuarioServicePortBinding" type="tns:UsuarioService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="buscarPorFecha">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="buscarPorCP">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="crearEvento">
 <soap:operation soapAction=""/>
 <input>

@@ -4,6 +4,14 @@
 
 <xs:element name="borrarEventoResponse" type="tns:borrarEventoResponse"/>
 
+<xs:element name="buscarPorCP" type="tns:buscarPorCP"/>
+
+<xs:element name="buscarPorCPResponse" type="tns:buscarPorCPResponse"/>
+
+<xs:element name="buscarPorFecha" type="tns:buscarPorFecha"/>
+
+<xs:element name="buscarPorFechaResponse" type="tns:buscarPorFechaResponse"/>
+
 <xs:element name="crearEvento" type="tns:crearEvento"/>
 
 <xs:element name="crearEventoResponse" type="tns:crearEventoResponse"/>
@@ -48,9 +56,15 @@
 
 <xs:element name="verEventosResponse" type="tns:verEventosResponse"/>
 
-<xs:complexType name="modificarEvento">
+<xs:complexType name="buscarPorCP">
 <xs:sequence>
-<xs:element name="arg0" type="tns:evento" minOccurs="0"/>
+<xs:element name="arg0" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscarPorCPResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -82,7 +96,69 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="modificarEvento">
+<xs:sequence>
+<xs:element name="arg0" type="tns:evento" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="modificarEventoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerEventosSinValidar">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="obtenerEventosSinValidarResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerUsuarios">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="obtenerUsuariosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:usuarios" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscarPorFecha">
+<xs:sequence>
+<xs:element name="arg0" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscarPorFechaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="formateoFecha">
+<xs:sequence>
+<xs:element name="arg0" type="xs:anySimpleType" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="formateoFechaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="borrarEvento">
+<xs:sequence>
+<xs:element name="arg0" type="tns:evento" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="borrarEventoResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -110,16 +186,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="obtenerEventosSinValidar">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="obtenerEventosSinValidarResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="verEventos">
 <xs:sequence>
 <xs:element name="arg0" type="tns:usuarios" minOccurs="0"/>
@@ -129,16 +195,6 @@
 <xs:complexType name="verEventosResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="obtenerUsuarios">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="obtenerUsuariosResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:usuarios" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -154,18 +210,6 @@
 <xs:complexType name="crearEventoResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="formateoFecha">
-<xs:sequence>
-<xs:element name="arg0" type="xs:anySimpleType" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="formateoFechaResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:dateTime" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -190,18 +234,6 @@
 <xs:complexType name="iniciarSesionResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:usuarios" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="borrarEvento">
-<xs:sequence>
-<xs:element name="arg0" type="tns:evento" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="borrarEventoResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>
