@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Eventos</title>
+       
+    </h:head>
+    <h:body>
+        <f:view>
+             <h:form id="busqueda">
+                <!-- <h:commandButton value="BuscarPorPreferencias" onclick="{agendaManagedBean.buscarPorPreferencias()}" disabled="{agendaManagedBean.usuario.tipoUsuario==0}"></h:commandButton>-->
+                 <h:selectOneRadio value="#{testBean.busqueda}"  rendered="#{testBean.usuario.tipoUsuario!=0}">
+                       <f:selectItem itemValue="1" itemLabel="Buscar por fecha"/> <br/>
+                       <f:selectItem itemValue="2" itemLabel="Buscar por código postal" /><br/>
+                       <f:selectItem itemValue="3" itemLabel="Ver todos los eventos" /><br/>
+                       <f:selectItem itemValue="4" itemLabel="Buscar por preferencias" />
+                       <f:selectItem itemValue="5" itemLabel="FinBusqueda" />
+                    </h:selectOneRadio>
+                 <h:selectOneRadio value="#{testBean.busqueda}"  rendered="#{testBean.usuario.tipoUsuario==0}">
+                       <f:selectItem itemValue="1" itemLabel="Buscar por fecha"/> <br/>
+                       <f:selectItem itemValue="2" itemLabel="Buscar por código postal" /><br/>
+                       <f:selectItem itemValue="3" itemLabel="Ver todos los eventos" /><br/>
+                       <f:selectItem itemValue="5" itemLabel="FinBusqueda" />
+                    </h:selectOneRadio>
+                <div id="fechaBusqueda" >
+                    <h:outputLabel value="Fecha:" for="fecha" />
+                    <h:inputText id="fechaBusqueda" value="#{testBean.fechaOrdenacion}" title="Fecha" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:inputText>
+                 </div>
+                 <div id="cpBusqueda">
+                     <h:outputLabel value="Codigo Postal:" for="cp" />
+                     <h:inputText id="cpBusqueda" value="#{testBean.codigoPostalBuscar}" title="cp" />
+                 </div>
+                 <h:commandButton value="Buscar" onclick="#{testBean.buscarPor()}">
+                </h:commandButton>
+             </h:form> 
+            
+             <h:form id="ordenacion">
+                <h:selectOneRadio value="#{testBean.ordenacion}">
+                   <f:selectItem itemValue="1" itemLabel="Ordenar por precio" /><br/>
+                   <f:selectItem itemValue="2" itemLabel="Ordenar por fecha" /><br/>
+                   <f:selectItem itemValue="3" itemLabel="Ordenar por localización" /><br/>
+                   <f:selectItem itemValue="4" itemLabel="Sin ordenar" /><br/>
+                   <f:ajax execute="@form" listener="#{testBean.ordenar()}"  render="actualizar"/>
+                </h:selectOneRadio>
+                 <h:commandButton value="Ordenar">
+                    <f:ajax execute="@form" render="listaEventos" />
+                    
+                </h:commandButton> 
+             </h:form>
+            
+            <h:form id="listaEventos">
+                <h1><h:outputText value="List"/></h1>
+                <h:dataTable value="#{testBean.eventosList}" var="item">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="FechaInicio"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechainicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Fechafin"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechafin}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Descripcion"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descripcion}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Localizacion"/>
+                        </f:facet>
+                        <h:outputText value="#{item.localizacion}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Codigo Postal"/>
+                        </f:facet>
+                        <h:outputText value="#{item.codigopostal}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Precio"/>
+                        </f:facet>
+                        <h:outputText value="#{item.precio}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Url"/>
+                        </f:facet>
+                        <h:outputText value="#{item.url}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Estado"/>
+                        </f:facet>
+                        <h:outputText value="#{item.estado}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Palabras Clave"/>
+                        </f:facet>
+                        <h:outputText value="#{item.palabrasclave}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Emailusuario"/>
+                        </f:facet>
+                        <h:outputText value="#{item.emailusuario.email}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value=""/>
+                        </f:facet>
+                        <h:commandButton action="#{agendaManagedBean.verModificarEvento(item)}" rendered="#{agendaManagedBean.comprobarPeriodista()}" value="modificarEvento">
+                        </h:commandButton>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value=""/>
+                        </f:facet>
+                        <h:commandButton action="#{agendaManagedBean.borrarEvento(item)}" rendered="#{agendaManagedBean.comprobarPeriodista()}" value="borrarEvento">
+                        </h:commandButton>
+                    </h:column>
+                </h:dataTable>
+                <h:commandButton action="#{agendaManagedBean.subirEvento()}" value="Crear Evento" rendered="#{agendaManagedBean.usuario.tipoUsuario!=0}"/>
+                <h:commandButton action="#{agendaManagedBean.verPerfilUsuario()}" value="Ver mi perfil" rendered="#{agendaManagedBean.usuario.tipoUsuario!=0}"/>
+                <h:commandButton action="#{agendaManagedBean.verValidarEventos()}" rendered="#{agendaManagedBean.comprobarPeriodista()}" value="Validar Eventos"/>
+                <h:commandButton action="#{agendaManagedBean.salir()}" value="Salir"/>
+            </h:form>
+        </f:view>
+        
+        
+        
+    </h:body>
+</html>

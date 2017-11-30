@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>AgendaMLGTest</th>
+                    <th>Operaciones del servidor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Crear Evento</td>
+                    <td><h:button value="crearEvento" outcome="pages/crearEvento" /></td>
+                </tr>
+                <tr>
+                    <td>Ver Eventos</td>
+                    <td><h:commandButton action="#{testBean.verEventos_T()}" value="verEventos" /></td>
+                </tr>
+                <tr>
+                    <td>Modificar Evento</td>
+                    <td><h:commandButton value="modificarEventos" /></td>
+                </tr>
+                <tr>
+                    <td>Borrar Evento</td>
+                    <td><h:commandButton value="modificarEventos" /></td>
+                </tr>
+                <tr>
+                    <td>Buscar por CP</td>
+                    <td><h:commandButton value="buscarEventosPorCP" /></td>
+                </tr>
+                <tr>
+                    <td>Buscar por fecha</td>
+                    <td><h:commandButton value="buscarEventosPorFecha" /></td>
+                </tr>
+                <tr>
+                    <td>Notificar Usuario</td>
+                    <td><h:commandButton value="notificarUsuario" /></td>
+                </tr>
+                <tr>
+                    <td>Obtener Eventos De Usuario</td>
+                    <td><h:commandButton value="obtenerEventosDeUsuario" /></td>
+                </tr>
+                <tr>
+                    <td>Obtener Eventos Sin Validar</td>
+                    <td><h:commandButton value="obtenerEventosDeSinValidar" /></td>
+                </tr>
+                <tr>
+                    <td>Rechazar Evento</td>
+                    <td><h:commandButton value="rechazarEvento" /></td>
+                </tr>
+                <tr>
+                    <td>Validar Evento</td>
+                    <td><h:commandButton value="validarEvento" /></td>
+                </tr>
+                <tr>
+                    <td>Obtener Usuarios</td>
+                    <td><h:commandButton value="obtenerUsuarios" /></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </h:body>
+</html>
+
