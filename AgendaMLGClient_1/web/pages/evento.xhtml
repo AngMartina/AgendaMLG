@@ -9,7 +9,7 @@
     <h:body>
         <f:view>
             <h:form>
-                <h1><h:outputText value="Crear Evento"/></h1>
+                <h1><h:outputText value="Crear/Modificar Evento"/></h1>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Fechainicio:" for="fechainicio" />
                     <h:inputText id="fechainicio" value="#{testBean.evento.fechainicio}" title="Fechainicio" required="true" requiredMessage="Introduzca fecha de inicio">
@@ -51,6 +51,7 @@
                 </h:panelGrid>
                 <h:outputText value="#{testBean.mensaje}"/>
                 <h:commandButton action="#{testBean.validarCamposCrearEventoYCrear()}" value="Crear"/>
+                <h:commandButton action="#{testBean.modificarEvento(testBean.evento)}" value="Modificar"/>
             </h:form>
             <h:form>
                <h:button value="volver" outcome="/index" />

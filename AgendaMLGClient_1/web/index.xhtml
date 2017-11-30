@@ -18,27 +18,28 @@
             <tbody>
                 <tr>
                     <td>Crear Evento</td>
-                    <td><h:button value="crearEvento" outcome="pages/crearEvento" /></td>
+                    <td><h:button value="crearEvento" outcome="pages/evento" /></td>
                 </tr>
                 <tr>
                     <td>Ver Eventos</td>
                     <td><h:commandButton action="#{testBean.verEventos_T()}" value="verEventos" /></td>
                 </tr>
                 <tr>
-                    <td>Modificar Evento</td>
-                    <td><h:commandButton action="#{testBean.modificarEvento_T()}" value="modificarEventos" /></td>
-                </tr>
-                <tr>
-                    <td>Borrar Evento</td>
-                    <td><h:commandButton value="borrarEvento" /></td>
-                </tr>
-                <tr>
                     <td>Buscar por CP</td>
-                    <td><h:commandButton value="buscarEventosPorCP" /></td>
+                    <td><h:commandButton action="#{testBean.buscarPorCP_T(testBean.cp)}" value="buscarEventosPorCP" />
+                        <br/>
+                        <h:outputLabel value="Cp:" for="inputCP" />
+                        <h:inputText id="inputCP" class="form-control" value="#{testBean.cp}" />
+                    </td>
                 </tr>
                 <tr>
                     <td>Buscar por fecha</td>
-                    <td><h:commandButton value="buscarEventosPorFecha" /></td>
+                    <td><h:commandButton action="#{testBean.buscarPorFecha_T(testBean.fecha)}" value="buscarEventosPorFecha" /><br/>
+                        <h:outputLabel value="Fecha:" for="inputDate" />
+                    <h:inputText id="inputDate" value="#{testBean.fecha}" title="Fecha">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:inputText>
+                    </td>
                 </tr>
                 <tr>
                     <td>Notificar Usuario</td>
@@ -46,23 +47,18 @@
                 </tr>
                 <tr>
                     <td>Obtener Eventos De Usuario</td>
-                    <td><h:commandButton value="obtenerEventosDeUsuario" /></td>
+                    <td><h:commandButton action="#{testBean.obtenerEventosDeUsuario_T(testBean.email)}" value="obtenerEventosDeUsuario" /><br/>
+                        <h:outputLabel value="Email:" for="inputEmail" />
+                        <h:inputText id="inputEmail" class="form-control" value="#{testBean.email}" />
+                    </td>
                 </tr>
                 <tr>
                     <td>Obtener Eventos Sin Validar</td>
                     <td><h:commandButton  action="#{testBean.obtenerEventosSinValidar_T()}"  value="obtenerEventosSinValidar" /></td>
                 </tr>
                 <tr>
-                    <td>Rechazar Evento</td>
-                    <td><h:commandButton value="rechazarEvento" /></td>
-                </tr>
-                <tr>
-                    <td>Validar Evento</td>
-                    <td><h:commandButton value="validarEvento" /></td>
-                </tr>
-                <tr>
                     <td>Obtener Usuarios</td>
-                    <td><h:commandButton value="obtenerUsuarios" /></td>
+                    <td><h:commandButton action="#{testBean.obtenerUsuarios_T()}" value="obtenerUsuarios" /></td>
                 </tr>
             </tbody>
         </table>

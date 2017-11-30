@@ -96,6 +96,18 @@
                         <h:commandButton action="#{testBean.borrarEvento_T(item)}" value="borrarEvento">
                         </h:commandButton>
                     </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value=""/>
+                        </f:facet>
+                        <h:commandButton action="#{testBean.rechazarEvento_T(item)}" value="rechazarEvento" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value=""/>
+                        </f:facet>
+                        <h:commandButton action="#{testBean.validarEvento_T(item)}" value="validarEvento" />
+                    </h:column>
                 </h:dataTable>
                <h:button value="volver" outcome="/index" />
             </h:form>
