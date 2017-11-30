@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.ws.WebServiceRef;
 
 
@@ -50,7 +51,7 @@ public class TestBean implements Serializable {
     @PostConstruct
     public void init(){
         this.evento = new Evento();
-        this.usuario = new Usuarios();
+        this.usuario = iniciarSesion("juanlopez@yahoo.es");
         this.eventosList = new ArrayList<>();
         this.usuariosList = new ArrayList();
     }
@@ -81,6 +82,7 @@ public class TestBean implements Serializable {
             evento.setFechainicio(evento.getFechafin());
             evento.setFechafin(aux);
             crearEvento(evento, usuario);
+            eventosList.add(evento);
             return "/pages/listaEventos?faces-redirect=true";
         }
         return null;
@@ -206,7 +208,7 @@ public class TestBean implements Serializable {
     //Devuelve una lista de eventos en base al tipo de usuario que accede a ellos
     public String verEventos_T(){
         Usuarios u = iniciarSesion("juanlopez@yahoo.es");
-        this.eventosList = verEventos(u);
+        this.eventosList = verEventos(usuario);
         return "/pages/listaEventos?faces-redirect=true";
     }
     
@@ -216,12 +218,27 @@ public class TestBean implements Serializable {
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.verEventos(arg0);
     }
+    
+    public String modificarEvento_T(Evento evento) throws DatatypeConfigurationException {
+        evento.getFechainicio().setDate(evento.getFechainicio().getDate()+ 1);
+        evento.getFechafin().setDate(evento.getFechafin().getDate()+ 1);
+        client.UsuarioService port = service.getUsuarioServicePort();
+        port.modificarEvento(evento);
+        return "/pages/listaEventos?faces-redirect=true";
+    }
 
     private String modificarEvento(client.Evento arg0) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.modificarEvento(arg0);
+    }
+    
+    private String borrarEvento_T(client.Evento arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.borrarEvento(arg0);
     }
 
     private String borrarEvento(client.Evento arg0) {
@@ -257,6 +274,11 @@ public class TestBean implements Serializable {
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.obtenerEventosDeUsuario(arg0);
+    }
+    
+    public String obtenerEventosSinValidar_T() {
+        this.eventosList = obtenerEventosSinValidar();
+        return "/pages/listaEventos?faces-redirect=true";
     }
 
     private java.util.List<client.Evento> obtenerEventosSinValidar() {
