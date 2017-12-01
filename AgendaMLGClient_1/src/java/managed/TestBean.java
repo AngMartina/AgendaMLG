@@ -47,6 +47,7 @@ public class TestBean implements Serializable {
     protected int cp;
     protected Date fecha;
     protected String email;
+    protected String mail;
     protected String notificacion;
 
     /**
@@ -278,17 +279,11 @@ public class TestBean implements Serializable {
         return port.buscarPorFecha(arg0);
     }
     
-    public String notificarUsuario_T(client.Usuarios arg0) {
-        notificarUsuario(arg0, notificacion);
+    public String notificarUsuario_T() {
+        Usuarios u = iniciarSesion(mail);
+        notificarUsuario(u, notificacion);
         this.usuariosList = obtenerUsuarios();
         return "/pages/listaUsuarios?faces-redirect=true";
-    }
-
-    private void notificarUsuario(client.Usuarios arg0, java.lang.String arg1) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        client.UsuarioService port = service.getUsuarioServicePort();
-        port.notificarUsuario(arg0, arg1);
     }
     
     public String obtenerEventosDeUsuario_T(String s) {
@@ -444,13 +439,6 @@ public class TestBean implements Serializable {
         this.cp = cp;
     }
 
-    private Usuarios iniciarSesion(java.lang.String arg0) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        client.UsuarioService port = service.getUsuarioServicePort();
-        return port.iniciarSesion(arg0);
-    }
-
     public Date getFecha() {
         return fecha;
     }
@@ -473,6 +461,28 @@ public class TestBean implements Serializable {
 
     public void setNotificacion(String notificacion) {
         this.notificacion = notificacion;
+    }
+
+    private void notificarUsuario(client.Usuarios arg0, java.lang.String arg1) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        port.notificarUsuario(arg0, arg1);
+    }
+
+    private Usuarios iniciarSesion(java.lang.String arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        client.UsuarioService port = service.getUsuarioServicePort();
+        return port.iniciarSesion(arg0);
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
     
 }
