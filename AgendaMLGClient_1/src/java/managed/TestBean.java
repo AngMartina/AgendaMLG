@@ -181,20 +181,24 @@ public class TestBean implements Serializable {
                 break;
         }
     }  
-    public List<Evento> listaEventosPreferencia(Usuarios usuario){
+    public List<Evento> listaEventosPreferencia(Usuarios user){
         List<Evento> listaEventos = new ArrayList<>();
         boolean eventoAñadido;
-        String[] preferencias = usuario.getPreferencias().split(";");
+        String[] preferencias = user.getPreferencias().split(";");
         
-        for(Evento evento: eventosList){
-            String[] palabrasClave = evento.getPalabrasclave().split(";");
-            eventoAñadido = false;
+        for(Evento e: eventosList){
+            String[] pC;
+            if(e.getPalabrasclave()!=null ){
+                pC = e.getPalabrasclave().split(";");
             
-            for(int i = 0; i < preferencias.length-1 && !eventoAñadido; i++){
-                for(int j = 0; j < palabrasClave.length-1 && !eventoAñadido; j++){
-                    if(palabrasClave[j].equals(preferencias[i])){
-                        listaEventos.add(evento);
-                        eventoAñadido = true;
+                eventoAñadido = false;
+
+                for(int i = 0; i < preferencias.length-1 && !eventoAñadido; i++){
+                    for(int j = 0; j < pC.length-1 && !eventoAñadido; j++){
+                        if(pC[j].equals(preferencias[i])){
+                            listaEventos.add(e);
+                            eventoAñadido = true;
+                        }
                     }
                 }
             }
@@ -209,7 +213,7 @@ public class TestBean implements Serializable {
         return port.crearEvento(arg0, arg1);
     }
 
-    //Devuelve una lista de eventos en base al tipo de usuario que accede a ellos
+    //Devuelve una lista de eventos en base al tipo de u que accede a ellos
     public String verEventos_T(){
         Usuarios u = iniciarSesion("juanlopez@yahoo.es");
         this.eventosList = verEventos(usuario);
@@ -264,6 +268,14 @@ public class TestBean implements Serializable {
         // If the calling of port operations may lead to race condition some synchronization is required.
         client.UsuarioService port = service.getUsuarioServicePort();
         return port.buscarPorCP(arg0);
+    }
+    
+     public String buscarPorPreferencias_T() {
+        this.usuario= iniciarSesion("juanlopez@yahoo.es");
+        Usuarios u=iniciarSesion(this.autenticacionEmailIntroducido);
+        this.eventosList = verEventos(usuario);
+        this.eventosList = listaEventosPreferencia(u);
+        return "/pages/listaEventos?faces-redirect=true";
     }
     
     public String buscarPorFecha_T(Date date) {

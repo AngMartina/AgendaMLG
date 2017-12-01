@@ -42,6 +42,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Buscar por preferencias</td>
+                    <td><h:commandButton action="#{testBean.buscarPorPreferencias_T()}" value="buscarEventosPorPreferencias" /><br/>
+                        <h:outputLabel value="Email de Usuario:" for="inputEmailBusqueda" />
+                        <h:inputText id="inputEmailBusqueda" value="#{testBean.autenticacionEmailIntroducido}" title="EmailUsuario">
+                    </h:inputText>
+                    </td>
+                </tr>
+                <tr>
                     <td>Notificar Usuario</td>
                     <td><h:commandButton value="notificarUsuario" /></td>
                 </tr>

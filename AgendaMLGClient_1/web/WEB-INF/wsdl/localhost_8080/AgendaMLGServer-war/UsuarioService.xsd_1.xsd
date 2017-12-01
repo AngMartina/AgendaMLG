@@ -64,9 +64,15 @@
 
 <xs:element name="verEventosResponse" type="tns:verEventosResponse"/>
 
-<xs:complexType name="modificarEvento">
+<xs:complexType name="buscarPorCP">
 <xs:sequence>
-<xs:element name="arg0" type="tns:evento" minOccurs="0"/>
+<xs:element name="arg0" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscarPorCPResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -99,21 +105,15 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="modificarEvento">
+<xs:sequence>
+<xs:element name="arg0" type="tns:evento" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="modificarEventoResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="buscarPorCP">
-<xs:sequence>
-<xs:element name="arg0" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="buscarPorCPResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
