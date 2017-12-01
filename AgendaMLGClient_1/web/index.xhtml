@@ -51,7 +51,11 @@
                 </tr>
                 <tr>
                     <td>Notificar Usuario</td>
-                    <td><h:commandButton value="notificarUsuario" /></td>
+                    <td><h:commandButton action="#{testBean.notificarUsuario_T()}" value="Notificar usuario" /><br/>
+                        <h:outputLabel value="Email:" for="inputEmail" />
+                        <h:inputText id="inputMail" class="form-control" value="#{testBean.mail}" />
+                        <h:outputLabel value="Texto:" for="inputText" />
+                        <h:inputText id="inputText" class="form-control" value="#{testBean.notificacion}" /></td>
                 </tr>
                 <tr>
                     <td>Obtener Eventos De Usuario</td>

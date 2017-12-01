@@ -61,13 +61,6 @@
                         </f:facet>
                         <h:outputText value="#{item.preferencias}"/>
                     </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value=""/>
-                        </f:facet>
-                        <h:commandButton action="#{testBean.notificarUsuario_T(item)}" value="Notificar usuario" />
-                        <h:inputText id="inputNot" class="form-control" value="#{testBean.notificacion}" />
-                    </h:column>
                 </h:dataTable>
                <h:button value="volver" outcome="/index" />
             </h:form>
