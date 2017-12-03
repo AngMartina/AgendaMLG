@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>AgendaMLGTest</th>
+                    <th>Operaciones del servidor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Crear Evento</td>
+                    <td><h:button value="crearEvento" outcome="pages/evento" /></td>
+                </tr>
+                <tr>
+                    <td>Ver Eventos</td>
+                    <td><h:commandButton action="#{testBean.verEventos_T()}" value="verEventos" /></td>
+                </tr>
+                <tr>
+                    <td>Buscar por CP</td>
+                    <td><h:commandButton action="#{testBean.buscarPorCP_T(testBean.cp)}" value="buscarEventosPorCP" />
+                        <br/>
+                        <h:outputLabel value="Cp:" for="inputCP" />
+                        <h:inputText id="inputCP" class="form-control" value="#{testBean.cp}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Buscar por fecha</td>
+                    <td><h:commandButton action="#{testBean.buscarPorFecha_T(testBean.fecha)}" value="buscarEventosPorFecha" /><br/>
+                        <h:outputLabel value="Fecha:" for="inputDate" />
+                    <h:inputText id="inputDate" value="#{testBean.fecha}" title="Fecha">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Buscar por preferencias</td>
+                    <td><h:commandButton action="#{testBean.buscarPorPreferencias_T()}" value="buscarEventosPorPreferencias" /><br/>
+                        <h:outputLabel value="Email de Usuario:" for="inputEmailBusqueda" />
+                        <h:inputText id="inputEmailBusqueda" value="#{testBean.autenticacionEmailIntroducido}" title="EmailUsuario">
+                    </h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Notificar Usuario</td>
+                    <td><h:commandButton action="#{testBean.notificarUsuario_T()}" value="Notificar usuario" /><br/>
+                        <h:outputLabel value="Email:" for="inputEmail" />
+                        <h:inputText id="inputMail" class="form-control" value="#{testBean.mail}" />
+                        <h:outputLabel value="Texto:" for="inputText" />
+                        <h:inputText id="inputText" class="form-control" value="#{testBean.notificacion}" /></td>
+                </tr>
+                <tr>
+                    <td>Obtener Eventos De Usuario</td>
+                    <td><h:commandButton action="#{testBean.obtenerEventosDeUsuario_T(testBean.email)}" value="obtenerEventosDeUsuario" /><br/>
+                        <h:outputLabel value="Email:" for="inputEmail" />
+                        <h:inputText id="inputEmail" class="form-control" value="#{testBean.email}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Obtener Eventos Sin Validar</td>
+                    <td><h:commandButton  action="#{testBean.obtenerEventosSinValidar_T()}"  value="obtenerEventosSinValidar" /></td>
+                </tr>
+                <tr>
+                    <td>Obtener Usuarios</td>
+                    <td><h:commandButton action="#{testBean.obtenerUsuarios_T()}" value="obtenerUsuarios" /></td>
+                </tr>
+            </tbody>
+        </table>
+        </h:form>
+    </h:body>
+</html>
+
